@@ -17,109 +17,84 @@ import java.awt.Container;
 import java.awt.Color;
 import java.awt.Font;
 
-class Frame extends JFrame{
-	
-	Container c;
-	JLabel l1;
-	JLabel l2;
-	JLabel l3;
-	JLabel l4;
-	JLabel l5;
-	JButton b1;
-	JButton b2;
-	JTextField t1;
-	JTextField t2;
-	JTextField t3;
-	JPasswordField pf;
-	Font f1;
-	Font f2;
-	Font f3;
-	
-	private JTextField tf;
-	public Frame(){
-		set();
-	}
-	public void set(){
+class ShopOwnerFrame extends JFrame{
 		
-		this.setVisible(true);
-		this.setBounds(200,15,800,700);
-		//this.setLayout(new BorderLayout());
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public ShopOwnerFrame(){
+		setVisible(true);
+		setBounds(200,15,800,700);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		l1 = new JLabel("Registration");
-		l2 = new JLabel("Enter username ");
-		
-		b1 = new JButton("LogIn");
-		b2 = new JButton("SignUp");
-		t1 = new JTextField();
-		pf = new JPasswordField();
-		
-		f1 = new Font("Arial",Font.BOLD ,18);
-		f2 = new Font("Times New Roman",Font.BOLD ,25);
-		f3 = new Font("Arial",Font.BOLD ,13);
-		
-		Container c = this.getContentPane();
+		Container c = getContentPane();
 		c.setBackground(Color.WHITE);
 		c.setLayout(null);
 		
-		c.add(l1);
-		c.add(l2);
-		c.add(l3);
-		//c.add(l4);
-		//c.add(l5);
-		c.add(t1);
-		//c.add(t2);
-		//c.add(t3);
-		c.add(pf);
-		c.add(b1);
-		c.add(b2);
-		
-		l1.setBounds(((this.getWidth() - 150 )/2),(this.getHeight() - 650 ),150,100);
+		Font f1 = new Font("Arial",Font.BOLD ,18);
+		Font f2 = new Font("Times New Roman",Font.BOLD ,25);
+		Font f3 = new Font("Arial",Font.BOLD ,13);
+
+		JLabel l1 = new JLabel("Registration");
+		l1.setBounds(((getWidth() - 150 )/2),(getHeight() - 650 ),150,100);
 		l1.setFont(f2);
 		l1.setForeground(Color.BLACK);
+		add(l1);
 		
-		l2.setBounds(((this.getWidth() - 470 )/2),((this.getHeight() - 350 )/2),260,30);
+		JLabel l2 = new JLabel("Enter username ");
+		l2.setBounds(((getWidth() - 470 )/2),((getHeight() - 350 )/2),260,30);
 		l2.setFont(f3);
 		l2.setForeground(Color.GRAY);
-		
-		l3.setBounds(((this.getWidth() - 470 )/2),((this.getHeight() - 250 )/2),260,30);		
+		add(l2);
+
+		JLabel l3 = new JLabel("Enter password ");
+		l3.setBounds(((getWidth() - 470 )/2),((getHeight() - 250 )/2),260,30);		
 		l3.setFont(f3);
 		l3.setForeground(Color.GRAY);
+		add(l3);
 		
-		b1.setBounds(((this.getWidth() - 193 )/2),440,193,50);
+		JButton b1 = new JButton("logIn");
+		b1.setBounds(((getWidth() - 193 )/2),340,193,50);
 		b1.setFont(f1);
 		//b1.setCursor(crsr);
 		b1.setForeground(Color.BLACK);
-		
-		b2.setBounds(((this.getWidth() - 193 )/2),520,193,50);
+		b1.addActionListener ( new ActionListener() {
+			public void actionPerformed (ActionEvent e) {
+				
+			}
+		});
+		add(b1);
+
+		JButton b2 = new JButton("signUp");
+		b2.setBounds(((getWidth() - 193 )/2),420,193,50);
 		b2.setFont(f1);
 		//b2.setCursor(crsr);
 		b2.setForeground(Color.BLACK);
+		b2.addActionListener ( new ActionListener() {
+			public void actionPerformed (ActionEvent e) {
+				//fr2.dispose();
+				//fr1.setVisible(true);
+			}			
+		});
+		add(b2);
 		
-		t1.setBounds(((this.getWidth() - 210 )/2),((this.getHeight() - 350 )/2),250,40);
+		JTextField t1 = new JTextField();
+		t1.setBounds(((getWidth() - 210 )/2),((getHeight() - 350 )/2),250,40);
 		t1.setFont(f1);
 		t1.setForeground(Color.BLACK);
 		//t1.setBackground(Color.BLACK);
+		add(t1);
 
-		pf.setBounds(((this.getWidth() - 210 )/2),((this.getHeight() - 250 )/2),250,40);
+		JPasswordField pf = new JPasswordField();
+		pf.setBounds(((getWidth() - 210 )/2),((getHeight() - 250 )/2),250,40);
 		pf.setFont(f1);
 		pf.setEchoChar('$');
 		pf.setForeground(Color.BLACK);
 		//pf.setBackground(Color.BLACK);
-		
+		add(pf);
 		
 	}
 }
+	
 class Main{
 	public static void main(String [] args){
-		Frame f = new Frame();
+		ShopOwnerFrame f = new ShopOwnerFrame();
 	}
 }
-
-
-/*
-	- Shop owner
-	- vendor
-	- brodker
-	- buyer
-*/

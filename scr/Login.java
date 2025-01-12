@@ -10,7 +10,7 @@ public class Login extends JFrame implements ActionListener{
     JTextField tfusername ;
     JPasswordField tfpassword;
     JButton login,signup;
-    Login() {
+    public Login() {
 		
 		
 		String [] s = {"Market Owner","Shop owner","Coustomer","Vendor"}; 
@@ -61,7 +61,7 @@ public class Login extends JFrame implements ActionListener{
         
         tfusername = new JTextField();
 		tfusername.setBorder(lineBorder );
-		tfusername.setHorizontalAlignment(JTextField.CENTER);
+		//tfusername.setHorizontalAlignment(JTextField.CENTER);
 		tfusername.setBounds((int)(((1.5 * w ) - 210 )/2),((h - 350 )/2),250,40);
 		tfusername.setFont(f1);
 		tfusername.setForeground(Color.BLACK);        
@@ -69,7 +69,7 @@ public class Login extends JFrame implements ActionListener{
         
         tfpassword = new JPasswordField();
 		tfpassword.setBorder(lineBorder );
-		tfpassword.setHorizontalAlignment(JTextField.CENTER);
+		//tfpassword.setHorizontalAlignment(JTextField.CENTER);
 		tfpassword.setBounds((int)(((1.5 * w ) - 210 )/2),((h - 250 )/2),250,40);
 		tfpassword.setFont(f1);
 		tfpassword.setEchoChar('$');
@@ -96,7 +96,8 @@ public class Login extends JFrame implements ActionListener{
 
 		DefaultListCellRenderer lRenderer = new DefaultListCellRenderer();
 		lRenderer.setHorizontalAlignment(DefaultListCellRenderer.CENTER); // center-aligned items
-
+		
+		/*
 		JComboBox cmb1 = new JComboBox(s);
 		cmb1.setRenderer(lRenderer);
 		cmb1.setBounds((int)((w * .5 - 200 )/2),(h - 550 ),200,50);;
@@ -121,7 +122,7 @@ public class Login extends JFrame implements ActionListener{
 			}
 		});
 		add(cmb1);
-
+		*/
     }
     
     public void actionPerformed(ActionEvent ae) {

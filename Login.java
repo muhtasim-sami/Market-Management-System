@@ -1,5 +1,6 @@
 
 import javax.swing.*;
+import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -10,135 +11,141 @@ public class Login extends JFrame implements ActionListener{
     JPasswordField tfpassword;
     JButton login,signup;
     Login() {
-        
+		
+		
+		String [] s = {"Market Owner","Shop owner","Coustomer","Vendor"}; 
+		
+		boolean shopOwner, Coustomer, Vendor;
+		
+		Font f1 = new Font("Arial",Font.BOLD ,18);
+		Font f2 = new Font("Times New Roman",Font.BOLD ,25);
+		Font f3 = new Font("Arial",Font.BOLD ,13);
+		
+		Color VERY_LIGHT_BLUE = new Color(51,204,255);
+		Color LIGHT_GREEN = new Color(102,255,102);
+		Color DARK_BLUE = new Color(0,0,204);
+		Color DARK_GREEN = new Color(0,153,0);
+		
+		Cursor crsr = new Cursor(Cursor.HAND_CURSOR);
+
+		LineBorder lineBorder = new LineBorder(Color.black, 1, true);
+		
+        setVisible(true);
+        setBounds(200,15,800,700);
+		
+		double w = getWidth();
+		int h = (int)getHeight();
+		
+		
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
         
-        JLabel lblusername = new JLabel("Username");
-        lblusername.setBounds(40, 20, 100, 30);
-        add(lblusername);
+		JLabel l1 = new JLabel("Login");
+		l1.setBounds((int)(((1.5 * w ) - 150 )/2),(h - 650 ),150,100);
+		l1.setFont(f2);
+		l1.setForeground(DARK_GREEN);
+		add(l1);
+		
+		JLabel l2 = new JLabel("Enter username ");
+		l2.setBounds((int)(((1.5 * w ) - 470 )/2),((h - 350 )/2),260,30);
+		l2.setFont(f3);
+		l2.setForeground(Color.GRAY);
+		add(l2);
+
+		JLabel l3 = new JLabel("Enter password ");
+		l3.setBounds((int)(((1.5 * w ) - 470 )/2),((h - 250 )/2),260,30);		
+		l3.setFont(f3);
+		l3.setForeground(Color.GRAY);
+		add(l3);
         
         tfusername = new JTextField();
-        tfusername.setBounds(150, 20, 150, 30);
-        add(tfusername);
-        
-        JLabel lblpassword = new JLabel("Password");
-        lblpassword.setBounds(40, 70, 100, 30);
-        add(lblpassword);
+		tfusername.setBorder(lineBorder );
+		tfusername.setHorizontalAlignment(JTextField.CENTER);
+		tfusername.setBounds((int)(((1.5 * w ) - 210 )/2),((h - 350 )/2),250,40);
+		tfusername.setFont(f1);
+		tfusername.setForeground(Color.BLACK);        
+		add(tfusername);
         
         tfpassword = new JPasswordField();
-        tfpassword.setBounds(150, 70, 150, 30);
-        add(tfpassword);
+		tfpassword.setBorder(lineBorder );
+		tfpassword.setHorizontalAlignment(JTextField.CENTER);
+		tfpassword.setBounds((int)(((1.5 * w ) - 210 )/2),((h - 250 )/2),250,40);
+		tfpassword.setFont(f1);
+		tfpassword.setEchoChar('$');
+		tfpassword.setForeground(Color.BLACK);        
+		add(tfpassword);
         
-         login = new JButton("LOGIN");
-        login.setBounds(150, 140, 150, 30);
-        login.setBackground(Color.BLACK);
+        login = new JButton("LOGIN");
+        login.setBounds((int)(((1.5 * w)  - 193 )/2),340,193,50);
+		login.setFont(f1);
+		login.setCursor(crsr);
+		login.setBackground(DARK_GREEN);
         login.setForeground(Color.WHITE);
         login.addActionListener(this);
         add(login);
         
-         signup=new JButton("Sign-Up");
-        signup.setBounds(150, 200, 150, 30);
-        signup.setBackground(Color.BLACK);
+        signup = new JButton("Sign-Up");
+		signup.setBounds((int)(((1.5 * w ) - 193 )/2),420,193,50);
+		signup.setFont(f1);
+		signup.setCursor(crsr);        
+		signup.setBackground(DARK_GREEN);
         signup.setForeground(Color.WHITE);
         signup.addActionListener(this);
         add(signup);
 
+		DefaultListCellRenderer lRenderer = new DefaultListCellRenderer();
+		lRenderer.setHorizontalAlignment(DefaultListCellRenderer.CENTER); // center-aligned items
 
-        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/second.jpg"));
-        Image i2 = i1.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT);
-        ImageIcon i3 = new ImageIcon(i2);
-        JLabel image = new JLabel(i3);
-        image.setBounds(350, 0, 200, 200);
-        add(image);
-        
-        setSize(600, 300);
-        setLocation(450, 200);
-        setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JComboBox cmb1 = new JComboBox(s);
+		cmb1.setRenderer(lRenderer);
+		cmb1.setBounds((int)((w * .5 - 200 )/2),(h - 550 ),200,50);;
+		cmb1.setBackground(LIGHT_GREEN);
+		cmb1.setForeground(Color.BLACK);
+		cmb1.setFont(f1);
+		cmb1.setEditable(false);
+		cmb1.addActionListener (new ActionListener() {
+			public void actionPerformed (ActionEvent e) {
+				String s = (String) cmb1.getSelectedItem();
+				switch (s) {
+                    case "Shop owner":
+						boolean shopOwner = true;
+                        break;
+                    case "Coustomer":
+						boolean Coustomer = true;
+                        break;
+                    case "Vendor":
+						boolean Vendor = true;
+                        break;
+				}
+			}
+		});
+		add(cmb1);
+
     }
     
     public void actionPerformed(ActionEvent ae) {
         String username = tfusername.getText();
         char[] password = tfpassword.getPassword();
-        String test="";
-        for(int i=0;i< password.length;i++){
-            test+=password[i];
+        String test = "";
+		
+        for(int i = 0; i < password.length; i++){
+            test += password[i];
         }
 
-        if(ae.getSource()==login){
-       
-        try {
-           
-            System.out.println(username+" and "+test);
-            if(username.length()==0){
-                JOptionPane.showMessageDialog(null,"Please Enter username");
-                return;
-            }
-
-            if(test==""){
-                JOptionPane.showMessageDialog(null,"Please Enter password");
-                return;
-            }
-
-            if(username.length()>20){
-                JOptionPane.showMessageDialog(null,"Username is too long");
-                return;
-            }
-            if(test.length()>20){
-                JOptionPane.showMessageDialog(null,"Password is too long");
-                return;
-            }
-
-            String upperCaseChars = "(.*[A-Z].*)";
-            if (!test.matches(upperCaseChars ))
-            {
-                    System.out.println("Password must have atleast one uppercase character");
-                    JOptionPane.showMessageDialog(null,"Password must have atleast one uppercase character");
-                    return;
-            }
-            String lowerCaseChars = "(.*[a-z].*)";
-            if (!test.matches(lowerCaseChars ))
-            {
-                    System.out.println("Password must have atleast one lowercase character");
-                    JOptionPane.showMessageDialog(null,"Password must have atleast one lowercase character");
-                    return;
-            }
-            String numbers = "(.*[0-9].*)";
-            if (!test.matches(numbers ))
-            {
-                    System.out.println("Password must have atleast one number");
-                    JOptionPane.showMessageDialog(null,"Password must have atleast one number");
-                    return;
-            }
-            String specialChars = "(.*[@,#,$,%].*$)";
-            if (!test.matches(specialChars ))
-            {
-                    System.out.println("Password must have atleast one special character among @#$%");
-                    JOptionPane.showMessageDialog(null,"Password must have atleast one special character among @#$%");
-                    return;
-            }
-            Conn c = new Conn();
-            String query = "select * from login where username = '"+username+"' and password = '"+test+"'";
-            
-            ResultSet rs = c.s.executeQuery(query);
-            if (rs.next()) {
-                setVisible(false);
-                new afterlogin(username,test);
-            } else {
-                JOptionPane.showMessageDialog(null, "Invalid username or password");
-                tfusername.setText("");
-                tfpassword.setText("");
-
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Database Connectivity is not established..");
-            e.printStackTrace();
-        }
-    }
+        if(ae.getSource() == login){
+			if (new Security().usernameAndPasswordCheck(username,test)){
+				setVisible(false);
+			}
+			 else {
+				JOptionPane.showMessageDialog(null, "Invalid username or password");
+				tfusername.setText("");
+				tfpassword.setText("");
+			}
+		}
         if(ae.getSource()==signup){
             this.setVisible(false);
-            new signup();
+            new Signup();
         }
     }
     

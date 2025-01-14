@@ -1,3 +1,4 @@
+package management.product;
 
 import javax.swing.*;
 import java.awt.*;

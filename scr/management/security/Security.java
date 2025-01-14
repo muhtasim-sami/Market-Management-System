@@ -1,5 +1,7 @@
+package management.security;
 
 import javax.swing.*;
+import java.io.*;
 
 public class Security{
 	private String[] su = {"ahnaf","sami","rabby"};
@@ -7,6 +9,40 @@ public class Security{
 	private String[] ds = {"Shop owner","Vendor","Coustomer"};
 	private int person;
 	
+	public void Read(){
+		try {
+            FileReader reader = new FileReader("D:\\java\\MarketManagementSystem\\DB\\Product.txt");
+            BufferedReader br = new BufferedReader(reader);
+			br.append();
+			
+            String line;
+ 
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+            reader.close();
+		}
+		catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+
+	public void Write(){
+		try {
+            FileWriter writer = new FileWriter("Product.txt", true);
+            BufferedWriter bw = new BufferedWriter(writer);
+ 
+            bw.write("Hello World");
+            bw.newLine();
+            bw.write("See You Again!");
+ 
+            bw.close();
+		}
+		catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+
 	public void usernameCheck(String s){
 		boolean bu[] = new boolean [su.length];
 		boolean bUser = false;

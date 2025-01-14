@@ -1,4 +1,4 @@
-
+package management.product;
 
 import java.awt.*;
 import javax.swing.*;

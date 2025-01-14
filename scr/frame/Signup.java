@@ -1,3 +1,4 @@
+package frame;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -61,7 +62,7 @@ public class Signup extends JFrame implements ActionListener{
 		l4.setForeground(Color.GRAY);         
 		add(l4);
 
-        String array[] = {"Manager","Cashier"};
+        String array[] = {"Shop Manager","Cashier"};
 		
 		DefaultListCellRenderer lRenderer = new DefaultListCellRenderer();
 		lRenderer.setHorizontalAlignment(DefaultListCellRenderer.CENTER); // center-aligned items

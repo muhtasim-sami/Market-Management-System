@@ -1,4 +1,5 @@
 
+package employee.management.system;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,18 +24,7 @@ public class ViewEmployee extends JFrame implements ActionListener{
         cemployeeId.setBounds(300, 20, 150, 20);
         add(cemployeeId);
         
-        try {
-            Conn c = new Conn();
-            ResultSet rs = c.s.executeQuery("select * from employee");
-            while(rs.next()) {
-                cemployeeId.add(rs.getString("empId"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
         table = new JTable();
-        
         
         JScrollPane jsp = new JScrollPane(table);
         jsp.setBounds(0, 100, 900, 600);
@@ -69,19 +59,9 @@ public class ViewEmployee extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == search) {
             String query = "select * from employee where empId = '"+cemployeeId.getSelectedItem()+"'";
-            try {
-                Conn c = new Conn();
-                ResultSet rs = c.s.executeQuery(query);
-                table.setModel(DbUtils.resultSetToTableModel(rs));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            
         } else if (ae.getSource() == print) {
-            try {
-                table.print();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            
         } else if (ae.getSource() == update) {
             setVisible(false);
             new UpdateEmployee(cemployeeId.getSelectedItem());

@@ -88,9 +88,7 @@ public class UpdateProduct extends JFrame implements ActionListener {
         add(tfcname);
 
         try {
-            Conn c = new Conn();
-            String query = "select * from product where proId = '"+productId+"'";
-            ResultSet rs = c.s.executeQuery(query);
+            /*
             while(rs.next()) {
                 tfproid.setText(rs.getString("proId"));
                 tfproname.setText(rs.getString("proName"));
@@ -99,7 +97,7 @@ public class UpdateProduct extends JFrame implements ActionListener {
                 tfcname.setText(rs.getString("comName"));
                 
                 
-            }
+            }*/
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -151,7 +149,7 @@ public class UpdateProduct extends JFrame implements ActionListener {
             }
         } else {
             setVisible(false);
-            new Home();
+            //new Home();
         }
     }
 }

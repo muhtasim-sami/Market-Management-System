@@ -108,7 +108,7 @@ public class AddProduct extends JFrame implements ActionListener{
                 
                 JOptionPane.showMessageDialog(null, "Details added successfully");
                 setVisible(false);
-                new homepro();
+                //new homepro();
             }catch(Exception e){
                 e.printStackTrace();
             }

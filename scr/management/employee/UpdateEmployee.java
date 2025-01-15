@@ -161,7 +161,7 @@ public class UpdateEmployee extends JFrame implements ActionListener{
             
         } else {
             setVisible(false);
-            new Home();
+            //new Home();
         }
     }
 

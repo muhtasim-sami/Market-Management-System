@@ -10,7 +10,7 @@ public class AddEmployee extends JFrame implements ActionListener{
     // int number = ran.nextInt(999999);
     
     JTextField tfname, tffname, tfaddress, tfphone, tfaadhar, tfemail, tfsalary, tfdesignation,lblempId;
-    JDateChooser dcdob;
+   // JDateChooser dcdob;
     JComboBox cbeducation,jcb;
     JButton add, back;
     
@@ -45,11 +45,11 @@ public class AddEmployee extends JFrame implements ActionListener{
         labeldob.setBounds(50, 200, 150, 30);
         labeldob.setFont(new Font("serif", Font.PLAIN, 20));
         add(labeldob);
-        
+        /*
         dcdob = new JDateChooser();
         dcdob.setBounds(200, 200, 150, 30);
         add(dcdob);
-        
+        */
         JLabel labelsalary = new JLabel("Salary");
         labelsalary.setBounds(400, 200, 150, 30);
         labelsalary.setFont(new Font("serif", Font.PLAIN, 20));
@@ -150,7 +150,7 @@ public class AddEmployee extends JFrame implements ActionListener{
         if (ae.getSource() == add) {
             String name = tfname.getText();
             String fname = tffname.getText();
-            String dob = ((JTextField) dcdob.getDateEditor().getUiComponent()).getText();
+            //String dob = ((JTextField) dcdob.getDateEditor().getUiComponent()).getText();
             String salary = tfsalary.getText();
             String address = tfaddress.getText();
             String phone = tfphone.getText();
@@ -162,7 +162,7 @@ public class AddEmployee extends JFrame implements ActionListener{
             
         } else {
             setVisible(false);
-            new Home();
+            //new Home();
         }
     }
 

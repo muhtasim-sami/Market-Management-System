@@ -10,7 +10,7 @@ public class ProductManagement extends JFrame implements ActionListener{
     JButton view, add, update, remove;
 
     
-    ProductManagement(){
+    public ProductManagement(){
 		
         setVisible(true);
         setBounds(200,15,800,700);

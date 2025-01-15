@@ -67,7 +67,7 @@ public class ViewEmployee extends JFrame implements ActionListener{
             new UpdateEmployee(cemployeeId.getSelectedItem());
         } else {
             setVisible(false);
-            new Home();
+            //new Home();
         }
     }
 

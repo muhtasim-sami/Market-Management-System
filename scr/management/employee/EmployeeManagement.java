@@ -8,7 +8,7 @@ public class EmployeeManagement extends JFrame implements ActionListener{
 
     JButton view, add, update, remove;
     
-    EmployeeManagement() {
+    public EmployeeManagement() {
 		setVisible(true);
         setBounds(200,15,800,700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -2,6 +2,8 @@ package management.security;
 
 import javax.swing.*;
 import java.io.*;
+import management.employee.EmployeeManagement;
+import management.product.ProductManagement;
 
 public class Security{
 	private String[] su = {"ahnaf","sami","rabby"};
@@ -13,11 +15,12 @@ public class Security{
 		try {
             FileReader reader = new FileReader("D:\\java\\MarketManagementSystem\\DB\\Product.txt");
             BufferedReader br = new BufferedReader(reader);
-			br.append();
 			
             String line;
  
             while ((line = br.readLine()) != null) {
+				String[] data = new String[2];
+				data = line.split(" , ");
                 System.out.println(line);
             }
             reader.close();
@@ -27,14 +30,15 @@ public class Security{
         }
 	}
 
-	public void Write(){
+	public void Write(String[] s){
 		try {
             FileWriter writer = new FileWriter("Product.txt", true);
             BufferedWriter bw = new BufferedWriter(writer);
- 
-            bw.write("Hello World");
+			for (int i = 0; i < s.length; i++){
+				bw.write(s[i] + " , ");
+			}
+            //bw.write("Hello World");
             bw.newLine();
-            bw.write("See You Again!");
  
             bw.close();
 		}

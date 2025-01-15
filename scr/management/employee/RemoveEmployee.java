@@ -51,14 +51,12 @@ public class RemoveEmployee extends JFrame implements ActionListener {
         cEmpId.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent ie) {
                 try {
-                    Conn c = new Conn();
-                    String query = "select * from employee where empId = '"+cEmpId.getSelectedItem()+"'";
-                    ResultSet rs = c.s.executeQuery(query);
+                    /*
                     while(rs.next()) {
                         lblname.setText(rs.getString("name"));
                         lblphone.setText(rs.getString("phone"));
                         lblemail.setText(rs.getString("email"));
-                    }
+                    }*/
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -96,18 +94,14 @@ public class RemoveEmployee extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == delete) {
             try {
-                Conn c = new Conn();
-                String query = "delete from employee where empId = '"+cEmpId.getSelectedItem()+"'";
-                c.s.executeUpdate(query);
-                JOptionPane.showMessageDialog(null, "Employee Information Deleted Sucessfully");
-                setVisible(false);
-                new Home();
+                
+                // new Home();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             setVisible(false);
-            new Home();
+            //new Home();
         }
     }
 

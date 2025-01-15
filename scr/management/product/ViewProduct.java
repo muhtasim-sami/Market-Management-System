@@ -1,10 +1,8 @@
 
-package employee.management.system;
+package management.employee;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.*;
-import net.proteanit.sql.DbUtils;
 import java.awt.event.*;
 
 
@@ -76,10 +74,10 @@ public class ViewProduct extends JFrame implements ActionListener{
         } else if (ae.getSource() == update) {
             setVisible(false);
             // new UpdateEmployee(cproductId.getSelectedItem());
-            new updateProduct(cproductId.getSelectedItem());
+            //new updateProduct(cproductId.getSelectedItem());
         } else {
             setVisible(false);
-            new Home();
+            //new Home();
         }
     }
 }

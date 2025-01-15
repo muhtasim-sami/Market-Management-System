@@ -5,11 +5,11 @@ import java.awt.*;
 import java.awt.event.*;
 
 
-public class removeProduct extends JFrame implements ActionListener{
+public class RemoveProduct extends JFrame implements ActionListener{
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run(){
-                new removeProduct();
+                new RemoveProduct();
             }
         });
     }
@@ -17,7 +17,7 @@ public class removeProduct extends JFrame implements ActionListener{
     Choice cEmpId;
     JButton delete, back;
 
-    removeProduct(){
+    RemoveProduct(){
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
 
@@ -86,13 +86,13 @@ public class removeProduct extends JFrame implements ActionListener{
         if (ae.getSource() == delete) {
             try {
                setVisible(false);
-                new homepro();
+                //new homepro();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             setVisible(false);
-            new homepro();
+            //new homepro();
         }
     }
 }

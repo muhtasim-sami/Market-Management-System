@@ -17,7 +17,10 @@ public class RemoveProduct extends JFrame implements ActionListener{
     Choice cEmpId;
     JButton delete, back;
 
-    RemoveProduct(){
+    public RemoveProduct(){
+		setBounds(200,15,800,700);
+		setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
 
@@ -75,24 +78,19 @@ public class RemoveProduct extends JFrame implements ActionListener{
         image.setBounds(350, 0, 600, 400);
         add(image);
 
-        setSize(1000, 400);
-        setLocation(300, 150);
-        setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
     }
 
     public void actionPerformed(ActionEvent ae){
         if (ae.getSource() == delete) {
             try {
                setVisible(false);
-                //new homepro();
+                new ProductManagement();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             setVisible(false);
-            //new homepro();
+            new ProductManagement();
         }
     }
 }

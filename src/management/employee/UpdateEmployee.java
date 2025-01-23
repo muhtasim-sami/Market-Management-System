@@ -1,24 +1,24 @@
+
 package management.employee;
 
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class AddEmployee extends JFrame implements ActionListener{
+public class UpdateEmployee extends JFrame implements ActionListener{
     
-    // Random ran = new Random();
-    // int number = ran.nextInt(999999);
-    
-    JTextField tfname, tffname, tfaddress, tfphone, tfaadhar, tfemail, tfsalary, tfdesignation,lblempId;
-   // JDateChooser dcdob;
-    JComboBox cbeducation,jcb;
+    JTextField  tffname, tfaddress, tfphone, tfaadhar, tfemail, tfsalary, tfdesignation,lblname,lbldob,lblaadhar;
+    JLabel lblempId;
     JButton add, back;
+    String empId;
+    JComboBox tfeducation;
     
-    AddEmployee() {
+    public UpdateEmployee(String empId) {
+        this.empId = empId;
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
         
-        JLabel heading = new JLabel("Add Employee Detail");
+        JLabel heading = new JLabel("Update Employee Detail");
         heading.setBounds(320, 30, 500, 50);
         heading.setFont(new Font("SAN_SERIF", Font.BOLD, 25));
         add(heading);
@@ -28,9 +28,9 @@ public class AddEmployee extends JFrame implements ActionListener{
         labelname.setFont(new Font("serif", Font.PLAIN, 20));
         add(labelname);
         
-        tfname = new JTextField();
-        tfname.setBounds(200, 150, 150, 30);
-        add(tfname);
+       lblname = new JTextField();
+        lblname.setBounds(200, 150, 150, 30);
+        add(lblname);
         
         JLabel labelfname = new JLabel("Father's Name");
         labelfname.setBounds(400, 150, 150, 30);
@@ -45,11 +45,11 @@ public class AddEmployee extends JFrame implements ActionListener{
         labeldob.setBounds(50, 200, 150, 30);
         labeldob.setFont(new Font("serif", Font.PLAIN, 20));
         add(labeldob);
-        /*
-        dcdob = new JDateChooser();
-        dcdob.setBounds(200, 200, 150, 30);
-        add(dcdob);
-        */
+        
+        lbldob = new JTextField();
+        lbldob.setBounds(200, 200, 150, 30);
+        add(lbldob);
+        
         JLabel labelsalary = new JLabel("Salary");
         labelsalary.setBounds(400, 200, 150, 30);
         labelsalary.setFont(new Font("serif", Font.PLAIN, 20));
@@ -91,43 +91,42 @@ public class AddEmployee extends JFrame implements ActionListener{
         labeleducation.setFont(new Font("serif", Font.PLAIN, 20));
         add(labeleducation);
         
+
         String courses[] = {"BBA", "BCA", "BA", "BSC", "B.COM", "BTech", "MBA", "MCA", "MA", "MTech", "MSC", "PHD"};
-        cbeducation = new JComboBox(courses);
-        cbeducation.setBackground(Color.WHITE);
-        cbeducation.setBounds(600, 300, 150, 30);
-        add(cbeducation);
+        tfeducation = new JComboBox(courses);
+        // tfeducation = new JTextField();
+        tfeducation.setBounds(600, 300, 150, 30);
+        add(tfeducation);
         
         JLabel labeldesignation = new JLabel("Designation");
         labeldesignation.setBounds(50, 350, 150, 30);
         labeldesignation.setFont(new Font("serif", Font.PLAIN, 20));
         add(labeldesignation);
         
-        
-        String array[]={"Manager","Cashier"};
-        jcb=new JComboBox(array);
-        jcb.setBounds(200, 350, 150, 30);
-        add(jcb);
+        tfdesignation = new JTextField();
+        tfdesignation.setBounds(200, 350, 150, 30);
+        add(tfdesignation);
         
         JLabel labelaadhar = new JLabel("Aadhar Number");
         labelaadhar.setBounds(400, 350, 150, 30);
         labelaadhar.setFont(new Font("serif", Font.PLAIN, 20));
         add(labelaadhar);
         
-        tfaadhar = new JTextField();
-        tfaadhar.setBounds(600, 350, 150, 30);
-        add(tfaadhar);
+         lblaadhar = new JTextField();
+        lblaadhar.setBounds(600, 350, 150, 30);
+        add(lblaadhar);
         
         JLabel labelempId = new JLabel("Employee id");
         labelempId.setBounds(50, 400, 150, 30);
         labelempId.setFont(new Font("serif", Font.PLAIN, 20));
         add(labelempId);
         
-        lblempId = new JTextField( );
+        lblempId = new JLabel();
         lblempId.setBounds(200, 400, 150, 30);
         lblempId.setFont(new Font("serif", Font.PLAIN, 20));
         add(lblempId);
         
-        add = new JButton("Add Details");
+        add = new JButton("Update Details");
         add.setBounds(250, 550, 150, 40);
         add.addActionListener(this);
         add.setBackground(Color.BLACK);
@@ -144,33 +143,33 @@ public class AddEmployee extends JFrame implements ActionListener{
         setSize(900, 700);
         setLocation(300, 50);
         setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == add) {
-            String name = tfname.getText();
+            String name=lblname.getText();
             String fname = tffname.getText();
-            //String dob = ((JTextField) dcdob.getDateEditor().getUiComponent()).getText();
+            String dob=lbldob.getText();
             String salary = tfsalary.getText();
             String address = tfaddress.getText();
             String phone = tfphone.getText();
             String email = tfemail.getText();
-            String education = (String) cbeducation.getSelectedItem();
-            String designation = (String) jcb.getSelectedItem();
-            String aadhar = tfaadhar.getText();
-            String empId = lblempId.getText();
+            String education = (String) tfeducation.getSelectedItem();
+            String designation = tfdesignation.getText();
+            String adhar=lblaadhar.getText();
             
         } else {
             setVisible(false);
-            //new Home();
+            new EmployeeManagement();
         }
     }
 
     public static void main(String[] args) {
-        
         SwingUtilities.invokeLater(new Runnable() {
             public void run(){
-                new AddEmployee();
+                
+                new UpdateEmployee("");
             }
         });
     }

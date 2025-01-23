@@ -2,6 +2,7 @@
 package management.employee;
 
 import javax.swing.*;
+import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -10,10 +11,27 @@ public class RemoveEmployee extends JFrame implements ActionListener {
     Choice cEmpId;
     JButton delete, back;
     
-    RemoveEmployee() {
+    public RemoveEmployee() {
+		setVisible(true);
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
-        
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(1000, 400);
+        setLocation(300, 150);
+
+        Font f1 = new Font("Arial",Font.BOLD ,18);
+		Font f2 = new Font("Times New Roman",Font.BOLD ,25);
+		Font f3 = new Font("Arial",Font.BOLD ,13);
+		
+		Color VERY_LIGHT_BLUE = new Color(51,204,255);
+		Color LIGHT_GREEN = new Color(102,255,102);
+		Color DARK_BLUE = new Color(0,0,204);
+		Color DARK_GREEN = new Color(0,153,0);
+		
+		Cursor crsr = new Cursor(Cursor.HAND_CURSOR);
+
+		LineBorder lineBorder = new LineBorder(Color.black, 1, true);
+		
         JLabel labelempId = new JLabel("Employee Id");
         labelempId.setBounds(50, 50, 100, 30);
         add(labelempId);
@@ -46,6 +64,22 @@ public class RemoveEmployee extends JFrame implements ActionListener {
         JLabel lblemail = new JLabel();
         lblemail.setBounds(200, 200, 100, 30);
         add(lblemail);
+		
+		JTextField tfusername = new JTextField();
+		tfusername.setBorder(lineBorder );
+		//tfusername.setHorizontalAlignment(JTextField.CENTER);
+		tfusername.setBounds(150, 150, 100, 60);
+		tfusername.setFont(f1);
+		tfusername.setForeground(Color.BLACK);        
+		add(tfusername);
+        
+        JTextField tfpassword = new JPasswordField();
+		tfpassword.setBorder(lineBorder );
+		//tfpassword.setHorizontalAlignment(JTextField.CENTER);
+		tfpassword.setBounds(150, 150, 100, 30);
+		tfpassword.setFont(f1);
+		tfpassword.setForeground(Color.BLACK);        
+		add(tfpassword);
         
         
         cEmpId.addItemListener(new ItemListener() {
@@ -84,24 +118,19 @@ public class RemoveEmployee extends JFrame implements ActionListener {
         image.setBounds(350, 0, 600, 400);
         add(image);
         
-        setSize(1000, 400);
-        setLocation(300, 150);
-        setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
     }
     
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == delete) {
             try {
                 
-                // new Home();
+                new EmployeeManagement();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             setVisible(false);
-            //new Home();
+            new EmployeeManagement();
         }
     }
 

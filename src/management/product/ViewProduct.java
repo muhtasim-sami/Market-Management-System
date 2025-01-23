@@ -1,35 +1,46 @@
 
-package management.employee;
+package management.product;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class ViewEmployee extends JFrame implements ActionListener{
+
+public class ViewProduct extends JFrame implements ActionListener{
+    
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable(){
+          public void run(){
+              new ViewProduct();
+          }
+      });
+    }
 
     JTable table;
-    Choice cemployeeId;
+    Choice cproductId;
     JButton search, print, update, back;
-    
-    ViewEmployee() {
-        
+
+    public ViewProduct(){
+		setBounds(200,15,800,700);
+		setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
-        
+
         JLabel searchlbl = new JLabel("Search by Employee Id");
         searchlbl.setBounds(20, 20, 250, 20);
         add(searchlbl);
         
-        cemployeeId = new Choice();
-        cemployeeId.setBounds(300, 20, 150, 20);
-        add(cemployeeId);
+        cproductId = new Choice();
+        cproductId.setBounds(300, 20, 150, 20);
+        add(cproductId);
         
         table = new JTable();
         
         JScrollPane jsp = new JScrollPane(table);
         jsp.setBounds(0, 100, 900, 600);
         add(jsp);
-        
+
         search = new JButton("Search");
         search.setBounds(20, 70, 120, 20);
         search.addActionListener(this);
@@ -49,33 +60,22 @@ public class ViewEmployee extends JFrame implements ActionListener{
         back.setBounds(440, 70, 120, 20);
         back.addActionListener(this);
         add(back);
-        
-        setSize(900, 700);
-        setLocation(300, 100);
-        setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       
     }
-    
-    public void actionPerformed(ActionEvent ae) {
+
+    public void actionPerformed(ActionEvent ae){
         if (ae.getSource() == search) {
-            String query = "select * from employee where empId = '"+cemployeeId.getSelectedItem()+"'";
+            String query = "select * from product where proId = '"+cproductId.getSelectedItem()+"'";
             
         } else if (ae.getSource() == print) {
             
         } else if (ae.getSource() == update) {
             setVisible(false);
-            new UpdateEmployee(cemployeeId.getSelectedItem());
+            // new UpdateEmployee(cproductId.getSelectedItem());
+            //new updateProduct(cproductId.getSelectedItem());
         } else {
             setVisible(false);
-            //new Home();
+            new ProductManagement();
         }
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run(){
-                new ViewEmployee();
-            }
-        });
     }
 }

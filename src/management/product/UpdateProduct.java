@@ -4,26 +4,36 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class AddProduct extends JFrame implements ActionListener{
+public class UpdateProduct extends JFrame implements ActionListener {
     
     public static void main(String[] args) {
-          SwingUtilities.invokeLater(new Runnable(){
+        SwingUtilities.invokeLater(new Runnable() {
             public void run(){
-                new AddProduct();
+                new UpdateProduct("");
             }
         });
     }
+
+
+    String productId;
     JTextField tfproid,tfproname,tfqauntity,tfprice,tfcname;
     JComboBox type;
-    JButton add1;
-    AddProduct(){
-        this.getContentPane().setBackground(Color.WHITE);
+    JButton add, back;
+
+    public UpdateProduct(String productId){
+		
+		setBounds(200,15,800,700);
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.productId=productId;
+        getContentPane().setBackground(Color.WHITE);
         setLayout(null);
 
-        JLabel heading = new JLabel("Add Product Detail");
+        JLabel heading = new JLabel("Update Product Detail");
         heading.setBounds(320, 30, 500, 50);
         heading.setFont(new Font("SAN_SERIF", Font.BOLD, 25));
         add(heading);
+
         
         JLabel lproid = new JLabel("Product Id");
         lproid.setBounds(50, 150, 150, 30);
@@ -80,38 +90,61 @@ public class AddProduct extends JFrame implements ActionListener{
         tfcname = new JTextField();
         tfcname.setBounds(600, 250, 150, 30);
         add(tfcname);
-        
-        add1 = new JButton("Add Details");
-        add1.setBounds(250, 350, 150, 40);
-        add1.addActionListener(this);
-        add1.setBackground(Color.BLACK);
-        add1.setForeground(Color.WHITE);
-        add(add1);
 
+        try {
+            /*
+            while(rs.next()) {
+                tfproid.setText(rs.getString("proId"));
+                tfproname.setText(rs.getString("proName"));
+                tfqauntity.setText(rs.getString("qauntity"));
+                tfprice.setText(rs.getString("price"));
+                tfcname.setText(rs.getString("comName"));
+                
+                
+            }*/
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
-        setSize(900, 700);
-        setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        add = new JButton("Update Details");
+        add.setBounds(250, 550, 150, 40);
+        add.addActionListener(this);
+        add.setBackground(Color.BLACK);
+        add.setForeground(Color.WHITE);
+        add(add);
+        
+        back = new JButton("Back");
+        back.setBounds(450, 550, 150, 40);
+        back.addActionListener(this);
+        back.setBackground(Color.BLACK);
+        back.setForeground(Color.WHITE);
+        add(back);
+    
         
     }
 
     public void actionPerformed(ActionEvent ae){
-        if(ae.getSource()==add1){
-
-            String sproid=tfproid.getText();
-            String sproname=tfproname.getText();
+        if (ae.getSource() == add) {
+            // String proid=tfproid.getText();
+            String proname = tfproname.getText();
+            String qauntity=tfqauntity.getText();
+            String price = tfprice.getText();
+            String comname = tfcname.getText();
             String stype=(String) type.getSelectedItem();
-            String sqauntity=tfqauntity.getText();
-            String sprice=tfprice.getText();
-            String scname=tfcname.getText();
-            try{
+            
+            
+            try {
                 
-                JOptionPane.showMessageDialog(null, "Details added successfully");
-                setVisible(false);
-                //new homepro();
-            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "Details updated successfully");
+                this.setVisible(false);
+                // new Home();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            setVisible(false);
+            //new Home();
         }
     }
 }

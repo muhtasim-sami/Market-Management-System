@@ -5,6 +5,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import management.validation.DBConnection;
+import management.shop.*;
 
 public class CustomerView extends JFrame {
     private JList<String> shopList;
@@ -14,8 +15,8 @@ public class CustomerView extends JFrame {
     private ArrayList<Shop> shops;
     private DBConnection dbConnection;
 
-    public CustomerView() {
-        dbConnection = DBConnection.getInstance();
+    public CustomerView(DBConnection dbConnection) {
+        this.dbConnection = dbConnection;
         shops = new ArrayList<>();
         loadData();
         setupUI();
@@ -147,7 +148,7 @@ public class CustomerView extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new CustomerView().setVisible(true);
+            new CustomerView(new DBConnection()).setVisible(true);
         });
     }
 }

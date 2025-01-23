@@ -1,5 +1,2 @@
- Book Shop
-Furnityre
-Coffee shop
-Clothes shop
-
+Shop: Book Shop
+Product: History

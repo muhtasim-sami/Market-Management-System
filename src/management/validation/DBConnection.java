@@ -4,10 +4,15 @@ import java.io.*;
 import java.util.*;
 
 public class DBConnection {
-    //public DBConnection(){}
-    public String userPass = "D://java//MarketManagementSystem//DB//user.txt";
-    public String shopData = "D://java//MarketManagementSystem//DB//shops.txt";
-    public String productData = "D://java//MarketManagementSystem//DB//products.txt";
+    private String userPassData = "D://java//MarketManagementSystem//DB//user.txt";
+    private String shopData = "D://java//MarketManagementSystem//DB//shops.txt";
+    private String productData = "D://java//MarketManagementSystem//DB//products.txt";
+    private String employeeData = "D://java//MarketManagementSystem//DB//employee.txt";
+
+	public String getUserPassData(){return userPassData;}
+	public String getShopData(){return shopData;}
+	public String getProductData(){return productData;}
+	public String getEmployeeData(){return employeeData;}
 
     public List<String> readFile(String filePath) {
         List<String> data = new ArrayList<>();

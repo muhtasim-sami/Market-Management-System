@@ -15,7 +15,7 @@ public class Security {
     
     public void readData() {
         data = new ArrayList<>();
-        List<String> lines = dbConnection.readFile(dbConnection.userPass);
+        List<String> lines = dbConnection.readFile(dbConnection.getUserPassData());
         for (String line : lines) {
             String[] values = line.split(" , ");
             data.add(Arrays.asList(values));
@@ -55,7 +55,7 @@ public class Security {
     public void writeUser(String[] userData) {
         List<String> content = new ArrayList<>();
         content.add(String.join(" , ", userData));
-        dbConnection.writeFile(dbConnection.userPass, content);
+        dbConnection.writeFile(dbConnection.getUserPassData(), content);
     }
 
     public void afterLogin(String username, String password) {
@@ -66,7 +66,7 @@ public class Security {
                         new EmployeeManagement();
                         break;
                     case "Vendor":
-                    case "Casher":
+                    case "Cashear":
                         new ProductManagement();
                         break;
                 }

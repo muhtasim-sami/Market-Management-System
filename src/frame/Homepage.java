@@ -71,9 +71,11 @@ public class Homepage extends JFrame implements ActionListener {
     
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == login) {
+			dispose();
             new Login();
         }
         if (ae.getSource() == signup) {
+			dispose();
             new Signup();
         }
         if (ae.getSource() == viewProducts) {

@@ -1,17 +1,20 @@
-
 package management.employee;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
+import management.validation.DBConnection;
 
-public class ViewEmployee extends JFrame implements ActionListener{
+public class ViewEmployee extends JFrame implements ActionListener {
 
     JTable table;
     Choice cemployeeId;
     JButton search, print, update, back;
-    
+    DBConnection dbConnection;
+
     public ViewEmployee() {
+        dbConnection = new DBConnection();
         
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
@@ -23,6 +26,13 @@ public class ViewEmployee extends JFrame implements ActionListener{
         cemployeeId = new Choice();
         cemployeeId.setBounds(300, 20, 150, 20);
         add(cemployeeId);
+        
+        // Populate employee IDs from the database
+        List<String> employeeData = dbConnection.readFile(dbConnection.getEmployeeData());
+        for (String data : employeeData) {
+            String[] details = data.split(",");
+            cemployeeId.add(details[0]); // Assuming the first column is employee ID
+        }
         
         table = new JTable();
         
@@ -58,10 +68,27 @@ public class ViewEmployee extends JFrame implements ActionListener{
     
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == search) {
-            String query = "select * from employee where empId = '"+cemployeeId.getSelectedItem()+"'";
+            String empId = cemployeeId.getSelectedItem();
+            List<String> employeeData = dbConnection.readFile(dbConnection.getEmployeeData());
+            String[] columnNames = {"Employee ID", "Name", "Father's Name", "DOB", "Salary", "Address", "Phone", "Email", "Education", "Designation", "Aadhar"};
+            String[][] data = new String[1][11];
+            
+            for (String dataLine : employeeData) {
+                String[] details = dataLine.split(",");
+                if (details[0].equals(empId)) {
+                    data[0] = details;
+                    break;
+                }
+            }
+            
+            table.setModel(new javax.swing.table.DefaultTableModel(data, columnNames));
             
         } else if (ae.getSource() == print) {
-            
+            try {
+                table.print();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else if (ae.getSource() == update) {
             setVisible(false);
             new UpdateEmployee(cemployeeId.getSelectedItem());

@@ -1,3 +1,20 @@
-books
-furnitures
-coffies
+Shop: 1, Everyday Essentials
+Product: 101, Shampoo, Personal Care, 50, 200, Unilever
+Product: 102, Milk, Dairy, 100, 50, Nestle
+Product: 103, Chips, Snacks, 200, 30, Lays
+Product: 104, Juice, Beverage, 150, 60, Tropicana
+Product: 105, Soap, Personal Care, 75, 40, Dove
+
+Shop: 2, Fresh Market
+Product: 201, Bread, Bakery, 100, 50, Wonder
+Product: 202, Butter, Dairy, 200, 70, Amul
+Product: 203, Apples, Fruits, 80, 30, FruitKing
+Product: 204, Chicken, Meat, 60, 150, MeatWorks
+Product: 205, Carrot, Vegetables, 120, 20, GreenField
+
+Shop: 3, Health & Fitness
+Product: 301, Protein Powder, Supplements, 40, 500, MuscleTech
+Product: 302, Vitamin D, Supplements, 200, 150, NatureMade
+Product: 303, Yoga Mat, Accessories, 30, 700, FitLife
+Product: 304, Dumbbells, Equipment, 25, 1000, IronFit
+Product: 305, Running Shoes, Sportswear, 50, 1200, Nike

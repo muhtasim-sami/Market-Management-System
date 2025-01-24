@@ -1,23 +1,24 @@
 package frame;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import management.validation.DBConnection;
 import management.shop.*;
 
 public class CustomerView extends JFrame {
     private JList<String> shopList;
-    private JList<String> productList;
+    private JTable productTable;
     private DefaultListModel<String> shopListModel;
-    private DefaultListModel<String> productListModel;
+    private DefaultTableModel productTableModel;
     private ArrayList<Shop> shops;
     private DBConnection dbConnection;
 
     public CustomerView(DBConnection dbConnection) {
         this.dbConnection = dbConnection;
-        shops = new ArrayList<>();
+        this.shops = new ArrayList<>();
         loadData();
         setupUI();
     }
@@ -28,122 +29,83 @@ public class CustomerView extends JFrame {
         setSize(800, 500);
         setLayout(new BorderLayout());
 
-        // Create panels
         JPanel leftPanel = new JPanel(new BorderLayout());
         JPanel rightPanel = new JPanel(new BorderLayout());
 
-        // Initialize list models
         shopListModel = new DefaultListModel<>();
-        productListModel = new DefaultListModel<>();
-
-        // Create lists
         shopList = new JList<>(shopListModel);
-        productList = new JList<>(productListModel);
 
-        // Add shops to the list model
         for (Shop shop : shops) {
             shopListModel.addElement(shop.name);
         }
 
-        // Add selection listener to shop list
         shopList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 int selectedIndex = shopList.getSelectedIndex();
                 if (selectedIndex != -1) {
-                    updateProductList(selectedIndex);
+                    String selectedShopId = shops.get(selectedIndex).getId();
+                    updateProductTable(selectedShopId);
                 }
             }
         });
 
-        // Create scroll panes
+        String[] columnNames = {"ProductID", "ProductName", "Type", "Quantity", "Price", "CompanyName"};
+        productTableModel = new DefaultTableModel(columnNames, 0);
+        productTable = new JTable(productTableModel);
+
         JScrollPane shopScrollPane = new JScrollPane(shopList);
-        JScrollPane productScrollPane = new JScrollPane(productList);
+        JScrollPane productScrollPane = new JScrollPane(productTable);
 
-        // Add labels
         leftPanel.add(new JLabel("Shops"), BorderLayout.NORTH);
-        rightPanel.add(new JLabel("Products"), BorderLayout.NORTH);
-
-        // Add scroll panes to panels
         leftPanel.add(shopScrollPane, BorderLayout.CENTER);
+        rightPanel.add(new JLabel("Products"), BorderLayout.NORTH);
         rightPanel.add(productScrollPane, BorderLayout.CENTER);
 
-        // Create buttons panel
-        JPanel buttonPanel = new JPanel();
-        JButton addShopButton = new JButton("Add Shop");
-        JButton addProductButton = new JButton("Add Product");
-        buttonPanel.add(addShopButton);
-        buttonPanel.add(addProductButton);
-
-        // Add button listeners
-        addShopButton.addActionListener(e -> addShop());
-        addProductButton.addActionListener(e -> addProduct());
-
-        // Add panels to frame
         add(leftPanel, BorderLayout.WEST);
         add(rightPanel, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
 
-        // Set panel sizes
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(e -> onBack());
+        add(backButton, BorderLayout.SOUTH);
+
         leftPanel.setPreferredSize(new Dimension(300, getHeight()));
     }
 
-    private void updateProductList(int shopIndex) {
-        productListModel.clear();
-        if (shopIndex >= 0 && shopIndex < shops.size()) {
-            for (String product : shops.get(shopIndex).products) {
-                productListModel.addElement(product);
+    private void updateProductTable(String shopId) {
+        List<String> productData = new ArrayList<>();
+        for (Shop shop : shops) {
+            if (shop.getId().equals(shopId)) {
+                productData = shop.products;
+                break;
             }
         }
-    }
-
-    private void addShop() {
-        String shopName = JOptionPane.showInputDialog(this, "Enter shop name:");
-        if (shopName != null && !shopName.trim().isEmpty()) {
-            Shop newShop = new Shop(shopName.trim());
-            shops.add(newShop);
-            shopListModel.addElement(shopName);
-            saveData();
-        }
-    }
-
-    private void addProduct() {
-        int selectedShopIndex = shopList.getSelectedIndex();
-        if (selectedShopIndex == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a shop first!");
-            return;
-        }
-        String productName = JOptionPane.showInputDialog(this, "Enter product name:");
-        if (productName != null && !productName.trim().isEmpty()) {
-            shops.get(selectedShopIndex).products.add(productName.trim());
-            updateProductList(selectedShopIndex);
-            saveData();
-        }
+        
+        String[] columnNames = {"ProductID", "ProductName", "Type", "Quantity", "Price", "CompanyName"};
+        String[][] data = productData.stream()
+                .map(product -> product.split(","))
+                .toArray(String[][]::new);
+        productTable.setModel(new DefaultTableModel(data, columnNames));
     }
 
     private void loadData() {
-        List<String> lines = dbConnection.readFile(dbConnection.shopData);
+        List<String> lines = dbConnection.readFile(dbConnection.getProductData());
         Shop currentShop = null;
         for (String line : lines) {
             if (line.startsWith("Shop: ")) {
-                String shopName = line.substring(6);
-                currentShop = new Shop(shopName);
+                String[] shopInfo = line.substring(6).split(",", 2);
+                String shopId = shopInfo[0].trim();
+                String shopName = shopInfo[1].trim();
+                currentShop = new Shop(shopId, shopName);
                 shops.add(currentShop);
             } else if (line.startsWith("Product: ") && currentShop != null) {
-                String productName = line.substring(9);
-                currentShop.products.add(productName);
+                currentShop.products.add(line.substring(9).trim());
             }
         }
     }
 
-    private void saveData() {
-        List<String> content = new ArrayList<>();
-        for (Shop shop : shops) {
-            content.add("Shop: " + shop.name);
-            for (String product : shop.products) {
-                content.add("Product: " + product);
-            }
-        }
-        dbConnection.writeFile(dbConnection.shopData, content);
+    private void onBack() {
+        this.setVisible(false);
+        new Homepage();
     }
 
     public static void main(String[] args) {

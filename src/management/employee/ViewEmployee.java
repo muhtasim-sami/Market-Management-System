@@ -28,7 +28,7 @@ public class ViewEmployee extends JFrame implements ActionListener {
         add(cemployeeId);
         
         // Populate employee IDs from the database
-        List<String> employeeData = dbConnection.readFile(dbConnection.getEmployeeData());
+        List<String> employeeData = dbConnection.readEmployeeData();
         for (String data : employeeData) {
             String[] details = data.split(",");
             cemployeeId.add(details[0]); // Assuming the first column is employee ID
@@ -69,7 +69,7 @@ public class ViewEmployee extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == search) {
             String empId = cemployeeId.getSelectedItem();
-            List<String> employeeData = dbConnection.readFile(dbConnection.getEmployeeData());
+            List<String> employeeData = dbConnection.readEmployeeData();
             String[] columnNames = {"Employee ID", "Name", "Father's Name", "DOB", "Salary", "Address", "Phone", "Email", "Education", "Designation", "Aadhar"};
             String[][] data = new String[1][11];
             

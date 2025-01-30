@@ -160,9 +160,9 @@ public class AddEmployee extends JFrame implements ActionListener {
             String empId = lblempId.getText();
 
             String employeeDetails = empId + "," + name + "," + fname + "," + dob + "," + salary + "," + address + "," + phone + "," + email + "," + education + "," + designation + "," + aadhar;
-            List<String> employeeData = dbConnection.readFile(dbConnection.getEmployeeData());
+            List<String> employeeData = dbConnection.readEmployeeData();
             employeeData.add(employeeDetails);
-            dbConnection.writeFile(dbConnection.getEmployeeData(), employeeData);
+            dbConnection.writeFile(employeeData);
 
             JOptionPane.showMessageDialog(null, "Employee Added Successfully");
             setVisible(false);

@@ -42,8 +42,9 @@ public class UpdateProduct extends JFrame implements ActionListener {
         lproid.setFont(new Font("serif", Font.PLAIN, 20));
         add(lproid);
 
-        tfproid = new JTextField();
+        JLabel tfproid = new JLabel();
         tfproid.setBounds(200, 150, 150, 30);
+		tfproid.setFont(new Font("serif", Font.PLAIN, 20));
         add(tfproid);
 
         JLabel lproname = new JLabel("Product's Name");
@@ -94,7 +95,7 @@ public class UpdateProduct extends JFrame implements ActionListener {
 
         // Load product details if productId is provided
         if (!productId.isEmpty()) {
-            List<String> productData = dbConnection.readFile(dbConnection.getProductData());
+            List<String> productData = dbConnection.readProductData();
             for (String product : productData) {
                 String[] details = product.split(",");
                 if (details[0].equals(productId)) {
@@ -126,23 +127,16 @@ public class UpdateProduct extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == add) {
-            String proid = tfproid.getText();
+            //String proid = tfproid.getText();
             String proname = tfproname.getText();
             String ptype = (String) type.getSelectedItem();
             String quantity = tfquantity.getText();
             String price = tfprice.getText();
             String cname = tfcname.getText();
 
-            String updatedProductDetails = proid + "," + proname + "," + ptype + "," + quantity + "," + price + "," + cname;
-            List<String> productData = dbConnection.readFile(dbConnection.getProductData());
-            for (int i = 0; i < productData.size(); i++) {
-                String[] details = productData.get(i).split(",");
-                if (details[0].equals(proid)) {
-                    productData.set(i, updatedProductDetails);
-                    break;
-                }
-            }
-            dbConnection.writeFile(dbConnection.getProductData(), productData);
+            String updatedProductDetails = proname + ", " + ptype + ", " + quantity + ", " + price + ", " + cname;
+            
+            dbConnection.updateProductData(productId,updatedProductDetails);
 
             JOptionPane.showMessageDialog(null, "Details updated successfully");
             setVisible(false);

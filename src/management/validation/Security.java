@@ -1,74 +1,93 @@
 package management.validation;
-
 import java.util.*;
 import management.employee.EmployeeManagement;
 import management.product.ProductManagement;
 
 public class Security {
-    
-    private List<List<String>> data = new ArrayList<>();
     private DBConnection dbConnection;
-
+    
     public Security(DBConnection dbConnection) {
-		this.dbConnection = dbConnection;
+        this.dbConnection = dbConnection;
     }
     
-    public void readData() {
-        data = new ArrayList<>();
-        List<String> lines = dbConnection.readFile(dbConnection.getUserPassData());
-        for (String line : lines) {
-            String[] values = line.split(" , ");
-            data.add(Arrays.asList(values));
-        }
-    }
-
     public boolean checkUsername(String username) {
-        readData(); // Ensure data is read before checking
-        for (List<String> row : data) {
-            if (row.get(0).trim().equals(username)) {
-                return true;
+        List<String> data = dbConnection.readFile();
+        for (String line : data) {
+            if (line.startsWith("User:")) {
+                String[] parts = line.substring(6).split(", ");
+                // Skip checking if there aren't enough parts
+                if (parts.length < 3) continue;
+                
+                String storedUsername = parts[1].trim();
+                if (storedUsername.equals(username)) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
     public boolean checkPassword(String password) {
-        readData(); // Ensure data is read before checking
-        for (List<String> row : data) {
-            if (row.get(1).trim().equals(password)) {
-                return true;
+        List<String> data = dbConnection.readFile();
+        for (String line : data) {
+            if (line.startsWith("User:")) {
+                String[] parts = line.substring(6).split(", ");
+                // Skip checking if there aren't enough parts
+                if (parts.length < 3) continue;
+                
+                String storedPassword = parts[2].trim();
+                if (storedPassword.equals(password)) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
     public boolean checkCredentials(String username, String password) {
-        readData(); // Ensure data is read before checking
-        for (List<String> row : data) {
-            if (row.get(0).trim().equals(username) && row.get(1).trim().equals(password)) {
-                return true;
+        List<String> data = dbConnection.readFile();
+        for (String line : data) {
+            if (line.startsWith("User: ")) {
+                String[] parts = line.substring(6).split(", ");
+                //if (parts.length < 3) continue;
+                
+                String storedUsername = parts[1].trim();
+                String storedPassword = parts[2].trim();
+                if (storedUsername.equals(username) && storedPassword.equals(password)) {
+                    return true;
+                }
             }
         }
         return false;
     }
     
     public void writeUser(String[] userData) {
-        List<String> content = new ArrayList<>();
-        content.add(String.join(" , ", userData));
-        dbConnection.writeFile(dbConnection.getUserPassData(), content);
+        List<String> userDataList = new ArrayList<>(Arrays.asList(userData));
+        dbConnection.writeFile(userDataList);
     }
 
     public void afterLogin(String username, String password) {
-        for (List<String> row : data) {
-            if (row.get(0).trim().equals(username) && row.get(1).trim().equals(password)) {
-                switch (row.get(2).trim()) {
-                    case "Shop Manager":
-                        new EmployeeManagement();
-                        break;
-                    case "Vendor":
-                    case "Cashear":
-                        new ProductManagement();
-                        break;
+        List<String> data = dbConnection.readFile();
+        for (String line : data) {
+            if (line.startsWith("User: ")) {
+                String[] parts = line.substring(6).split(", ");
+                //if (parts.length < 4) continue;
+                
+                String storedUsername = parts[1].trim();
+                String storedPassword = parts[2].trim();
+                String role = parts[3].trim();
+                
+                if (storedUsername.equals(username) && storedPassword.equals(password)) {
+                    switch (role) {
+                        case "Shop Manager":
+                            new EmployeeManagement();
+                            break;
+                        case "Vendor":
+                        case "Cashier":
+                            new ProductManagement();
+                            break;
+                    }
+                    break;
                 }
             }
         }

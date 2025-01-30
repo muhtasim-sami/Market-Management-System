@@ -142,7 +142,7 @@ public class UpdateEmployee extends JFrame implements ActionListener {
         add(back);
 
         // Populate fields with existing data
-        List<String> employeeData = dbConnection.readFile(dbConnection.getUserPassData());
+        List<String> employeeData = dbConnection.readEmployeeData();
         for (String data : employeeData) {
             String[] details = data.split(",");
             if (details[0].equals(empId)) {
@@ -179,15 +179,9 @@ public class UpdateEmployee extends JFrame implements ActionListener {
             String designation = tfdesignation.getText();
             String aadhar = lblaadhar.getText();
 
-            String updatedDetails = empId + "," + name + "," + fname + "," + dob + "," + salary + "," + address + "," + phone + "," + email + "," + education + "," + designation + "," + aadhar;
-            List<String> employeeData = dbConnection.readFile(dbConnection.getUserPassData());
-            for (int i = 0; i < employeeData.size(); i++) {
-                if (employeeData.get(i).split(",")[0].equals(empId)) {
-                    employeeData.set(i, updatedDetails);
-                    break;
-                }
-            }
-            dbConnection.writeFile(dbConnection.getUserPassData(), employeeData);
+            String updatedDetails = name + "," + fname + "," + dob + "," + salary + "," + address + "," + phone + "," + email + "," + education + "," + designation + "," + aadhar;
+            
+            dbConnection.updateEmployeeData(empId,updatedDetails);
 
             JOptionPane.showMessageDialog(null, "Employee Updated Successfully");
             setVisible(false);

@@ -1,1 +1,74 @@
-arpanil , 1@Gh , Casher , 
+Employee: E001, John Employee, John Doe, 1985-04-12, 50000, 789 Market St, 1234567890, johne@market.com, BSc, Manager, 1234-5678-9012
+Employee: E002, Jane Employee, Richard Smith, 1990-09-25, 45000, 456 Bakery Lane, 0987654321, janee@market.com, BA, Sales Associate, 2345-6789-0123
+Employee: E003, Mark Taylor, Michael Taylor, 1982-08-14, 55000, 1010 Market St, 2345678901, markt@market.com, MSc, Senior Manager, 3456-7890-1234
+Employee: E004, Lucy White, Richard White, 1993-01-30, 48000, 678 Bakery Lane, 3456789012, lucyw@market.com, MBA, HR Manager, 4567-8901-2345
+Employee: E005, Robert Brown, Stephen Brown, 1988-11-20, 52000, 345 Market St, 4567890123, robertb@market.com, PhD, Director, 5678-9012-3456
+Employee: E006, Emily Green, Charles Green, 1995-02-18, 47000, 234 Bakery Lane, 5678901234, emilyg@market.com, BCom, Accountant, 6789-0123-4567
+
+User: U001, John Doe, password123, john@example.com
+User: U002, Jane Smith, janePass456, jane@example.com
+User: U003, Mark Johnson, markPass789, mark@example.com
+User: U004, Lucy Brown, lucyPass101, lucy@example.com
+User: U005, Robert King, robertPass202, robert@example.com
+User: U006, Emily Harris, emilyPass303, emily@example.com
+
+Shop: S001, John's Grocery, 123 Market Street, John Doe
+Product: S001P001, Apples, 50, 2.5, Fresh red apples, Organic, 2025-01-15
+Product: S001P002, Bananas, 30, 1.2, Ripe bananas, Imported, 2025-01-10
+Product: S001P003, Oranges, 40, 3.0, Juicy oranges, Local, 2025-01-20
+Product: S001P004, Grapes, 25, 4.0, Seedless grapes, Imported, 2025-01-25
+Product: S001P005, Strawberries, 20, 5.0, Fresh strawberries, Organic, 2025-02-01
+Product: S001P006, Mangoes, 35, 2.8, Sweet mangoes, Local, 2025-03-05
+Product: S001P007, Pineapples, 28, 3.5, Juicy pineapples, Imported, 2025-01-30
+
+Shop: S002, Jane's Bakery, 456 Bakery Lane, Jane Smith
+Product: S002P001, Bread, 20, 1.5, Whole grain bread, Baked daily, 2025-01-12
+Product: S002P002, Croissant, 15, 2.0, Buttery croissant, French, 2025-01-08
+Product: S002P003, Muffin, 25, 2.5, Blueberry muffin, Freshly baked, 2025-01-18
+Product: S002P004, Bagel, 30, 1.8, Plain bagel, Baked daily, 2025-01-20
+Product: S002P005, Donut, 35, 1.5, Glazed donut, Sweet, 2025-01-15
+Product: S002P006, Scone, 20, 2.2, Raisin scone, Freshly baked, 2025-01-22
+Product: S002P007, Tart, 18, 3.0, Fruit tart, Freshly made, 2025-01-25
+
+Shop: S003, Mark's Electronics, 789 Tech Park, Mark Johnson
+Product: S003P001, Laptop, 10, 1000, High-performance laptop, Gaming, 2025-12-31
+Product: S003P002, Headphones, 25, 150, Noise-canceling headphones, Wireless, 2025-07-15
+Product: S003P003, Smartphone, 30, 800, Latest model smartphone, 5G, 2025-05-10
+Product: S003P004, Tablet, 20, 600, High-resolution tablet, Android, 2025-08-30
+Product: S003P005, Smartwatch, 40, 200, Advanced smartwatch, Fitness, 2025-06-20
+Product: S003P006, Camera, 15, 1200, Professional camera, DSLR, 2025-11-10
+Product: S003P007, Speaker, 50, 300, Bluetooth speaker, Portable, 2025-07-01
+
+Shop: S004, Emily's Boutique, 321 Fashion Ave, Emily Harris
+Product: S004P001, Dress, 15, 50, Summer dress, Cotton, 2025-04-01
+Product: S004P002, Jacket, 20, 80, Winter jacket, Wool, 2025-09-15
+Product: S004P003, Shoes, 25, 60, Running shoes, Synthetic, 2025-03-10
+Product: S004P004, Handbag, 10, 100, Leather handbag, Imported, 2025-05-20
+Product: S004P005, Scarf, 30, 20, Silk scarf, Fashion, 2025-02-05
+Product: S004P006, Hat, 12, 25, Sun hat, Straw, 2025-04-10
+Product: S004P007, Gloves, 18, 30, Winter gloves, Leather, 2025-10-05
+
+Shop: S005, Robert's Bookstore, 987 Book St, Robert King
+Product: S005P001, Fiction Book, 100, 15.0, Bestselling fiction, Hardcover, 2025-03-01
+Product: S005P002, Non-fiction Book, 80, 20.0, Award-winning non-fiction, Paperback, 2025-04-10
+Product: S005P003, Children's Book, 50, 10.0, Popular children's book, Illustrated, 2025-02-15
+Product: S005P004, Mystery Book, 60, 18.0, Thrilling mystery, Hardcover, 2025-05-05
+Product: S005P005, Science Book, 40, 25.0, Latest science discoveries, Hardcover, 2025-01-25
+Product: S005P006, History Book, 30, 22.0, Detailed history, Paperback, 2025-06-01
+Product: S005P007, Art Book, 20, 30.0, Beautiful art collection, Coffee table book, 2025-07-20
+
+Shop: S006, Lucy's Toy Store, 654 Toy Ave, Lucy Brown
+Product: S006P001, Teddy Bear, 50, 25.0, Soft teddy bear, Plush, 2025-02-28
+Product: S006P002, Doll, 40, 30.0, Beautiful doll, Plastic, 2025-03-15
+Product: S006P003, Puzzle, 60, 15.0, Challenging puzzle, Cardboard, 2025-04-01
+Product: S006P004, Action Figure, 70, 20.0, Superhero action figure, Plastic, 2025-05-10
+Product: S006P005, Board Game, 30, 35.0, Fun board game, Cardboard, 2025-06-25
+Product: S006P006, Toy Car, 80, 15.0, Remote control car, Plastic, 2025-07-30
+Product: S006P007, Lego Set, 100, 50.0, Creative building set, Plastic, 2025-08-15
+
+Shop: S007, Emily's Jewelry Store, 789 Gem St, Emily Harris
+Product: S007P001, Necklace, 25, 150.0, Elegant necklace, Gold, 2025-01-20
+Product: S007P002, Ring, 30, 200.0, Diamond ring, Platinum, 2025-02-10
+Product: S007P003, Bracelet, 40, 100.0, Stylish bracelet, Silver, 2025-03-05
+Product: S007P004, Earrings, 50, 75.0, Beautiful earrings, Gold, 2025-04-15
+Product: S007P005, Watch, 20, 250.0, Luxury watch, Stainless steel, 2025-05-25

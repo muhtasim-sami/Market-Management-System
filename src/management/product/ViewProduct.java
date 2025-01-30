@@ -39,7 +39,7 @@ public class ViewProduct extends JFrame implements ActionListener {
         add(cproductId);
 
         // Populate the choice with product IDs
-        List<String> productData = dbConnection.readFile(dbConnection.getProductData());
+        List<String> productData = dbConnection.readProductData();
         for (String product : productData) {
             String[] details = product.split(",");
             cproductId.add(details[0]);
@@ -75,7 +75,7 @@ public class ViewProduct extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == search) {
             String selectedProId = cproductId.getSelectedItem();
-            List<String> productData = dbConnection.readFile(dbConnection.getProductData());
+            List<String> productData = dbConnection.readProductData();
             String[] columnNames = {"ProductID", "ProductName", "Type", "Quantity", "Price", "CompanyName"};
             String[][] data = productData.stream()
                     .filter(product -> product.split(",")[0].equals(selectedProId))

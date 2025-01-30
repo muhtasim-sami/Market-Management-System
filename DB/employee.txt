@@ -1,6 +1,0 @@
-EmployeeID,Name,Father's Name,Date of Birth,Salary,Address,Phone,Email,Highest Education,Designation,Aadhar Number
-101,John Doe,Robert Doe,1990-01-01,50000,123 Main St,555-1234,john.doe@example.com,BTech,Manager,123456789012
-102,Jane Smith,Michael Smith,1992-02-02,55000,456 Elm St,555-5678,jane.smith@example.com,MBA,Cashier,234567890123
-103,Emily Johnson,David Johnson,1988-03-03,60000,789 Oak St,555-9012,emily.johnson@example.com,MSC,Manager,345678901234
-104,Michael Brown,James Brown,1995-04-04,45000,321 Pine St,555-3456,michael.brown@example.com,BA,Cashier,456789012345
-105,Sarah Davis,William Davis,1993-05-05,48000,654 Maple St,555-7890,sarah.davis@example.com,MTech,Manager,567890123456

@@ -106,9 +106,9 @@ public class AddProduct extends JFrame implements ActionListener {
             String cname = tfcname.getText();
 
             String productDetails = proid + "," + proname + "," + ptype + "," + quantity + "," + price + "," + cname;
-            List<String> productData = dbConnection.readFile(dbConnection.getProductData());
+            List<String> productData = dbConnection.readProductData();
             productData.add(productDetails);
-            dbConnection.writeFile(dbConnection.getProductData(), productData);
+            dbConnection.writeFile(productData);
 
             JOptionPane.showMessageDialog(null, "Product Added Successfully");
             setVisible(false);

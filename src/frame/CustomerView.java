@@ -88,11 +88,11 @@ public class CustomerView extends JFrame {
     }
 
     private void loadData() {
-        List<String> lines = dbConnection.readFile(dbConnection.getProductData());
+        List<String> lines = dbConnection.readShopAndProductData();
         Shop currentShop = null;
         for (String line : lines) {
             if (line.startsWith("Shop: ")) {
-                String[] shopInfo = line.substring(6).split(",", 2);
+                String[] shopInfo = line.substring(6).split(", ", 4);
                 String shopId = shopInfo[0].trim();
                 String shopName = shopInfo[1].trim();
                 currentShop = new Shop(shopId, shopName);

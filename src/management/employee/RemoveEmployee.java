@@ -44,10 +44,10 @@ public class RemoveEmployee extends JFrame implements ActionListener {
         add(cEmpId);
 
         // Populate employee IDs from the database
-        List<String> employeeData = dbConnection.readFile(dbConnection.getUserPassData());
+        List<String> employeeData = dbConnection.readEmployeeData();
         for (String data : employeeData) {
             String[] details = data.split(",");
-            cEmpId.add(details[0]); // Assuming the first column is employee ID
+            cEmpId.add(details[0]); 
         }
 
         JLabel labelname = new JLabel("Name");
@@ -55,7 +55,7 @@ public class RemoveEmployee extends JFrame implements ActionListener {
         add(labelname);
 
         JLabel lblname = new JLabel();
-        lblname.setBounds(200, 100, 100, 30);
+        lblname.setBounds(200, 100, 150, 30);
         add(lblname);
 
         JLabel labelphone = new JLabel("Phone");
@@ -63,7 +63,7 @@ public class RemoveEmployee extends JFrame implements ActionListener {
         add(labelphone);
 
         JLabel lblphone = new JLabel();
-        lblphone.setBounds(200, 150, 100, 30);
+        lblphone.setBounds(200, 150, 150, 30);
         add(lblphone);
 
         JLabel labelemail = new JLabel("Email");
@@ -71,7 +71,7 @@ public class RemoveEmployee extends JFrame implements ActionListener {
         add(labelemail);
 
         JLabel lblemail = new JLabel();
-        lblemail.setBounds(200, 200, 100, 30);
+        lblemail.setBounds(200, 200, 150, 30);
         add(lblemail);
 
         cEmpId.addItemListener(new ItemListener() {
@@ -118,9 +118,7 @@ public class RemoveEmployee extends JFrame implements ActionListener {
         if (ae.getSource() == delete) {
             try {
                 String empId = cEmpId.getSelectedItem();
-                List<String> employeeData = dbConnection.readFile(dbConnection.getUserPassData());
-                employeeData.removeIf(data -> data.split(",")[0].equals(empId));
-                dbConnection.writeFile(dbConnection.getUserPassData(), employeeData);
+                dbConnection.removeEmployeeData(empId);
 
                 JOptionPane.showMessageDialog(null, "Employee Removed Successfully");
                 setVisible(false);

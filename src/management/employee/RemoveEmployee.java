@@ -5,16 +5,16 @@ import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
-import management.validation.DBConnection;
+import management.validation.DBManager;
 
 public class RemoveEmployee extends JFrame implements ActionListener {
 
     Choice cEmpId;
     JButton delete, back;
-    DBConnection dbConnection;
+    DBManager DBManager;
 
     public RemoveEmployee() {
-        dbConnection = new DBConnection();
+        DBManager = new DBManager();
         setVisible(true);
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
@@ -44,7 +44,7 @@ public class RemoveEmployee extends JFrame implements ActionListener {
         add(cEmpId);
 
         // Populate employee IDs from the database
-        List<String> employeeData = dbConnection.readEmployeeData();
+        List<String> employeeData = DBManager.readEmployeeData();
         for (String data : employeeData) {
             String[] details = data.split(",");
             cEmpId.add(details[0]); 
@@ -118,7 +118,7 @@ public class RemoveEmployee extends JFrame implements ActionListener {
         if (ae.getSource() == delete) {
             try {
                 String empId = cEmpId.getSelectedItem();
-                dbConnection.removeEmployeeData(empId);
+                DBManager.removeEmployeeData(empId);
 
                 JOptionPane.showMessageDialog(null, "Employee Removed Successfully");
                 setVisible(false);

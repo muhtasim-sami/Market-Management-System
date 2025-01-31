@@ -1,20 +1,26 @@
 package management.product;
 
+import java.io.*;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.List;
-import management.validation.DBConnection;
+import java.util.ArrayList;
+import java.util.Arrays;
+import management.validation.DBManager;
+import user.*;
 
 public class AddProduct extends JFrame implements ActionListener {
 
-    JTextField tfproid, tfproname, tfquantity, tfprice, tfcname;
-    JComboBox<String> type;
+    JTextField type, tfproname, tfquantity, tfprice, tfcname;
+    JComboBox<String> shop;
     JButton add1, back;
-    DBConnection dbConnection;
+    DBManager DBManager;
+	String user;
 
-    public AddProduct() {
-        dbConnection = new DBConnection();
+    public AddProduct(String user) {
+		this.user = user;
+        DBManager = new DBManager();
         setBounds(200, 15, 800, 700);
         setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,14 +32,14 @@ public class AddProduct extends JFrame implements ActionListener {
         heading.setFont(new Font("SAN_SERIF", Font.BOLD, 25));
         add(heading);
 
-        JLabel lproid = new JLabel("Product Id");
+        JLabel lproid = new JLabel("Product Type");
         lproid.setBounds(50, 150, 150, 30);
         lproid.setFont(new Font("serif", Font.PLAIN, 20));
         add(lproid);
 
-        tfproid = new JTextField();
-        tfproid.setBounds(200, 150, 150, 30);
-        add(tfproid);
+        type = new JTextField();
+        type.setBounds(200, 150, 150, 30);
+        add(type);
 
         JLabel lproname = new JLabel("Product's Name");
         lproname.setBounds(400, 150, 150, 30);
@@ -44,15 +50,26 @@ public class AddProduct extends JFrame implements ActionListener {
         tfproname.setBounds(600, 150, 150, 30);
         add(tfproname);
 
-        JLabel labeltype = new JLabel("Type of Product");
+        JLabel labeltype = new JLabel("Shop Name");
         labeltype.setBounds(50, 200, 150, 30);
         labeltype.setFont(new Font("serif", Font.PLAIN, 20));
         add(labeltype);
 
-        String[] array = {"Personal Care", "Dairy", "Snacks", "Beverage"};
-        type = new JComboBox<>(array);
-        type.setBounds(200, 200, 150, 30);
-        add(type);
+		List<String> lines = DBManager.readShopAndProductData();
+		List<String> shopArray = new ArrayList<>();
+        for (String line : lines) {
+            if (line.startsWith("Shop: ")) {
+                String[] shopInfo = line.substring(6).split(", ", 4);
+                String shopName = shopInfo[1].trim();
+				shopArray.add(shopName);
+            } 
+        }
+
+        //String[] array = {"Personal Care", "Dairy", "Snacks", "Beverage"};
+		String[] array = shopArray.toArray(new String[shopArray.size()]);
+        shop = new JComboBox<>(array);
+        shop.setBounds(200, 200, 150, 30);
+        add(shop);
 
         JLabel lquantity = new JLabel("Quantity");
         lquantity.setBounds(400, 200, 150, 30);
@@ -89,7 +106,7 @@ public class AddProduct extends JFrame implements ActionListener {
         add(add1);
 
         back = new JButton("Back");
-        back.setBounds(450, 550, 150, 40);
+        back.setBounds(450, 350, 150, 40);
         back.addActionListener(this);
         back.setBackground(Color.BLACK);
         back.setForeground(Color.WHITE);
@@ -98,31 +115,38 @@ public class AddProduct extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == add1) {
-            String proid = tfproid.getText();
+            String ptype = type.getText();
             String proname = tfproname.getText();
-            String ptype = (String) type.getSelectedItem();
+            String pshop = (String) shop.getSelectedItem();
             String quantity = tfquantity.getText();
             String price = tfprice.getText();
             String cname = tfcname.getText();
 
-            String productDetails = proid + "," + proname + "," + ptype + "," + quantity + "," + price + "," + cname;
-            List<String> productData = dbConnection.readProductData();
-            productData.add(productDetails);
-            dbConnection.writeFile(productData);
+			List<String> productDetails = Arrays.asList(proname, ptype, quantity, price, cname);
+
+            //String productDetails = proname + "," + ptype + "," + quantity + "," + price + "," + cname;
+            //List<String> productData = DBManager.readProductData();
+            //productData.add(productDetails);
+            DBManager.addProductData(productDetails,pshop);
 
             JOptionPane.showMessageDialog(null, "Product Added Successfully");
             setVisible(false);
             new ProductManagement();
         } else if (ae.getSource() == back) {
+			if (user == "VendorSell"){
+				new VendorSell(new DBManager());
+			}
+			else {
+				new ProductManagement();				
+			}
             setVisible(false);
-            new ProductManagement();
         }
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new AddProduct();
+                new AddProduct("");
             }
         });
     }

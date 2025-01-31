@@ -5,14 +5,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
-import management.validation.DBConnection;
+import management.validation.DBManager;
 
 public class ViewProduct extends JFrame implements ActionListener {
 
     JTable table;
     Choice cproductId;
     JButton search, print, update, back;
-    DBConnection dbConnection;
+    DBManager DBManager;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -23,7 +23,7 @@ public class ViewProduct extends JFrame implements ActionListener {
     }
 
     public ViewProduct() {
-        dbConnection = new DBConnection();
+        DBManager = new DBManager();
         setBounds(200, 15, 800, 700);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,7 +39,7 @@ public class ViewProduct extends JFrame implements ActionListener {
         add(cproductId);
 
         // Populate the choice with product IDs
-        List<String> productData = dbConnection.readProductData();
+        List<String> productData = DBManager.readProductData();
         for (String product : productData) {
             String[] details = product.split(",");
             cproductId.add(details[0]);
@@ -75,7 +75,7 @@ public class ViewProduct extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == search) {
             String selectedProId = cproductId.getSelectedItem();
-            List<String> productData = dbConnection.readProductData();
+            List<String> productData = DBManager.readProductData();
             String[] columnNames = {"ProductID", "ProductName", "Type", "Quantity", "Price", "CompanyName"};
             String[][] data = productData.stream()
                     .filter(product -> product.split(",")[0].equals(selectedProId))

@@ -79,8 +79,8 @@ public class Homepage extends JFrame implements ActionListener {
             new Signup();
         }
         if (ae.getSource() == viewProducts) {
-            DBConnection dbConnection = new DBConnection();
-            CustomerView customerView = new CustomerView(dbConnection);
+            DBManager DBManager = new DBManager();
+            CustomerView customerView = new CustomerView(DBManager);
             customerView.setVisible(true);
             this.dispose(); // Close the homepage window
         }

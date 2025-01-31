@@ -4,17 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
-import management.validation.DBConnection;
+import management.validation.DBManager;
 
 public class ViewEmployee extends JFrame implements ActionListener {
 
     JTable table;
     Choice cemployeeId;
     JButton search, print, update, back;
-    DBConnection dbConnection;
+    DBManager DBManager;
 
     public ViewEmployee() {
-        dbConnection = new DBConnection();
+        DBManager = new DBManager();
         
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
@@ -28,7 +28,7 @@ public class ViewEmployee extends JFrame implements ActionListener {
         add(cemployeeId);
         
         // Populate employee IDs from the database
-        List<String> employeeData = dbConnection.readEmployeeData();
+        List<String> employeeData = DBManager.readEmployeeData();
         for (String data : employeeData) {
             String[] details = data.split(",");
             cemployeeId.add(details[0]); // Assuming the first column is employee ID
@@ -69,7 +69,7 @@ public class ViewEmployee extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == search) {
             String empId = cemployeeId.getSelectedItem();
-            List<String> employeeData = dbConnection.readEmployeeData();
+            List<String> employeeData = DBManager.readEmployeeData();
             String[] columnNames = {"Employee ID", "Name", "Father's Name", "DOB", "Salary", "Address", "Phone", "Email", "Education", "Designation", "Aadhar"};
             String[][] data = new String[1][11];
             

@@ -1,6 +1,6 @@
 package management.shop;
 
-import management.validation.DBConnection;
+import management.validation.DBManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +15,9 @@ public class Shop {
         this.products = new ArrayList<>();
     }
 
-    public static List<Shop> loadShops(DBConnection dbConnection) {
+    public static List<Shop> loadShops(DBManager DBManager) {
         List<Shop> shops = new ArrayList<>();
-        List<String> lines = dbConnection.readShopAndProductData();
+        List<String> lines = DBManager.readShopAndProductData();
         Shop currentShop = null;
         for (String line : lines) {
             if (line.startsWith("Shop: ")) {
@@ -33,7 +33,7 @@ public class Shop {
         return shops;
     }
 
-    public static void saveShops(DBConnection dbConnection, List<Shop> shops) {
+    public static void saveShops(DBManager DBManager, List<Shop> shops) {
         List<String> content = new ArrayList<>();
         for (Shop shop : shops) {
             content.add("Shop: " + shop.id + ", " + shop.name);
@@ -41,7 +41,7 @@ public class Shop {
                 content.add("Product: " + product);
             }
         }
-        dbConnection.writeFile(content);
+        DBManager.writeFile(content);
     }
 
     public String getId() {

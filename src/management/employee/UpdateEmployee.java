@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.List;
-import management.validation.DBConnection;
+import management.validation.DBManager;
 
 public class UpdateEmployee extends JFrame implements ActionListener {
 
@@ -13,11 +13,11 @@ public class UpdateEmployee extends JFrame implements ActionListener {
     JButton add, back;
     String empId;
     JComboBox tfeducation;
-    DBConnection dbConnection;
+    DBManager DBManager;
 
     public UpdateEmployee(String empId) {
         this.empId = empId;
-        dbConnection = new DBConnection();
+        DBManager = new DBManager();
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
 
@@ -142,7 +142,7 @@ public class UpdateEmployee extends JFrame implements ActionListener {
         add(back);
 
         // Populate fields with existing data
-        List<String> employeeData = dbConnection.readEmployeeData();
+        List<String> employeeData = DBManager.readEmployeeData();
         for (String data : employeeData) {
             String[] details = data.split(",");
             if (details[0].equals(empId)) {
@@ -181,7 +181,7 @@ public class UpdateEmployee extends JFrame implements ActionListener {
 
             String updatedDetails = name + "," + fname + "," + dob + "," + salary + "," + address + "," + phone + "," + email + "," + education + "," + designation + "," + aadhar;
             
-            dbConnection.updateEmployeeData(empId,updatedDetails);
+            DBManager.updateEmployeeData(empId,updatedDetails);
 
             JOptionPane.showMessageDialog(null, "Employee Updated Successfully");
             setVisible(false);

@@ -10,7 +10,7 @@ public class Login extends JFrame implements ActionListener {
     
     JTextField tfusername;
     JPasswordField tfpassword;
-    JButton login, signup, showPass;
+    JButton login, signup, back, showPass;
     JCheckBox cb1 = new JCheckBox("Show Password");
     JCheckBox cb2 = new JCheckBox("hide Password");
 
@@ -92,6 +92,15 @@ public class Login extends JFrame implements ActionListener {
         signup.addActionListener(this);
         add(signup);
         
+        back = new JButton("Back");
+        back.setBounds((int) (((1.5 * w) - 193) / 2), 500, 193, 50);
+        back.setFont(f1);
+        back.setCursor(crsr);        
+        back.setBackground(DARK_GREEN);
+        back.setForeground(Color.WHITE);
+        back.addActionListener(this);
+        add(back);
+        
         cb1.setBounds((int) (((1.5 * w) - 210) / 2), ((h - 150) / 2), 250, 20);
         cb1.setBackground(LIGHT_GREEN);
         cb1.setForeground(Color.BLACK);
@@ -113,7 +122,7 @@ public class Login extends JFrame implements ActionListener {
         if (ae.getSource() == login) {
             String username = tfusername.getText();
             String password = new String(tfpassword.getPassword());
-            Security sc = new Security(new DBConnection());
+            Security sc = new Security(new DBManager());
             if (sc.checkCredentials(username, password)) {
                 sc.afterLogin(username, password);
                 setVisible(false);
@@ -126,6 +135,10 @@ public class Login extends JFrame implements ActionListener {
         if (ae.getSource() == signup) {
             this.setVisible(false);
             new Signup();
+        }
+        if (ae.getSource() == back) {
+            this.setVisible(false);
+            new Homepage();
         }
         if (ae.getSource() == cb1) {
             tfpassword.setEchoChar('\u0000');

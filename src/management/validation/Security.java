@@ -1,17 +1,19 @@
 package management.validation;
 import java.util.*;
+import javax.swing.JOptionPane;
 import management.employee.EmployeeManagement;
 import management.product.ProductManagement;
+import user.*;
 
 public class Security {
-    private DBConnection dbConnection;
+    private DBManager DBManager;
     
-    public Security(DBConnection dbConnection) {
-        this.dbConnection = dbConnection;
+    public Security(DBManager DBManager) {
+        this.DBManager = DBManager;
     }
     
     public boolean checkUsername(String username) {
-        List<String> data = dbConnection.readFile();
+        List<String> data = DBManager.readFile();
         for (String line : data) {
             if (line.startsWith("User:")) {
                 String[] parts = line.substring(6).split(", ");
@@ -28,7 +30,7 @@ public class Security {
     }
 
     public boolean checkPassword(String password) {
-        List<String> data = dbConnection.readFile();
+        List<String> data = DBManager.readFile();
         for (String line : data) {
             if (line.startsWith("User:")) {
                 String[] parts = line.substring(6).split(", ");
@@ -45,7 +47,7 @@ public class Security {
     }
 
     public boolean checkCredentials(String username, String password) {
-        List<String> data = dbConnection.readFile();
+        List<String> data = DBManager.readFile();
         for (String line : data) {
             if (line.startsWith("User: ")) {
                 String[] parts = line.substring(6).split(", ");
@@ -63,11 +65,11 @@ public class Security {
     
     public void writeUser(String[] userData) {
         List<String> userDataList = new ArrayList<>(Arrays.asList(userData));
-        dbConnection.writeFile(userDataList);
+        DBManager.writeFile(userDataList);
     }
 
     public void afterLogin(String username, String password) {
-        List<String> data = dbConnection.readFile();
+        List<String> data = DBManager.readFile();
         for (String line : data) {
             if (line.startsWith("User: ")) {
                 String[] parts = line.substring(6).split(", ");
@@ -82,14 +84,92 @@ public class Security {
                         case "Shop Manager":
                             new EmployeeManagement();
                             break;
-                        case "Vendor":
                         case "Cashier":
                             new ProductManagement();
                             break;
+                        case "Vendor":
+							new VendorView(new DBManager());
+							break;
                     }
                     break;
                 }
             }
         }
     }
+	public boolean isValid(String username, String email, String test) {
+		if(username.length() == 0) {
+			JOptionPane.showMessageDialog(null, "Please Enter username");
+			return false;
+		}
+		if(username.length() > 20) {
+			JOptionPane.showMessageDialog(null, "Username is too long");
+			return false;
+		}
+
+		if(email.length() == 0) {
+			JOptionPane.showMessageDialog(null, "Please Enter email");
+			return false;
+		}
+		if(!email.contains("@") || (!email.contains(".")) || (!email.endsWith(".com"))) {
+			JOptionPane.showMessageDialog(null, "Invalid email");
+			return false;
+		}
+		String[] emailParts = email.split("@");
+		if(emailParts.length != 2) {
+			JOptionPane.showMessageDialog(null, "Invalid email format");
+			return false;
+		}
+		if(emailParts[0].length() == 0) {
+			JOptionPane.showMessageDialog(null, "Email username cannot be empty");
+			return false;
+		}
+		if(emailParts[1].length() == 0) {
+			JOptionPane.showMessageDialog(null, "Email domain cannot be empty");
+			return false;
+		}
+		if(email.contains(" ")) {
+			JOptionPane.showMessageDialog(null, "Email cannot contain spaces");
+			return false;
+		}
+		String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+		if(!email.matches(emailRegex)) {
+			JOptionPane.showMessageDialog(null, "Invalid email characters");
+			return false;
+		}
+
+		if(test == "") {
+			JOptionPane.showMessageDialog(null, "Please Enter password");
+			return false;
+		}
+		if(test.length() > 20) {
+			JOptionPane.showMessageDialog(null, "Password is too long");
+			return false;
+		}
+		String upperCaseChars = "(.*[A-Z].*)";
+		if(!test.matches(upperCaseChars)) {
+			System.out.println("Password must have atleast one uppercase character");
+			JOptionPane.showMessageDialog(null, "Password must have atleast one uppercase character");
+			return false;
+		}
+		String lowerCaseChars = "(.*[a-z].*)";
+		if(!test.matches(lowerCaseChars)) {
+			System.out.println("Password must have atleast one lowercase character");
+			JOptionPane.showMessageDialog(null, "Password must have atleast one lowercase character");
+			return false;
+		}
+		String numbers = "(.*[0-9].*)";
+		if(!test.matches(numbers)) {
+			System.out.println("Password must have atleast one number");
+			JOptionPane.showMessageDialog(null, "Password must have atleast one number");
+			return false;
+		}
+		String specialChars = "(.*[@,#,$,%].*$)";
+		if(!test.matches(specialChars)) {
+			System.out.println("Password must have atleast one special character among @#$%");
+			JOptionPane.showMessageDialog(null, "Password must have atleast one special character among @#$%");
+			return false;
+		}
+		
+		return true;
+	}
 }

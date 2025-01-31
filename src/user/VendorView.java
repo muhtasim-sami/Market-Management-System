@@ -1,5 +1,5 @@
 
-package frame;
+package user;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -9,8 +9,9 @@ import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
 import management.validation.DBManager;
 import management.shop.*;
+import frame.*;
 
-public class CustomerView extends JFrame {
+public class VendorView extends JFrame {
     private JList<String> shopList;
     private JTable productTable;
     private DefaultListModel<String> shopListModel;
@@ -19,7 +20,7 @@ public class CustomerView extends JFrame {
     private DBManager DBManager;
     private JButton billing, back;
     
-    public CustomerView(DBManager DBManager) {
+    public VendorView(DBManager DBManager) {
         this.DBManager = DBManager;
         this.shops = new ArrayList<>();
         loadData();
@@ -27,20 +28,16 @@ public class CustomerView extends JFrame {
     }
 
     private void setupUI() {
-        // Fonts
         Font f1 = new Font("Arial", Font.BOLD, 18);
         Font f2 = new Font("Times New Roman", Font.BOLD, 25);
         Font f3 = new Font("Arial", Font.BOLD, 13);
         
-        // Colors
         Color LIGHT_GREEN = new Color(102, 255, 102);
         Color DARK_GREEN = new Color(0, 153, 0);
         
-        // Cursor and Border
         Cursor crsr = new Cursor(Cursor.HAND_CURSOR);
         LineBorder lineBorder = new LineBorder(Color.black, 1, true);
         
-        // Frame setup
         setTitle("Shop Management System");
         setVisible(true);
         setBounds(200, 15, 800, 700);
@@ -51,14 +48,12 @@ public class CustomerView extends JFrame {
         double w = getWidth();
         int h = (int) getHeight();
         
-        // Title
-        JLabel titleLabel = new JLabel("Customer View");
+        JLabel titleLabel = new JLabel("Vendor View");
         titleLabel.setBounds((int) (((1.5 * w) - 200) / 2), (h - 650), 200, 100);
         titleLabel.setFont(f2);
         titleLabel.setForeground(DARK_GREEN);
         add(titleLabel);
 
-        // Shop List Panel
         JLabel shopLabel = new JLabel("Select Shop");
         shopLabel.setBounds(50, 120, 200, 30);
         shopLabel.setFont(f1);
@@ -78,7 +73,6 @@ public class CustomerView extends JFrame {
         shopScrollPane.setBounds(50, 160, 250, 200);
         add(shopScrollPane);
 
-        // Product Table Panel
         JLabel productLabel = new JLabel("Products");
         productLabel.setBounds(50, 380, 200, 30);
         productLabel.setFont(f1);
@@ -107,7 +101,7 @@ public class CustomerView extends JFrame {
         });
 
         // Buttons
-        billing = new JButton("Billing");
+        billing = new JButton("Sell");
         billing.setBounds((int) (((1.5 * w) - 193) / 2), 590, 193, 50);
         billing.setFont(f1);
         billing.setCursor(crsr);
@@ -116,7 +110,7 @@ public class CustomerView extends JFrame {
         billing.addActionListener(e -> onBilling());
         add(billing);
 
-        back = new JButton("Back");
+        back = new JButton("Log-out");
         back.setBounds((int) (((0.5 * w) - 193) / 2), 590, 193, 50);
         back.setFont(f1);
         back.setCursor(crsr);
@@ -179,17 +173,17 @@ public class CustomerView extends JFrame {
         */
         this.setVisible(false);
         //new Billing(DBManager, selectedShop, productData);
-		new Billing(DBManager);
+		new VendorSell(DBManager);
     }
 
     private void onBack() {
         this.setVisible(false);
-        new Homepage();
+        new Login();
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new CustomerView(new DBManager()).setVisible(true);
+            new VendorView(new DBManager()).setVisible(true);
         });
     }
 }

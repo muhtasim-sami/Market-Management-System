@@ -4,13 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
-import management.validation.DBConnection;
+import management.validation.DBManager;
 
 public class RemoveProduct extends JFrame implements ActionListener {
     private Choice cProId;
     private JTextField tfProName, tfCName, tfQuantity;
     private JButton delete, back;
-    private DBConnection dbConnection;
+    private DBManager DBManager;
     private List<String> productData;
 
     public static void main(String[] args) {
@@ -18,7 +18,7 @@ public class RemoveProduct extends JFrame implements ActionListener {
     }
 
     public RemoveProduct() {
-        dbConnection = new DBConnection();
+        DBManager = new DBManager();
         setBounds(200, 15, 800, 700);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,7 +33,7 @@ public class RemoveProduct extends JFrame implements ActionListener {
         cProId.setBounds(200, 50, 150, 30);
         add(cProId);
 
-        productData = dbConnection.readProductData();
+        productData = DBManager.readProductData();
         for (String product : productData) {
 			String[] details = product.split(", ");
 			cProId.add(details[0]);
@@ -109,7 +109,7 @@ public class RemoveProduct extends JFrame implements ActionListener {
                 }
             }
             */
-            dbConnection.removeProductData(selectedProId);
+            DBManager.removeProductData(selectedProId);
             
             JOptionPane.showMessageDialog(null, "Product Deleted Successfully");
             setVisible(false);

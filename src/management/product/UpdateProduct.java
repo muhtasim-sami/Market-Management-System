@@ -5,7 +5,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.List;
-import management.validation.DBConnection;
+import management.validation.DBManager;
 
 public class UpdateProduct extends JFrame implements ActionListener {
 
@@ -13,7 +13,7 @@ public class UpdateProduct extends JFrame implements ActionListener {
     JTextField tfproid, tfproname, tfquantity, tfprice, tfcname;
     JComboBox<String> type;
     JButton add, back;
-    DBConnection dbConnection;
+    DBManager DBManager;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -24,7 +24,7 @@ public class UpdateProduct extends JFrame implements ActionListener {
     }
 
     public UpdateProduct(String productId) {
-        dbConnection = new DBConnection();
+        DBManager = new DBManager();
         setBounds(200, 15, 800, 700);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -95,7 +95,7 @@ public class UpdateProduct extends JFrame implements ActionListener {
 
         // Load product details if productId is provided
         if (!productId.isEmpty()) {
-            List<String> productData = dbConnection.readProductData();
+            List<String> productData = DBManager.readProductData();
             for (String product : productData) {
                 String[] details = product.split(",");
                 if (details[0].equals(productId)) {
@@ -136,7 +136,7 @@ public class UpdateProduct extends JFrame implements ActionListener {
 
             String updatedProductDetails = proname + ", " + ptype + ", " + quantity + ", " + price + ", " + cname;
             
-            dbConnection.updateProductData(productId,updatedProductDetails);
+            DBManager.updateProductData(productId,updatedProductDetails);
 
             JOptionPane.showMessageDialog(null, "Details updated successfully");
             setVisible(false);

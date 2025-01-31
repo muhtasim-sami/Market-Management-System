@@ -4,17 +4,19 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.List;
-import management.validation.DBConnection;
+import java.util.ArrayList;
+import java.util.Arrays;
+import management.validation.DBManager;
 
 public class AddEmployee extends JFrame implements ActionListener {
 
     JTextField tfname, tffname, tfaddress, tfphone, tfaadhar, tfemail, tfsalary, tfdesignation, lblempId, dcdob;
     JComboBox cbeducation, jcb;
     JButton add, back;
-    DBConnection dbConnection;
+    DBManager DBManager;
 
     public AddEmployee() {
-        dbConnection = new DBConnection();
+        DBManager = new DBManager();
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
 
@@ -115,17 +117,7 @@ public class AddEmployee extends JFrame implements ActionListener {
         tfaadhar = new JTextField();
         tfaadhar.setBounds(600, 350, 150, 30);
         add(tfaadhar);
-
-        JLabel labelempId = new JLabel("Employee id");
-        labelempId.setBounds(50, 400, 150, 30);
-        labelempId.setFont(new Font("serif", Font.PLAIN, 20));
-        add(labelempId);
-
-        lblempId = new JTextField();
-        lblempId.setBounds(200, 400, 150, 30);
-        lblempId.setFont(new Font("serif", Font.PLAIN, 20));
-        add(lblempId);
-
+		
         add = new JButton("Add Details");
         add.setBounds(250, 550, 150, 40);
         add.addActionListener(this);
@@ -157,12 +149,10 @@ public class AddEmployee extends JFrame implements ActionListener {
             String education = (String) cbeducation.getSelectedItem();
             String designation = (String) jcb.getSelectedItem();
             String aadhar = tfaadhar.getText();
-            String empId = lblempId.getText();
-
-            String employeeDetails = empId + "," + name + "," + fname + "," + dob + "," + salary + "," + address + "," + phone + "," + email + "," + education + "," + designation + "," + aadhar;
-            List<String> employeeData = dbConnection.readEmployeeData();
-            employeeData.add(employeeDetails);
-            dbConnection.writeFile(employeeData);
+			
+			List<String> employeeDetails = Arrays.asList(name, fname, dob, salary, address, phone, email, education, designation, aadhar);
+			
+            DBManager.addEmployeeData(employeeDetails);
 
             JOptionPane.showMessageDialog(null, "Employee Added Successfully");
             setVisible(false);

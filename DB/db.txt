@@ -1,25 +1,26 @@
-Employee: E001, John Employee, John Doe, 1985-04-12, 53000, 789 Market St, 1234567890, johne@market.com,BBA, Manager, 1234-5678-9012
+Employee: E001, John Employee, John Doe, 1985-04-12, 50000, 789 Market St, 1234567890, johne@market.com, BSc, Manager, 1234-5678-9012
 Employee: E002, Jane Employee, Richard Smith, 1990-09-25, 45000, 456 Bakery Lane, 0987654321, janee@market.com, BA, Sales Associate, 2345-6789-0123
 Employee: E003, Mark Taylor, Michael Taylor, 1982-08-14, 55000, 1010 Market St, 2345678901, markt@market.com, MSc, Senior Manager, 3456-7890-1234
 Employee: E004, Lucy White, Richard White, 1993-01-30, 48000, 678 Bakery Lane, 3456789012, lucyw@market.com, MBA, HR Manager, 4567-8901-2345
 Employee: E005, Robert Brown, Stephen Brown, 1988-11-20, 52000, 345 Market St, 4567890123, robertb@market.com, PhD, Director, 5678-9012-3456
 Employee: E006, Emily Green, Charles Green, 1995-02-18, 47000, 234 Bakery Lane, 5678901234, emilyg@market.com, BCom, Accountant, 6789-0123-4567
 
-User: U201, Sami, 1@Mn, Cashier, john@example.com
-User: U202, Rabby, 1@Ab, Shop Manager, jane@example.com
-User: U003, Mark Johnson, markPass789, mark@example.com
-User: U004, Lucy Brown, lucyPass101, lucy@example.com
-User: U005, Robert King, robertPass202, robert@example.com
-User: U006, Emily Harris, emilyPass303, emily@example.com
+User: U001, Sami, 1@Mn, Cashier, sami@example.com
+User: U002, Rabby, 1@Ab, Shop Manager, rabby@example.com
+User: U003, Mark Johnson, markPass789, Cashier, mark@example.com
+User: U004, Lucy Brown, lucyPass101, Shop Manager, lucy@example.com
+User: U005, Robert King, robertPass202, Cashier, robert@example.com
+User: U006, Emily Harris, emilyPass303, Cashier, emily@example.com
+User: U007, ahnaf, 1@Cd, Vendor, ahnaf@demo.com
 
 Shop: S001, John's Grocery, 123 Market Street, John Doe
-Product: S001P001,  Apples, Personal Care, 50,  40,  John's Grocery
-Product: S001P002, Bananas, Fruit, 30, 1.2, John's Grocery
+Product: S001P001, Apples, Fruit, 50, 2.5, John's Grocery
+Product: S001P002, Bananas, Fruit, 028, 1.2, John's Grocery
 Product: S001P003, Oranges, Fruit, 40, 3.0, John's Grocery
-Product: S001P004, Grapes, Fruit, 25, 4.0, John's Grocery
+Product: S001P004, Grapes, Fruit, 048, 4.0, John's Grocery, 
 Product: S001P005, Strawberries, Fruit, 20, 5.0, John's Grocery
 Product: S001P006, Mangoes, Fruit, 35, 2.8, John's Grocery
-Product: S001P007, Pineapples, Fruit, 28, 3.5, John's Grocery
+Product: S001P007, S001P0077PineapplesFruit0223.5John's Grocery
 
 Shop: S002, Jane's Bakery, 456 Bakery Lane, Jane Smith
 Product: S002P001, Bread, Bakery, 20, 1.5, Jane's Bakery

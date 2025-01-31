@@ -80,7 +80,7 @@ public class ProductManagement extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == add) {
             setVisible(false);
-            new AddProduct();
+            new AddProduct("");
         } else if (ae.getSource() == view) {
             setVisible(false);
             new ViewProduct();

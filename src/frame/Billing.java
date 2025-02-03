@@ -5,6 +5,8 @@ import java.io.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import management.validation.*;
@@ -21,25 +23,29 @@ public class Billing extends JFrame {
     private String customerNum = null;
 	private String path = System.getProperty("user.dir");  
 	private String background = (path.substring(0, path.length() - 3) + "pic\\Billing System.jpg");
+	private ArrayList<Object[]> selectedProductsList = new ArrayList<>();
+
 	
-    public Billing(DBManager DBManager, DefaultTableModel selectedProductsModel, double totalAmount) {
+    public Billing(DBManager DBManager, DefaultTableModel selectedProductsModel, double totalAmount, ArrayList<Object[]> selectedProductsList) {
 
         this.DBManager = DBManager;
         this.selectedProductsModel = selectedProductsModel;
         this.totalAmount = totalAmount;
+        this.selectedProductsList = selectedProductsList;
         //this.billArea = billArea;
 
         setupUI();
 
     }
 
-    public Billing(DBManager DBManager,String customerName, String customerNum, DefaultTableModel selectedProductsModel, double totalAmount) {
+    public Billing(DBManager DBManager,String customerName, String customerNum, DefaultTableModel selectedProductsModel, double totalAmount, ArrayList<Object[]> selectedProductsList) {
 
         this.DBManager = DBManager;
         this.customerName = customerName;
         this.customerNum = customerNum;
         this.selectedProductsModel = selectedProductsModel;
         this.totalAmount = totalAmount;
+        this.selectedProductsList = selectedProductsList;
         //this.billArea = billArea;
 
         setupUI();
@@ -147,7 +153,7 @@ public class Billing extends JFrame {
     private void addMoreProducts() {
 		customerDetails();
         this.setVisible(false);
-        new Buying(DBManager, customerName, customerNum, selectedProductsModel);
+        new Buying(DBManager, customerName, customerNum, selectedProductsModel, selectedProductsList);
     }
 
     private void saveBill() {

@@ -24,12 +24,12 @@ Product: S001P003, Oranges, Fruit, 294, 3.0, John's Grocery,
 Product: S001P004, Grapes, Fruit, 035, 4.0, John's Grocery, 
 Product: S001P005, Strawberries, Fruit, 298, 5.0, John's Grocery, 
 Product: S001P006, Mangoes, Fruit, 191, 2.8, John's Grocery, 
-Product: S001P007, S001P0077PineapplesFruit0223.5John's Grocery
+Product: S001P007, Pineapples, Fruit, 022, 3.5, John's Grocery
 
 Shop: S002, Jane's Bakery, 456 Bakery Lane, Jane Smith
 Product: S002P001, Bread, Bakery, 037, 1.5, Jane's Bakery, 
-Product: S002P002, Croissant, Bakery, 15, 2.0, Jane's Bakery
-Product: S002P003, Muffin, Bakery, 011, 2.5, Jane's Bakery, 
+Product: S002P002, Croissant, Bakery, 030, 2.0, Jane's Bakery, 
+Product: S002P003, Muffin, Bakery, 040, 2.5, Jane's Bakery, 
 Product: S002P004, Bagel, Bakery, 066, 1.8, Jane's Bakery, 
 Product: S002P005, Donut, Bakery, 025, 1.5, Jane's Bakery, 
 Product: S002P006, Scone, Bakery, 20, 2.2, Jane's Bakery

@@ -21,7 +21,7 @@ public class Buying extends JFrame {
     private JList<String> shopList;
     private JTable productTable, selectedProductsTable;
     private DefaultListModel<String> shopListModel;
-    private DefaultTableModel productTableModel, selectedProductsModel;
+    private DefaultTableModel productTableModel, editableProductTableModel, editableSelectedProductsModel, selectedProductsModel;
     private ArrayList<Shop> shops;
     private DBManager DBManager;
     private JTextField jtcustomerName, jtcustomerNum, quantityField;
@@ -36,6 +36,8 @@ public class Buying extends JFrame {
 	private Font f3 = new Font("Arial", Font.BOLD, 13);
 	private String path = System.getProperty("user.dir");  
 	private String background = (path.substring(0, path.length() - 3) + "pic\\Billing System.jpg");
+	private ArrayList<Object[]> selectedProductsList = new ArrayList<>();
+
 	
 	// Colors
 	private Color LIGHT_GREEN = new Color(102, 255, 102);
@@ -49,6 +51,7 @@ public class Buying extends JFrame {
 	
 	private boolean firstTimeOrder;
 	private boolean backToOrder;
+	String selectedShopId;
 
     public Buying(DBManager DBManager) {
         this.DBManager = DBManager;
@@ -63,11 +66,12 @@ public class Buying extends JFrame {
         setupBillPanel(f1, f3,  DARK_BLUE, lineBorder, crsr);
     }
 	
-	public Buying(DBManager DBManager, String customerName, String customerNum, DefaultTableModel selectedProductsModel ) {
+	public Buying(DBManager DBManager, String customerName, String customerNum, DefaultTableModel selectedProductsModel, ArrayList<Object[]> selectedProductsList ) {
         this.selectedProductsModel = selectedProductsModel;
 		this.DBManager = DBManager;
 		this.customerName = customerName;
         this.customerNum = customerNum;
+        this.selectedProductsList = selectedProductsList;
 		this.shops = new ArrayList<>();
 		firstTimeOrder = false;
 		backToOrder = true;
@@ -100,7 +104,6 @@ public class Buying extends JFrame {
         setTitle("Buying System");
         setBounds(200, 15, 1100, 900);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //getContentPane().setBackground(Color.WHITE);
         setLayout(null);
 		setVisible(true);
 		
@@ -114,42 +117,9 @@ public class Buying extends JFrame {
         titleLabel.setForeground( DARK_BLUE);
         add(titleLabel);
 
-        // Customer Information Panel
-        //setupCustomerPanel(f1, f3,  DARK_BLUE);
         
-        // Shop and Product Selection Panel
         setupShopAndProductPanel(f1, f3,  DARK_BLUE, lineBorder);
     }
-
-    /*private void setupCustomerPanel(Font f1, Font f3, Color  DARK_BLUE) {
-        JPanel customerPanel = new JPanel(null);
-        customerPanel.setBounds(20, 80, 1040, 60);
-        customerPanel.setBackground(Color.WHITE);
-        
-        JLabel customerName = new JLabel("Customer's Name:");
-        customerName.setBounds(10, 20, 150, 20);
-        customerName.setFont(f3);
-        customerName.setForeground( DARK_BLUE);
-        customerPanel.add(customerName);
-
-        jtcustomerName = new JTextField();
-        jtcustomerName.setBounds(160, 20, 150, 20);
-        jtcustomerName.setFont(f3);
-        customerPanel.add(jtcustomerName);
-
-        JLabel customerNum = new JLabel("Contact Number:");
-        customerNum.setBounds(330, 20, 150, 20);
-        customerNum.setFont(f3);
-        customerNum.setForeground( DARK_BLUE);
-        customerPanel.add(customerNum);
-
-        jtcustomerNum = new JTextField();
-        jtcustomerNum.setBounds(490, 20, 150, 20);
-        jtcustomerNum.setFont(f3);
-        customerPanel.add(jtcustomerNum);
-
-        add(customerPanel);
-    }*/
 
     private void setupShopAndProductPanel(Font f1, Font f3, Color  DARK_BLUE, LineBorder lineBorder) {
         // Shop List
@@ -185,9 +155,7 @@ public class Buying extends JFrame {
         productTable = new JTable(productTableModel);
         productTable.setFont(f3);
         productTable.getTableHeader().setFont(f3);
-        //productTable.setModel(tableModel);
-        //productTable.setEnabled(false);
-        //productTable.addTableModelListener(quantityFocus);
+        
 
         JScrollPane productScrollPane = new JScrollPane(productTable);
         productScrollPane.setBounds(290, 190, 770, 150);
@@ -216,7 +184,7 @@ public class Buying extends JFrame {
             if (!e.getValueIsAdjusting()) {
                 int selectedIndex = shopList.getSelectedIndex();
                 if (selectedIndex != -1) {
-                    String selectedShopId = shops.get(selectedIndex).getId();
+                    selectedShopId = shops.get(selectedIndex).getId();
                     updateProductTable(selectedShopId);
                 }
             }
@@ -284,70 +252,86 @@ public class Buying extends JFrame {
 		cancelButton.setFont(f3);
 		cancelButton.setBackground( DARK_BLUE);
 		cancelButton.setForeground(Color.WHITE);
-		cancelButton.addActionListener(e -> cancelSelectedRow());
+		cancelButton.addActionListener(e -> removeSelectedRowAndUpdateModel());
 		add(cancelButton);
 
-        //add(buttonPanel);
-    }
-
-    private void addToSelectedProducts() {
-        int selectedRow = productTable.getSelectedRow();
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a product first");
-            return;
-        }
-
-        String quantityStr = quantityField.getText().trim();
-        if (quantityStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter quantity");
-            return;
-        }
-
-        try {
-            int quantity = Integer.parseInt(quantityStr);
-            int availableQuantity = Integer.parseInt(productTable.getValueAt(selectedRow, 3).toString());
-            
-            if (quantity <= 0) {
-                JOptionPane.showMessageDialog(this, "Please enter a valid quantity");
-                return;
-            }
-            
-            if (quantity > availableQuantity) {
-                JOptionPane.showMessageDialog(this, "Not enough quantity available");
-                return;
-            }
-
-            String productId = productTable.getValueAt(selectedRow, 0).toString();
-            String productName = productTable.getValueAt(selectedRow, 1).toString();
-            double price = Double.parseDouble(productTable.getValueAt(selectedRow, 4).toString());
-            double total = price * quantity;
-
-            selectedProductsModel.addRow(new Object[]{
-                productId,
-                productName,
-                quantity,
-                price,
-                total
-            });
-
-            totalAmount += total;
-            quantityField.setText("");
-
-            // Update available quantity in product table
-            productTable.setValueAt(availableQuantity - quantity, selectedRow, 3);
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Please enter a valid quantity");
-        }
     }
 	
+	
+	private void addToSelectedProducts() {
+		int selectedRow = productTable.getSelectedRow();
+		if (selectedRow == -1) {
+			JOptionPane.showMessageDialog(this, "Please select a product first");
+			return;
+		}
+
+		String quantityStr = quantityField.getText().trim();
+		if (quantityStr.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Please enter quantity");
+			return;
+		}
+
+		try {
+			int quantity = Integer.parseInt(quantityStr);
+			
+			String productId = (String) editableProductTableModel.getValueAt(selectedRow, 0);
+			String productName = (String) editableProductTableModel.getValueAt(selectedRow, 1);
+			String availableQuantityStr = (String) editableProductTableModel.getValueAt(selectedRow, 3);
+			String priceStr = (String) editableProductTableModel.getValueAt(selectedRow, 4);
+
+			int availableQuantity = Integer.parseInt(availableQuantityStr.trim());
+			double price = Double.parseDouble(priceStr.trim());
+
+			if (quantity <= 0) {
+				JOptionPane.showMessageDialog(this, "Please enter a valid quantity");
+				return;
+			}
+
+			if (quantity > availableQuantity) {
+				JOptionPane.showMessageDialog(this, "Not enough quantity available");
+				return;
+			}
+
+			double total = price * quantity;
+
+			Object[] newRow = {productId, productName, quantity, price, total};
+			updateSelectedProductsModel(newRow);
+
+
+			totalAmount += total;
+			quantityField.setText("");
+
+			// Refresh the product table
+			//editableProductTableModel.fireTableDataChanged();
+
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "Please enter a valid quantity");
+		}
+	}
+	
+	private void updateSelectedProductsModel(Object[] newRowData) {
+		
+		selectedProductsList.add(newRowData);
+
+		Object[][] dataArray = new Object[selectedProductsList.size()][];
+        for (int i = 0; i < selectedProductsList.size(); i++) {
+            dataArray[i] = selectedProductsList.get(i);
+        }
+		
+		String[] columnNames = {"ProductID", "ProductName", "Quantity", "Price", "Total"};
+		editableSelectedProductsModel = new DefaultTableModel(dataArray, columnNames);
+		selectedProductsModel = new NonEditableTableModel(dataArray, columnNames);
+
+		selectedProductsTable.setModel(selectedProductsModel);
+	}
+	
 	public void firstTImeBilling(){
-		new Billing(DBManager, selectedProductsModel, totalAmount);
+		new Billing(DBManager, selectedProductsModel, totalAmount, selectedProductsList);
 		setVisible(false);
 	}
 	
 	public void backToBilling(){
-		new Billing(DBManager,customerName, customerNum, selectedProductsModel, totalAmount);
+		new Billing(DBManager,customerName, customerNum, selectedProductsModel, totalAmount, selectedProductsList);
 		setVisible(false);
 	}
 
@@ -453,38 +437,6 @@ public class Buying extends JFrame {
         }
     }
 	
-    private void updateProductTable(String shopId) {
-        // Clear existing table data
-        productTableModel.setRowCount(0);
-        
-        // Find the selected shop
-        Shop selectedShop = shops.stream()
-            .filter(shop -> shop.getId().equals(shopId))
-            .findFirst()
-            .orElse(null);
-            
-        if (selectedShop != null) {
-            // Add each product to the table
-            for (String productInfo : selectedShop.products) {
-                String[] data = productInfo.split(",");
-                if (data.length == 6) { // Ensure we have all required fields
-                    productTableModel.addRow(new Object[]{
-                        data[0].trim(), // ProductID
-                        data[1].trim(), // ProductName
-                        data[2].trim(), // Type
-                        data[3].trim(), // Quantity
-                        data[4].trim(), // Price
-                        data[5].trim()  // CompanyName
-                    });
-                }
-            }
-        }
-        
-        // Notify the table that data has changed
-        productTableModel.fireTableDataChanged();
-        productTableModel.addTableModelListener(quantityFocus);
-    }
-	/*
 	private void updateProductTable(String shopId) {
         List<String> productData = new ArrayList<>();
         for (Shop shop : shops) {
@@ -501,8 +453,9 @@ public class Buying extends JFrame {
         
         // Use the custom NonEditableTableModel
         productTableModel = new NonEditableTableModel(data, columnNames);
+		editableProductTableModel = new DefaultTableModel(data, columnNames);
         productTable.setModel(productTableModel);
-    }*/
+    }
 	
 	public void quantityFocus(){
 		quantityField.requestFocus();
@@ -517,32 +470,24 @@ public class Buying extends JFrame {
 		}
 	};
 	
-	private void cancelSelectedRow() {
+	private void removeSelectedRowAndUpdateModel() {
 		int selectedRow = selectedProductsTable.getSelectedRow();
 		if (selectedRow == -1) {
 			JOptionPane.showMessageDialog(this, "Please select a product to cancel");
 			return;
 		}
-
-		// Get the product details from the selected row
-		String productId = selectedProductsTable.getValueAt(selectedRow, 0).toString();
-		int quantity = Integer.parseInt(selectedProductsTable.getValueAt(selectedRow, 2).toString());
-		double total = Double.parseDouble(selectedProductsTable.getValueAt(selectedRow, 4).toString());
-
-		// Update the total amount
-		totalAmount -= total;
-
-		// Find the product in the product table and update its quantity
-		for (int i = 0; i < productTable.getRowCount(); i++) {
-			if (productTable.getValueAt(i, 0).toString().equals(productId)) {
-				int currentQuantity = Integer.parseInt(productTable.getValueAt(i, 3).toString());
-				productTable.setValueAt(currentQuantity + quantity, i, 3);
-				break;
-			}
+		selectedProductsList.remove(selectedRow);
+		Object[][] dataArray = new Object[selectedProductsList.size()][];
+		for (int i = 0; i < selectedProductsList.size(); i++) {
+			dataArray[i] = selectedProductsList.get(i);
 		}
 
-		// Remove the row from the selected products table
-		selectedProductsModel.removeRow(selectedRow);
+		String[] columnNames = {"ProductID", "ProductName", "Quantity", "Price", "Total"};
+		editableSelectedProductsModel = new DefaultTableModel(dataArray, columnNames);
+		selectedProductsModel = new NonEditableTableModel(dataArray, columnNames);
+
+		selectedProductsTable.setModel(selectedProductsModel);
+		
 	}
 
 

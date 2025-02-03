@@ -4,74 +4,78 @@ Employee: E003, Mark Taylor, Michael Taylor, 1982-08-14, 55000, 1010 Market St, 
 Employee: E004, Lucy White, Richard White, 1993-01-30, 48000, 678 Bakery Lane, 3456789012, lucyw@market.com, MBA, HR Manager, 4567-8901-2345
 Employee: E005, Robert Brown, Stephen Brown, 1988-11-20, 52000, 345 Market St, 4567890123, robertb@market.com, PhD, Director, 5678-9012-3456
 Employee: E006, Emily Green, Charles Green, 1995-02-18, 47000, 234 Bakery Lane, 5678901234, emilyg@market.com, BCom, Accountant, 6789-0123-4567
+Employee: E007, , , , , , , , BBA, Manager, 
 
-User: U001, Sami, 1@Mn, Cashier, sami@example.com
-User: U002, Rabby, 1@Ab, Shop Manager, rabby@example.com
-User: U003, Mark Johnson, markPass789, Cashier, mark@example.com
-User: U004, Lucy Brown, lucyPass101, Shop Manager, lucy@example.com
-User: U005, Robert King, robertPass202, Cashier, robert@example.com
-User: U006, Emily Harris, emilyPass303, Cashier, emily@example.com
+User: U001, Sami, 1@Mn, Shop Manager, sami@example.com
+User: U002, Rabby, 1@Ab, Employee Manager, rabby@example.com
+User: U003, Mark Johnson, markPass789, Shop Manager, mark@example.com
+User: U004, Lucy Brown, lucyPass101, Employee Manager, lucy@example.com
+User: U005, Robert King, robertPass202, Shop Manager, robert@example.com
+User: U006, Emily Harris, emilyPass303, Shop Manager, emily@example.com
 User: U007, ahnaf, 1@Cd, Vendor, ahnaf@demo.com
+User: U008, Niasor, 1@Niasor, Vendor, niasor@gmail.com
+User: U009, arponil, 1@Gh, Employee Manager, arponil@demo.com
+User: U010, fahim, 1@Ef, Employee Manager, fahim@gmail.com
 
 Shop: S001, John's Grocery, 123 Market Street, John Doe
-Product: S001P001, Apples, Fruit, 50, 2.5, John's Grocery
-Product: S001P002, Bananas, Fruit, 028, 1.2, John's Grocery
-Product: S001P003, Oranges, Fruit, 40, 3.0, John's Grocery
-Product: S001P004, Grapes, Fruit, 048, 4.0, John's Grocery, 
-Product: S001P005, Strawberries, Fruit, 20, 5.0, John's Grocery
-Product: S001P006, Mangoes, Fruit, 35, 2.8, John's Grocery
+Product: S001P001, Apples, Fruit, 087, 2.5, John's Grocery, 
+Product: S001P002, Bananas, Fruit, 173, 1.2, John's Grocery, 
+Product: S001P003, Oranges, Fruit, 294, 3.0, John's Grocery, 
+Product: S001P004, Grapes, Fruit, 035, 4.0, John's Grocery, 
+Product: S001P005, Strawberries, Fruit, 298, 5.0, John's Grocery, 
+Product: S001P006, Mangoes, Fruit, 191, 2.8, John's Grocery, 
 Product: S001P007, S001P0077PineapplesFruit0223.5John's Grocery
 
 Shop: S002, Jane's Bakery, 456 Bakery Lane, Jane Smith
-Product: S002P001, Bread, Bakery, 20, 1.5, Jane's Bakery
+Product: S002P001, Bread, Bakery, 037, 1.5, Jane's Bakery, 
 Product: S002P002, Croissant, Bakery, 15, 2.0, Jane's Bakery
-Product: S002P003, Muffin, Bakery, 25, 2.5, Jane's Bakery
-Product: S002P004, Bagel, Bakery, 30, 1.8, Jane's Bakery
-Product: S002P005, Donut, Bakery, 35, 1.5, Jane's Bakery
+Product: S002P003, Muffin, Bakery, 011, 2.5, Jane's Bakery, 
+Product: S002P004, Bagel, Bakery, 066, 1.8, Jane's Bakery, 
+Product: S002P005, Donut, Bakery, 025, 1.5, Jane's Bakery, 
 Product: S002P006, Scone, Bakery, 20, 2.2, Jane's Bakery
-Product: S002P007, Tart, Bakery, 18, 3.0, Jane's Bakery
+Product: S002P007, Tart, Bakery, 128, 3.0, Jane's Bakery, 
 
 Shop: S003, Mark's Electronics, 789 Tech Park, Mark Johnson
-Product: S003P001, Laptop, Electronics, 10, 1000, Mark's Electronics
-Product: S003P002, Headphones, Electronics, 25, 150, Mark's Electronics
-Product: S003P003, Smartphone, Electronics, 30, 800, Mark's Electronics
-Product: S003P004, Tablet, Electronics, 20, 600, Mark's Electronics
-Product: S003P005, Smartwatch, Electronics, 40, 200, Mark's Electronics
-Product: S003P006, Camera, Electronics, 15, 1200, Mark's Electronics
-Product: S003P007, Speaker, Electronics, 50, 300, Mark's Electronics
+Product: S003P001, Laptop, Electronics, 100, 1000, Mark's Electronics, 
+Product: S003P002, Headphones, Electronics, 021, 150, Mark's Electronics, 
+Product: S003P003, Smartphone, Electronics, 027, 800, Mark's Electronics, 
+Product: S003P004, Tablet, Electronics, 074, 600, Mark's Electronics, 
+Product: S003P005, Smartwatch, Electronics, 037, 200, Mark's Electronics, 
+Product: S003P006, Camera, Electronics, 012, 1200, Mark's Electronics, 
+Product: S003P007, Speaker, Electronics, 049, 300, Mark's Electronics, 
 
 Shop: S004, Emily's Boutique, 321 Fashion Ave, Emily Harris
-Product: S004P001, Dress, Clothing, 15, 50, Emily's Boutique
-Product: S004P002, Jacket, Clothing, 20, 80, Emily's Boutique
-Product: S004P003, Shoes, Clothing, 25, 60, Emily's Boutique
-Product: S004P004, Handbag, Clothing, 10, 100, Emily's Boutique
-Product: S004P005, Scarf, Clothing, 30, 20, Emily's Boutique
-Product: S004P006, Hat, Clothing, 12, 25, Emily's Boutique
+Product: S004P001, Dress, Clothing, 070, 50, Emily's Boutique, 
+Product: S004P002, Jacket, Clothing, 010, 80, Emily's Boutique, 
+Product: S004P003, Shoes, Clothing, 019, 60, Emily's Boutique, 
+Product: S004P004, Handbag, Clothing, 086, 100, Emily's Boutique, 
+Product: S004P005, Scarf, Clothing, 024, 20, Emily's Boutique, 
+Product: S004P006, Hat, Clothing, 066, 25, Emily's Boutique, 
 Product: S004P007, Gloves, Clothing, 18, 30, Emily's Boutique
 
 Shop: S005, Robert's Bookstore, 987 Book St, Robert King
 Product: S005P001, Fiction Book, Book, 100, 15.0, Robert's Bookstore
 Product: S005P002, Non-fiction Book, Book, 80, 20.0, Robert's Bookstore
-Product: S005P003, Children's Book, Book, 50, 10.0, Robert's Bookstore
+Product: S005P003, Children's Book, Book, 045, 10.0, Robert's Bookstore, 
 Product: S005P004, Mystery Book, Book, 60, 18.0, Robert's Bookstore
 Product: S005P005, Science Book, Book, 40, 25.0, Robert's Bookstore
 Product: S005P006, History Book, Book, 30, 22.0, Robert's Bookstore
-Product: S005P007, Art Book, Book, 20, 30.0, Robert's Bookstore
+Product: S005P007, Art Book, Book, 126, 30.0, Robert's Bookstore, 
 
 Shop: S006, Lucy's Toy Store, 654 Toy Ave, Lucy Brown
-Product: S006P001, Teddy Bear, Toy, 50, 25.0, Lucy's Toy Store
+Product: S006P001, Teddy Bear, Toy, 045, 25.0, Lucy's Toy Store, 
 Product: S006P002, Doll, Toy, 40, 30.0, Lucy's Toy Store
 Product: S006P003, Puzzle, Toy, 60, 15.0, Lucy's Toy Store
 Product: S006P004, Action Figure, Toy, 70, 20.0, Lucy's Toy Store
-Product: S006P005, Board Game, Toy, 30, 35.0, Lucy's Toy Store
-Product: S006P006, Toy Car, Toy, 80, 15.0, Lucy's Toy Store
-Product: S006P007, Lego Set, Toy, 100, 50.0, Lucy's Toy Store
+Product: S006P005, Board Game, Toy, 028, 35.0, Lucy's Toy Store, 
+Product: S006P006, Toy Car, Toy, 074, 15.0, Lucy's Toy Store, 
+Product: S006P007, Lego Set, Toy, 098, 50.0, Lucy's Toy Store, 
 
 Shop: S007, Emily's Jewelry Store, 789 Gem St, Emily Harris
-Product: S007P001, Necklace, Jewelry, 25, 150.0, Emily's Jewelry Store
-Product: S007P002, Ring, Jewelry, 30, 200.0, Emily's Jewelry Store
-Product: S007P003, Bracelet, Jewelry, 40, 100.0, Emily's Jewelry Store
-Product: S007P004, Earrings, Jewelry, 50, 75.0, Emily's Jewelry Store
-Product: S007P005, Watch, Jewelry, 20, 250.0, Emily's Jewelry Store
-Product: S007P006, Anklet, Jewelry, 35, 90.0, Emily's Jewelry Store
-Product: S007P007, Brooch, Jewelry, 15, 60.0, Emily's Jewelry Store
+Product: S007P001,  Necklace, Personal Care,  069,  250.0,  Emily's Jewelry Store
+Product: S007P002, Ring, Jewelry, 218, 200.0, Emily's Jewelry Store, 
+Product: S007P003, Bracelet, Jewelry, 030, 100.0, Emily's Jewelry Store, 
+Product: S007P004, Earrings, Jewelry, 036, 75.0, Emily's Jewelry Store, 
+Product: S007P005, Watch, Jewelry, 542, 250.0, Emily's Jewelry Store, 
+Product: S007P006, Anklet, Jewelry, 031, 90.0, Emily's Jewelry Store, 
+Product: S007P007, Brooch, Jewelry, 195, 60.0, Emily's Jewelry Store, 

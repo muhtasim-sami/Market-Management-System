@@ -1,376 +1,170 @@
 package frame;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Date;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.text.SimpleDateFormat;
-import management.validation.DBManager;
-import management.shop.*;
+import management.validation.*;
 
 public class Billing extends JFrame {
-    private JList<String> shopList;
-    private JTable productTable, selectedProductsTable;
-    private DefaultListModel<String> shopListModel;
-    private DefaultTableModel productTableModel, selectedProductsModel;
-    private ArrayList<Shop> shops;
-    private DBManager DBManager;
-    private JTextField jtcustomerName, jtcustomerNum, quantityField;
     private JTextArea billArea;
-    private JButton addToCart, generateBill, saveButton, backButton;
-    private double totalAmount = 0;
+    private JTable selectedProductsTable;
+    private DefaultTableModel selectedProductsModel;
+	private JTextField jtcustomerName, jtcustomerNum;
+    private JButton addMoreButton;
+    private double totalAmount;
+    private DBManager DBManager;
+    private String customerName = null;
+    private String customerNum = null;
+	private String path = System.getProperty("user.dir");  
+	private String background = (path.substring(0, path.length() - 3) + "pic\\Billing System.jpg");
+	
+    public Billing(DBManager DBManager, DefaultTableModel selectedProductsModel, double totalAmount) {
 
-    public Billing(DBManager DBManager) {
         this.DBManager = DBManager;
-        this.shops = new ArrayList<>();
-        loadData();
+        this.selectedProductsModel = selectedProductsModel;
+        this.totalAmount = totalAmount;
+        //this.billArea = billArea;
+
         setupUI();
+
+    }
+
+    public Billing(DBManager DBManager,String customerName, String customerNum, DefaultTableModel selectedProductsModel, double totalAmount) {
+
+        this.DBManager = DBManager;
+        this.customerName = customerName;
+        this.customerNum = customerNum;
+        this.selectedProductsModel = selectedProductsModel;
+        this.totalAmount = totalAmount;
+        //this.billArea = billArea;
+
+        setupUI();
+		jtcustomerName.setText(customerName);
+		jtcustomerNum.setText(customerNum);
     }
 
     private void setupUI() {
         // Fonts
         Font f1 = new Font("Arial", Font.BOLD, 18);
-        Font f2 = new Font("Times New Roman", Font.BOLD, 25);
         Font f3 = new Font("Arial", Font.BOLD, 13);
-        
+
+		Cursor crsr = new Cursor(Cursor.HAND_CURSOR);
+		LineBorder lineBorder = new LineBorder(Color.black, 1, true);
+		
         // Colors
-        Color LIGHT_GREEN = new Color(102, 255, 102);
-        Color DARK_GREEN = new Color(0, 153, 0);
-        
-        // Cursor and Border
-        Cursor crsr = new Cursor(Cursor.HAND_CURSOR);
-        LineBorder lineBorder = new LineBorder(Color.black, 1, true);
-        
+        //Color DARK_GREEN = new Color(0, 153, 0);
+        Color DARK_BLUE = new Color(0, 0, 204);
+
         // Frame setup
         setTitle("Billing System");
-        setBounds(200, 15, 1100, 900);
+        setBounds(200, 15, 1100, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(Color.WHITE);
+        //getContentPane().setBackground(Color.WHITE);
         setLayout(null);
-		setVisible(true);
+        setVisible(true);
+		
+		JLabel l = new JLabel(new ImageIcon(background));
+		setContentPane(l);
 
         // Title
         JLabel titleLabel = new JLabel("Billing System");
         titleLabel.setBounds(450, 20, 200, 50);
-        titleLabel.setFont(f2);
-        titleLabel.setForeground(DARK_GREEN);
+        titleLabel.setFont(f1);
+        titleLabel.setForeground(DARK_BLUE);
         add(titleLabel);
 
-        // Customer Information Panel
-        setupCustomerPanel(f1, f3, DARK_GREEN);
-        
-        // Shop and Product Selection Panel
-        setupShopAndProductPanel(f1, f3, DARK_GREEN, lineBorder);
-        
         // Selected Products Panel
-        setupSelectedProductsPanel(f1, f3, DARK_GREEN, lineBorder);
-        
-        // Bill Panel
-        setupBillPanel(f1, f3, DARK_GREEN, lineBorder, crsr);
-    }
-
-    private void setupCustomerPanel(Font f1, Font f3, Color DARK_GREEN) {
-        JPanel customerPanel = new JPanel(null);
-        customerPanel.setBounds(20, 80, 1040, 60);
-        customerPanel.setBackground(Color.WHITE);
-        
-        JLabel customerName = new JLabel("Customer's Name:");
-        customerName.setBounds(10, 20, 150, 20);
-        customerName.setFont(f3);
-        customerName.setForeground(DARK_GREEN);
-        customerPanel.add(customerName);
-
-        jtcustomerName = new JTextField();
-        jtcustomerName.setBounds(160, 20, 150, 20);
-        jtcustomerName.setFont(f3);
-        customerPanel.add(jtcustomerName);
-
-        JLabel customerNum = new JLabel("Contact Number:");
-        customerNum.setBounds(330, 20, 150, 20);
-        customerNum.setFont(f3);
-        customerNum.setForeground(DARK_GREEN);
-        customerPanel.add(customerNum);
-
-        jtcustomerNum = new JTextField();
-        jtcustomerNum.setBounds(490, 20, 150, 20);
-        jtcustomerNum.setFont(f3);
-        customerPanel.add(jtcustomerNum);
-
-        add(customerPanel);
-    }
-
-    private void setupShopAndProductPanel(Font f1, Font f3, Color DARK_GREEN, LineBorder lineBorder) {
-        // Shop List
-        JLabel shopLabel = new JLabel("Select Shop");
-        shopLabel.setBounds(20, 150, 200, 30);
-        shopLabel.setFont(f1);
-        shopLabel.setForeground(DARK_GREEN);
-        add(shopLabel);
-
-        shopListModel = new DefaultListModel<>();
-        shopList = new JList<>(shopListModel);
-        shopList.setFont(f3);
-        shopList.setBorder(lineBorder);
-        
-        for (Shop shop : shops) {
-            shopListModel.addElement(shop.name);
-        }
-
-        JScrollPane shopScrollPane = new JScrollPane(shopList);
-        shopScrollPane.setBounds(20, 190, 250, 150);
-        add(shopScrollPane);
-
-        // Product Table
-        JLabel productLabel = new JLabel("Available Products");
-        productLabel.setBounds(290, 150, 200, 30);
-        productLabel.setFont(f1);
-        productLabel.setForeground(DARK_GREEN);
-        add(productLabel);
-
-        String[] columnNames = {"ProductID", "ProductName", "Type", "Available", "Price", "CompanyName"};
-        productTableModel = new DefaultTableModel(columnNames, 0);
-        productTable = new JTable(productTableModel);
-        productTable.setFont(f3);
-        productTable.getTableHeader().setFont(f3);
-
-        JScrollPane productScrollPane = new JScrollPane(productTable);
-        productScrollPane.setBounds(290, 190, 770, 150);
-        add(productScrollPane);
-
-        // Quantity Panel
-        JPanel quantityPanel = new JPanel(null);
-        quantityPanel.setBounds(20, 350, 450, 50);
-        quantityPanel.setBackground(Color.WHITE);
-
-        JLabel quantityLabel = new JLabel("Quantity:");
-        quantityLabel.setBounds(10, 10, 80, 30);
-        quantityLabel.setFont(f3);
-        quantityLabel.setForeground(DARK_GREEN);
-        quantityPanel.add(quantityLabel);
-
-        quantityField = new JTextField();
-        quantityField.setBounds(90, 10, 80, 30);
-        quantityField.setFont(f3);
-        quantityPanel.add(quantityField);
-
-        addToCart = new JButton("Add to Cart");
-        addToCart.setBounds(180, 10, 120, 30);
-        addToCart.setFont(f3);
-        addToCart.setBackground(DARK_GREEN);
-        addToCart.setForeground(Color.WHITE);
-        addToCart.addActionListener(e -> addToSelectedProducts());
-        quantityPanel.add(addToCart);
-
-        add(quantityPanel);
-
-        // Add selection listener
-        shopList.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                int selectedIndex = shopList.getSelectedIndex();
-                if (selectedIndex != -1) {
-                    String selectedShopId = shops.get(selectedIndex).getId();
-                    updateProductTable(selectedShopId);
-                }
-            }
-        });
-    }
-
-    private void setupSelectedProductsPanel(Font f1, Font f3, Color DARK_GREEN, LineBorder lineBorder) {
         JLabel selectedLabel = new JLabel("Selected Products");
-        selectedLabel.setBounds(20, 410, 200, 30);
+        selectedLabel.setBounds(330, 100, 200, 30);
         selectedLabel.setFont(f1);
-        selectedLabel.setForeground(DARK_GREEN);
+        selectedLabel.setForeground(DARK_BLUE);
         add(selectedLabel);
 
-        String[] columnNames = {"ProductID", "ProductName", "Quantity", "Price", "Total"};
-        selectedProductsModel = new DefaultTableModel(columnNames, 0);
         selectedProductsTable = new JTable(selectedProductsModel);
         selectedProductsTable.setFont(f3);
         selectedProductsTable.getTableHeader().setFont(f3);
 
         JScrollPane selectedScrollPane = new JScrollPane(selectedProductsTable);
-        selectedScrollPane.setBounds(20, 450, 1040, 150);
+        selectedScrollPane.setBounds(330, 140, 700, 150);
         add(selectedScrollPane);
-    }
 
-    private void setupBillPanel(Font f1, Font f3, Color DARK_GREEN, LineBorder lineBorder, Cursor crsr) {
-        // Bill Area
-        billArea = new JTextArea();
+		billArea = new JTextArea();
         billArea.setFont(f3);
         billArea.setEditable(false);
+
+        // Bill Area
         JScrollPane billScroll = new JScrollPane(billArea);
-        billScroll.setBounds(20, 610, 1040, 180);
+        billScroll.setBounds(330, 310, 700, 180);
         add(billScroll);
 
         // Buttons
         JPanel buttonPanel = new JPanel(null);
-        buttonPanel.setBounds(500, 350, 720, 50);
+        buttonPanel.setBounds(20, 200, 300, 150);
         buttonPanel.setBackground(Color.WHITE);
 
-        generateBill = new JButton("Generate Bill");
-        generateBill.setBounds(10, 10, 150, 30);
-        generateBill.setFont(f3);
-        generateBill.setCursor(crsr);
-        generateBill.setBackground(DARK_GREEN);
-        generateBill.setForeground(Color.WHITE);
-        generateBill.addActionListener(e -> generateBill());
-        buttonPanel.add(generateBill);
+        addMoreButton = new JButton("Add More");
+        addMoreButton.setBounds(30, 250, 150, 30);
+        addMoreButton.setFont(f3);
+        addMoreButton.setBackground(DARK_BLUE);
+        addMoreButton.setForeground(Color.WHITE);
+        addMoreButton.addActionListener(e -> addMoreProducts());
+        add(addMoreButton);
 
-        saveButton = new JButton("Save Bill");
-        saveButton.setBounds(180, 10, 150, 30);
+        JButton saveButton = new JButton("Save Bill");
+        saveButton.setBounds(30, 290, 150, 30);
         saveButton.setFont(f3);
-        saveButton.setCursor(crsr);
-        saveButton.setBackground(DARK_GREEN);
+        saveButton.setBackground(DARK_BLUE);
         saveButton.setForeground(Color.WHITE);
         saveButton.addActionListener(e -> saveBill());
-        buttonPanel.add(saveButton);
+        add(saveButton);
 
-        backButton = new JButton("Back");
-        backButton.setBounds(350, 10, 150, 30);
+        JButton backButton = new JButton("Back");
+        backButton.setBounds(30, 330, 150, 30);
         backButton.setFont(f3);
-        backButton.setCursor(crsr);
-        backButton.setBackground(DARK_GREEN);
+        backButton.setBackground(DARK_BLUE);
         backButton.setForeground(Color.WHITE);
-        backButton.addActionListener(e -> goBack());
-        buttonPanel.add(backButton);
+        backButton.addActionListener(e -> addMoreProducts());
+        add(backButton);
+		
+		JButton generateBill = new JButton("Generate Bill");
+        generateBill.setBounds(30, 370, 150, 30);
+        generateBill.setFont(f3);
+        generateBill.setCursor(crsr);
+        generateBill.setBackground(DARK_BLUE);
+        generateBill.setForeground(Color.WHITE);
+        generateBill.addActionListener(e -> generateBill());
+        add(generateBill);
 
-        add(buttonPanel);
+        //add(buttonPanel);
+		setupCustomerPanel(f1, f3, DARK_BLUE, customerName, customerNum);
+		//generateBill();
     }
 
-    private void addToSelectedProducts() {
-        int selectedRow = productTable.getSelectedRow();
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a product first");
-            return;
-        }
-
-        String quantityStr = quantityField.getText().trim();
-        if (quantityStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter quantity");
-            return;
-        }
-
-        try {
-            int quantity = Integer.parseInt(quantityStr);
-            int availableQuantity = Integer.parseInt(productTable.getValueAt(selectedRow, 3).toString());
-            
-            if (quantity <= 0) {
-                JOptionPane.showMessageDialog(this, "Please enter a valid quantity");
-                return;
-            }
-            
-            if (quantity > availableQuantity) {
-                JOptionPane.showMessageDialog(this, "Not enough quantity available");
-                return;
-            }
-
-            String productId = productTable.getValueAt(selectedRow, 0).toString();
-            String productName = productTable.getValueAt(selectedRow, 1).toString();
-            double price = Double.parseDouble(productTable.getValueAt(selectedRow, 4).toString());
-            double total = price * quantity;
-
-            selectedProductsModel.addRow(new Object[]{
-                productId,
-                productName,
-                quantity,
-                price,
-                total
-            });
-
-            totalAmount += total;
-            quantityField.setText("");
-
-            // Update available quantity in product table
-            productTable.setValueAt(availableQuantity - quantity, selectedRow, 3);
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Please enter a valid quantity");
-        }
+    private void addMoreProducts() {
+		customerDetails();
+        this.setVisible(false);
+        new Buying(DBManager, customerName, customerNum, selectedProductsModel);
     }
-
-	private void generateBill() {
-		if (selectedProductsModel.getRowCount() == 0) {
-			JOptionPane.showMessageDialog(this, "No products selected");
-			return;
-		}
-
-		if (jtcustomerName.getText().trim().isEmpty() || jtcustomerNum.getText().trim().isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Please enter customer details");
-			return;
-		}
-
-		// Update quantities in database for all selected products
-		try {
-			for (int i = 0; i < selectedProductsModel.getRowCount(); i++) {
-				String productId = selectedProductsModel.getValueAt(i, 0).toString();
-				int quantity = Integer.parseInt(selectedProductsModel.getValueAt(i, 2).toString());
-				
-				// Update the quantity in database
-				DBManager.decreasedProductQuantity(productId, quantity);
-			}
-
-			// Now generate the bill as before
-			StringBuilder bill = new StringBuilder();
-			bill.append("************************************************************\n");
-			bill.append("************************* BILLING INVOICE *******************\n");
-			bill.append("************************************************************\n\n");
-			bill.append("Customer Name: ").append(jtcustomerName.getText()).append("\n");
-			bill.append("Contact Number: ").append(jtcustomerNum.getText()).append("\n");
-			bill.append("Date: ").append(java.time.LocalDate.now()).append("\n\n");
-			bill.append("Products:\n");
-			bill.append("---------------------------------------------------------------\n");
-			bill.append(String.format("%-10s %-20s %-10s %-10s %-10s\n", 
-				"ID", "Name", "Quantity", "Price", "Total"));
-			bill.append("---------------------------------------------------------------\n");
-
-			for (int i = 0; i < selectedProductsModel.getRowCount(); i++) {
-				bill.append(String.format("%-10s %-20s %-10s %-10.2f %-10.2f\n",
-					selectedProductsModel.getValueAt(i, 0),
-					selectedProductsModel.getValueAt(i, 1),
-					selectedProductsModel.getValueAt(i, 2),
-					selectedProductsModel.getValueAt(i, 3),
-					selectedProductsModel.getValueAt(i, 4)));
-			}
-
-			bill.append("---------------------------------------------------------------\n");
-			bill.append(String.format("Total Amount: %.2f\n", totalAmount));
-			bill.append("---------------------------------------------------------------\n");
-			bill.append("\nThank you for shopping with us!\n");
-			
-			billArea.setText(bill.toString());
-			
-			// Show success message
-			JOptionPane.showMessageDialog(this, "Bill generated and quantities updated successfully!");
-			
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, 
-				"Error updating quantities: " + e.getMessage(),
-				"Update Error",
-				JOptionPane.ERROR_MESSAGE);
-		}
-	}
 
     private void saveBill() {
         if (billArea.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please generate bill first");
+            JOptionPane.showMessageDialog(this, "No bill to save");
             return;
         }
 
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
-        
+
         if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             if (!file.getName().toLowerCase().endsWith(".txt")) {
                 file = new File(file.getParentFile(), file.getName() + ".txt");
             }
-            
+
             try (PrintWriter writer = new PrintWriter(file)) {
                 writer.print(billArea.getText());
                 JOptionPane.showMessageDialog(this, "Bill saved successfully");
@@ -384,117 +178,141 @@ public class Billing extends JFrame {
         this.setVisible(false);
         new CustomerView(DBManager);
     }
+	private void generateBill() {
+		if (selectedProductsModel.getRowCount() == 0) {
+			JOptionPane.showMessageDialog(this, "No products selected");
+			return;
+		}
+		customerDetails();
+		
+		if (customerName.isEmpty() || customerNum.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Please enter customer details");
+			return;
+		}
+		
+		int n = JOptionPane.showConfirmDialog (null, "Do you want buy more products ?" ,
+			 "Info" , JOptionPane.YES_NO_CANCEL_OPTION);
+		if (n == JOptionPane.YES_OPTION) {
+			addMoreProducts();
+		}
+		else if ((n == JOptionPane.NO_OPTION) || (n == JOptionPane.CANCEL_OPTION))  {
+			Object[] possibleValues = { "Pay Directly", "Cash On Delivery", "Cancel Order" };
 
-    private void loadData() {
-        List<String> lines = DBManager.readShopAndProductData();
-        Shop currentShop = null;
+			Object selectedValue = JOptionPane.showInputDialog(null,
+				"How do you like to Pay ?", "Input",
+				JOptionPane.INFORMATION_MESSAGE, null,
+				possibleValues, possibleValues[0]
+			);
+			if (selectedValue == "Pay Directly"){
+				bill();
+				confermBill();
+			}
+			else if (selectedValue == "Cash On Delivery"){
+				bill();
+				//confermBill();
+			}
+		}
+
+		
+
+	}
+	
+	private void setupCustomerPanel(Font f1, Font f3, Color DARK_BLUE, String name, String number) {
         
-        try {
-            for (String line : lines) {
-                if (line == null || line.trim().isEmpty()) {
-                    continue;
-                }
-                
-                if (line.startsWith("Shop: ")) {
-                    String[] shopInfo = line.substring(6).split(", ", 4);
-                    if (shopInfo.length >= 2) {
-                        String shopId = shopInfo[0].trim();
-                        String shopName = shopInfo[1].trim();
-                        currentShop = new Shop(shopId, shopName);
-                        shops.add(currentShop);
-                    }
-                } else if (line.startsWith("Product: ") && currentShop != null) {
-                    String productInfo = line.substring(9).trim();
-                    // Validate product info before adding
-                    if (isValidProductInfo(productInfo)) {
-                        currentShop.products.add(productInfo);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, 
-                "Error loading shop and product data: " + e.getMessage(),
-                "Data Loading Error",
-                JOptionPane.ERROR_MESSAGE);
-        }
+        JLabel customerName = new JLabel("Customer's Name:");
+        customerName.setBounds(30, 100, 120, 20);
+        customerName.setFont(f3);
+        customerName.setForeground(DARK_BLUE);
+        add(customerName);
 
-        // If no shops were loaded, show error message
-        if (shops.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                "No shop data was loaded. Please check the data source.",
-                "Data Loading Warning",
-                JOptionPane.WARNING_MESSAGE);
-        }
+        jtcustomerName = new JTextField(name);
+        jtcustomerName.setBounds(30, 130, 150, 30);
+        jtcustomerName.setFont(f3);
+        jtcustomerName.setText(name);
+        add(jtcustomerName);
+
+        JLabel customerNum = new JLabel("Contact Number:");
+        customerNum.setBounds(30, 170, 120, 20);
+        customerNum.setFont(f3);
+        customerNum.setForeground(DARK_BLUE);
+        add(customerNum);
+
+        jtcustomerNum = new JTextField(number);
+        jtcustomerNum.setBounds(30, 200, 150, 30);
+        jtcustomerNum.setFont(f3);
+        jtcustomerNum.setText(number);
+        add(jtcustomerNum);
+
     }
+	public void confermBill(){
+		for (int i = 0; i < selectedProductsModel.getRowCount(); i++) {
+			String productId = selectedProductsModel.getValueAt(i, 0).toString();
+			int quantity = Integer.parseInt(selectedProductsModel.getValueAt(i, 2).toString());
+			
+			// Update the quantity in database
+			DBManager.decreasedProductQuantity(productId, quantity);
+		}
+	}
+	public void paymentOption(){
+		
+	}
+	
+	public void customerDetails(){
+		customerName = jtcustomerName.getText();
+		customerNum = jtcustomerNum.getText();
+	}
+	
+	public void bill(){
+		try {
 
-    private boolean isValidProductInfo(String productInfo) {
-        String[] parts = productInfo.split(",");
-        // Expecting: ProductID, ProductName, Type, Quantity, Price, CompanyName
-        if (parts.length != 6) {
-            return false;
-        }
-        
-        try {
-            // Validate ProductID (non-empty)
-            if (parts[0].trim().isEmpty()) {
-                return false;
-            }
-            
-            // Validate Quantity (must be a positive integer)
-            int quantity = Integer.parseInt(parts[3].trim());
-            if (quantity < 0) {
-                return false;
-            }
-            
-            // Validate Price (must be a positive number)
-            double price = Double.parseDouble(parts[4].trim());
-            if (price < 0) {
-                return false;
-            }
-            
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
+			// Now generate the bill as before
+			StringBuilder bill = new StringBuilder();
+			bill.append("************************************************************\n");
+			bill.append("************************* Billing INVOICE *******************\n");
+			bill.append("************************************************************\n\n");
+			bill.append(" Customer Name: ").append(jtcustomerName.getText()).append("\n");
+			bill.append(" Contact Number: ").append(jtcustomerNum.getText()).append("\n");
+			bill.append(" Date: ").append(java.time.LocalDate.now()).append("\n\n");
+			bill.append(" Products:\n");
+			bill.append("---------------------------------------------------------------\n");
+			bill.append(String.format(" %-10s %-20s %-10s %-10s %-10s\n", 
+				"ID", "Name", "Quantity", "Price", "Total"));
+			bill.append("---------------------------------------------------------------\n");
 
-    private void updateProductTable(String shopId) {
-        // Clear existing table data
-        productTableModel.setRowCount(0);
-        
-        // Find the selected shop
-        Shop selectedShop = shops.stream()
-            .filter(shop -> shop.getId().equals(shopId))
-            .findFirst()
-            .orElse(null);
-            
-        if (selectedShop != null) {
-            // Add each product to the table
-            for (String productInfo : selectedShop.products) {
-                String[] data = productInfo.split(",");
-                if (data.length == 6) { // Ensure we have all required fields
-                    productTableModel.addRow(new Object[]{
-                        data[0].trim(), // ProductID
-                        data[1].trim(), // ProductName
-                        data[2].trim(), // Type
-                        data[3].trim(), // Quantity
-                        data[4].trim(), // Price
-                        data[5].trim()  // CompanyName
-                    });
-                }
-            }
-        }
-        
-        // Notify the table that data has changed
-        productTableModel.fireTableDataChanged();
-    }
+			for (int i = 0; i < selectedProductsModel.getRowCount(); i++) {
+				bill.append(String.format(" %-10s %-20s %-10s %-10.2f %-10.2f\n",
+					selectedProductsModel.getValueAt(i, 0),
+					selectedProductsModel.getValueAt(i, 1),
+					selectedProductsModel.getValueAt(i, 2),
+					selectedProductsModel.getValueAt(i, 3),
+					selectedProductsModel.getValueAt(i, 4)));
+			}
 
+			bill.append("---------------------------------------------------------------\n");
+			bill.append(String.format(" Total Amount: %.2f\n", totalAmount));
+			bill.append("---------------------------------------------------------------\n");
+			bill.append("\n Thank you for shopping with us!\n");
+			
+			billArea.setText(bill.toString());
+			
+			// Show success message
+			//JOptionPane.showMessageDialog(this, "Bill generated and quantities updated successfully!");
+			
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, 
+				"Error updating quantities: " + e.getMessage(),
+				"Update Error",
+				JOptionPane.ERROR_MESSAGE
+			);
+		}
+	}
+	
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {
                 DBManager dbManager = new DBManager();
-                new Billing(dbManager).setVisible(true);
+                //new Billing(dbManager, "John Doe", "1234567890", new DefaultTableModel(), 0.0, new JTextArea()).setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Error initializing the application: " + e.getMessage());

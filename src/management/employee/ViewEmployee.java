@@ -70,7 +70,7 @@ public class ViewEmployee extends JFrame implements ActionListener {
         if (ae.getSource() == search) {
             String empId = cemployeeId.getSelectedItem();
             List<String> employeeData = DBManager.readEmployeeData();
-            String[] columnNames = {"Employee ID", "Name", "Father's Name", "DOB", "Salary", "Address", "Phone", "Email", "Education", "Designation", "Aadhar"};
+            String[] columnNames = {"Employee ID", "Name", "Father's Name", "DOB", "Salary", "Address", "Phone", "Email", "Education", "Designation", "Another Number"};
             String[][] data = new String[1][11];
             
             for (String dataLine : employeeData) {

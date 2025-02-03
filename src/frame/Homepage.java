@@ -10,6 +10,8 @@ import management.validation.*;
 
 public class Homepage extends JFrame implements ActionListener {
     
+	private String path = System.getProperty("user.dir");  
+	private String background = (path.substring(0, path.length() - 3) + "pic\\Billing System.jpg");
     JButton login, signup, viewProducts;
 
     public Homepage() {
@@ -30,22 +32,25 @@ public class Homepage extends JFrame implements ActionListener {
         
         double w = getWidth();
         int h = (int) getHeight();
+		
+		JLabel l = new JLabel(new ImageIcon(background));
+		setContentPane(l);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(Color.WHITE);
+        //getContentPane().setBackground(Color.WHITE);
         setLayout(null);
         
         JLabel l1 = new JLabel("Homepage");
         l1.setBounds((int) (((1.5 * w) - 150) / 2), (h - 650), 150, 100);
         l1.setFont(f2);
-        l1.setForeground(DARK_GREEN);
+        l1.setForeground( DARK_BLUE);
         add(l1);
         
         login = new JButton("Login");
         login.setBounds((int) (((1.5 * w) - 193) / 2), 340, 193, 50);
         login.setFont(f1);
         login.setCursor(crsr);
-        login.setBackground(DARK_GREEN);
+        login.setBackground( DARK_BLUE);
         login.setForeground(Color.WHITE);
         login.addActionListener(this);
         add(login);
@@ -54,7 +59,7 @@ public class Homepage extends JFrame implements ActionListener {
         signup.setBounds((int) (((1.5 * w) - 193) / 2), 420, 193, 50);
         signup.setFont(f1);
         signup.setCursor(crsr);        
-        signup.setBackground(DARK_GREEN);
+        signup.setBackground( DARK_BLUE);
         signup.setForeground(Color.WHITE);
         signup.addActionListener(this);
         add(signup);
@@ -63,7 +68,7 @@ public class Homepage extends JFrame implements ActionListener {
         viewProducts.setBounds((int) (((1.5 * w) - 193) / 2), 500, 193, 50);
         viewProducts.setFont(f1);
         viewProducts.setCursor(crsr);        
-        viewProducts.setBackground(DARK_GREEN);
+        viewProducts.setBackground( DARK_BLUE);
         viewProducts.setForeground(Color.WHITE);
         viewProducts.addActionListener(this);
         add(viewProducts);

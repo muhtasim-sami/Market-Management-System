@@ -3,7 +3,10 @@ package frame;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
+import java.io.*;
 import java.awt.event.*;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import management.validation.*;
 
 public class Login extends JFrame implements ActionListener {
@@ -13,6 +16,10 @@ public class Login extends JFrame implements ActionListener {
     JButton login, signup, back, showPass;
     JCheckBox cb1 = new JCheckBox("Show Password");
     JCheckBox cb2 = new JCheckBox("hide Password");
+	
+	private String path = System.getProperty("user.dir");  
+    private String loginIcon = (path.substring(0, path.length() - 3) + "pic\\login2.jpg");
+    private String background = (path.substring(0, path.length() - 3) + "pic\\Billing System.jpg");
 
     public Login() {
         String[] s = {"Market Owner", "Shop owner", "Customer", "Vendor"}; 
@@ -25,6 +32,8 @@ public class Login extends JFrame implements ActionListener {
         Color LIGHT_GREEN = new Color(102, 255, 102);
         Color DARK_BLUE = new Color(0, 0, 204);
         Color DARK_GREEN = new Color(0, 153, 0);
+		Color ORANGE_BACKGROUND = new Color(224, 117, 30); // Approximate orange color
+
         
         Cursor crsr = new Cursor(Cursor.HAND_CURSOR);
         LineBorder lineBorder = new LineBorder(Color.black, 1, true);
@@ -38,25 +47,40 @@ public class Login extends JFrame implements ActionListener {
         ButtonGroup bg1 = new ButtonGroup();
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(Color.WHITE);
+        //getContentPane().setBackground(Color.WHITE);
+		getContentPane().setBackground(ORANGE_BACKGROUND);                      
         setLayout(null);
-        
+		
+		JLabel l = new JLabel(new ImageIcon(background));
+		//l.setBounds(0,0,800,700);
+		//l.setLocation(0,0);
+		setContentPane(l);
+		//add(l);
+		
+		//try {
+            //setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File(loginIcon)))));
+        /*} catch (IOException e) {
+            e.printStackTrace();
+        }*/
+		
+		System.out.println(loginIcon);
+		
         JLabel l1 = new JLabel("Login");
         l1.setBounds((int) (((1.5 * w) - 150) / 2), (h - 650), 150, 100);
         l1.setFont(f2);
-        l1.setForeground(DARK_GREEN);
+        l1.setForeground(DARK_BLUE);
         add(l1);
         
         JLabel l2 = new JLabel("Enter username ");
         l2.setBounds((int) (((1.5 * w) - 470) / 2), ((h - 350) / 2), 260, 30);
         l2.setFont(f3);
-        l2.setForeground(Color.GRAY);
+        l2.setForeground(Color.WHITE);
         add(l2);
 
         JLabel l3 = new JLabel("Enter password ");
         l3.setBounds((int) (((1.5 * w) - 470) / 2), ((h - 250) / 2), 260, 30);        
         l3.setFont(f3);
-        l3.setForeground(Color.GRAY);
+        l3.setForeground(Color.WHITE);
         add(l3);
         
         tfusername = new JTextField();
@@ -64,6 +88,7 @@ public class Login extends JFrame implements ActionListener {
         tfusername.setBounds((int) (((1.5 * w) - 210) / 2), ((h - 350) / 2), 250, 40);
         tfusername.setFont(f1);
         tfusername.setForeground(Color.BLACK);        
+        tfusername.addKeyListener(nextTextField);        
         add(tfusername);
         
         tfpassword = new JPasswordField();
@@ -72,13 +97,14 @@ public class Login extends JFrame implements ActionListener {
         tfpassword.setFont(f1);
         tfpassword.setEchoChar('$');
         tfpassword.setForeground(Color.BLACK);        
+        tfpassword.addKeyListener(loginKey);        
         add(tfpassword);
         
         login = new JButton("LOGIN");
         login.setBounds((int) (((1.5 * w) - 193) / 2), 340, 193, 50);
         login.setFont(f1);
         login.setCursor(crsr);
-        login.setBackground(DARK_GREEN);
+        login.setBackground(DARK_BLUE);
         login.setForeground(Color.WHITE);
         login.addActionListener(this);
         add(login);
@@ -87,7 +113,7 @@ public class Login extends JFrame implements ActionListener {
         signup.setBounds((int) (((1.5 * w) - 193) / 2), 420, 193, 50);
         signup.setFont(f1);
         signup.setCursor(crsr);        
-        signup.setBackground(DARK_GREEN);
+        signup.setBackground(DARK_BLUE);
         signup.setForeground(Color.WHITE);
         signup.addActionListener(this);
         add(signup);
@@ -96,7 +122,7 @@ public class Login extends JFrame implements ActionListener {
         back.setBounds((int) (((1.5 * w) - 193) / 2), 500, 193, 50);
         back.setFont(f1);
         back.setCursor(crsr);        
-        back.setBackground(DARK_GREEN);
+        back.setBackground(DARK_BLUE);
         back.setForeground(Color.WHITE);
         back.addActionListener(this);
         add(back);
@@ -151,6 +177,23 @@ public class Login extends JFrame implements ActionListener {
 			cb1.setVisible(true);        
 		}
     }
+	KeyListener nextTextField = new KeyAdapter() {
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				tfpassword.requestFocus(); 
+			}
+		}
+	};
+    
+	KeyListener loginKey = new KeyAdapter() {
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				login.doClick(); 
+			}
+		}
+	};
     
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {

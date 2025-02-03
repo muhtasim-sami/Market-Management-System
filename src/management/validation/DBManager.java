@@ -4,7 +4,9 @@ import java.io.*;
 import java.util.*;
 
 public class DBManager {
-    private String db = "D://java//MarketManagementSystem//DB//db.txt";
+    
+    private String path = System.getProperty("user.dir");  
+    private String db = (path.substring(0, path.length() - 3) + "DB\\db.txt");
 
     public String getDB() { return db; }
 
@@ -440,97 +442,8 @@ public class DBManager {
     }
 }
 
-/*
-
-public void updateShopData(String shopId, String newData) {
-    List<String> allData = readFile();
-    List<String> updatedData = new ArrayList<>();
-    List<String> productsToRemove = new ArrayList<>();
-    
-    // First pass: identify all products belonging to this shop
-    for (String line : allData) {
-        if (line.startsWith("Product:")) {
-            String[] parts = line.substring(9).split(", ");
-            if (parts.length > 2 && parts[2].equals(shopId)) {
-                productsToRemove.add(parts[0]);  // Store product IDs to remove
-            }
-        }
-    }
-    
-    // Second pass: update shop data and remove associated products
-    for (String line : allData) {
-        if (line.startsWith("Shop:")) {
-            String[] parts = line.substring(6).split(", ");
-            if (parts[0].equals(shopId)) {
-                updatedData.add("Shop: " + shopId + ", " + newData);
-            } else {
-                updatedData.add(line);
-            }
-        } else if (line.startsWith("Product:")) {
-            String[] parts = line.substring(9).split(", ");
-            boolean shouldKeep = true;
-            for (String productId : productsToRemove) {
-                if (parts[0].equals(productId)) {
-                    shouldKeep = false;
-                    break;
-                }
-            }
-            if (shouldKeep) {
-                updatedData.add(line);
-            }
-        } else {
-            updatedData.add(line);
-        }
-    }
-    
-    writeFile(updatedData);
+class FilePath {
+	public String getfilePath(){
+		return System.getProperty("user.dir");  
+	}
 }
-		// Update product
-		updateProductData("P001", "P001, NewName, NewPrice, NewQuantity");
-
-		// Update employee
-		updateEmployeeData("E001", "E001, NewName, NewPosition, NewSalary");
-		
-        // Example usage with automatic ID generation
-        List<String> newShopData = Arrays.asList("MyShop", "Location1", "Owner1");
-        DBManager.addShopData(newShopData);
-        
-        List<String> newProductData1 = Arrays.asList("Product1", "19.99", "100");
-        DBManager.addProductData(newProductData1, "MyShop");
-        
-        List<String> newProductData2 = Arrays.asList("Product2", "29.99", "50");
-        DBManager.addProductData(newProductData2, "MyShop");
-        
-        List<String> newUserData = Arrays.asList("TestUser", "test@email.com", "password123");
-        DBManager.addUserData(newUserData);
-        
-        List<String> newEmployeeData = Arrays.asList("John Doe", "Father Doe", "1995-01-01", 
-            "60000", "123 Street", "555-1234", "john@example.com", "BSc", "Manager", "123456789");
-        DBManager.addEmployeeData(newEmployeeData);
-        List<String> newShopData = Arrays.asList("301", "Shop1", "Location1", "Owner1");
-        DBManager.addShopData(newShopData);
-        
-        List<String> newProductData1 = Arrays.asList("401", "Product1", "19.99", "100");
-        DBManager.addProductData(newProductData1, "Shop1");
-        
-        List<String> newProductData2 = Arrays.asList("402", "Product2", "29.99", "50");
-        DBManager.addProductData(newProductData2, "Shop1");
-		
-        List<String> newUserData1 = Arrays.asList("201", "TestUser1", "test1@email.com", "password123");
-        DBManager.addUserData(newUserData1);
-        
-        List<String> newProductData1 = Arrays.asList("401", "TestProduct", "19.99", "100");
-        DBManager.addProductData(newProductData1);
-        
-        List<String> newProductData2 = Arrays.asList("301", "TestProduct", "19.99", "100");
-        DBManager.addProductData(newProductData2);
-	
-        List<String> newProductData3 = Arrays.asList("201", "TestProduct", "19.99", "100");
-        DBManager.addProductData(newProductData3);
-        
-        List<String> newUserData2 = Arrays.asList("202", "TestUser2", "test2@email.com", "password456");
-        DBManager.addUserData(newUserData2);
-
-        List<String> newEmployeeData = Arrays.asList("107", "Test Employee", "TestFather Doe", "1995-01-01", "60000", "222 Test St", "555-8888", "test.employee@example.com", "BSc", "Tester", "890123456789");
-        DBManager.addEmployeeData(newEmployeeData);
-		*/

@@ -10,8 +10,12 @@ import java.util.Arrays;
 import management.validation.*;
 import java.util.regex.Pattern;
 
+
+
 public class Signup extends JFrame implements ActionListener {
     
+	private String path = System.getProperty("user.dir");  
+	private String background = (path.substring(0, path.length() - 3) + "pic\\Billing System.jpg");
     JTextField tfusername, tfemail;
     JPasswordField tfpassword;
     JComboBox<String> roleComboBox;
@@ -21,7 +25,7 @@ public class Signup extends JFrame implements ActionListener {
     ButtonGroup bg1 = new ButtonGroup();
     
     public Signup() {
-        String[] roles = {"Shop Manager", "Vendor", "Cashier"};
+        String[] roles = {"Shop Manager", "Employee Manager", "Vendor"};
         
         Font f1 = new Font("Arial", Font.BOLD, 18);
         Font f2 = new Font("Times New Roman", Font.BOLD, 25);
@@ -40,45 +44,50 @@ public class Signup extends JFrame implements ActionListener {
         double w = getWidth();
         int h = (int) getHeight();
         
+		JLabel l = new JLabel(new ImageIcon(background));
+		setContentPane(l);
+
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(Color.WHITE);
+        //getContentPane().setBackground(Color.WHITE);
         setLayout(null);
         
         JLabel l1 = new JLabel("Sign-Up");
         l1.setBounds((int) (((1.5 * w) - 150) / 2), (h - 650), 150, 100);
         l1.setFont(f2);
-        l1.setForeground(DARK_GREEN);
+        l1.setForeground(DARK_BLUE);
         add(l1);
         
         JLabel l2 = new JLabel("Enter username ");
         l2.setBounds((int) (((1.5 * w) - 470) / 2), ((h - 400) / 2), 260, 30);
         l2.setFont(f3);
-        l2.setForeground(Color.GRAY);
+        l2.setForeground(Color.WHITE);
         add(l2);
 
         JLabel lEmail = new JLabel("Enter email ");
         lEmail.setBounds((int) (((1.5 * w) - 470) / 2), ((h - 300) / 2), 260, 30);
         lEmail.setFont(f3);
-        lEmail.setForeground(Color.GRAY);
+        lEmail.setForeground(Color.WHITE);
         add(lEmail);
 
         JLabel l3 = new JLabel("Enter password ");
         l3.setBounds((int) (((1.5 * w) - 470) / 2), ((h - 200) / 2), 260, 30);        
         l3.setFont(f3);
-        l3.setForeground(Color.GRAY);
+        l3.setForeground(Color.WHITE);
         add(l3);
         
         JLabel l4 = new JLabel("Select role ");
         l4.setBounds((int) (((1.5 * w) - 470) / 2), ((h - 100) / 2), 260, 30);        
         l4.setFont(f3);
-        l4.setForeground(Color.GRAY);
+        l4.setForeground(Color.WHITE);
         add(l4);
         
         tfusername = new JTextField();
         tfusername.setBorder(lineBorder);
         tfusername.setBounds((int) (((1.5 * w) - 210) / 2), ((h - 400) / 2), 250, 40);
         tfusername.setFont(f1);
-        tfusername.setForeground(Color.BLACK);        
+        tfusername.setForeground(Color.BLACK);     
+        tfusername.addKeyListener(emailKey);     
         add(tfusername);
 
         tfemail = new JTextField();
@@ -86,6 +95,7 @@ public class Signup extends JFrame implements ActionListener {
         tfemail.setBounds((int) (((1.5 * w) - 210) / 2), ((h - 300) / 2), 250, 40);
         tfemail.setFont(f1);
         tfemail.setForeground(Color.BLACK);        
+        tfemail.addKeyListener(passwordKey);        
         add(tfemail);
         
         tfpassword = new JPasswordField();
@@ -93,7 +103,8 @@ public class Signup extends JFrame implements ActionListener {
         tfpassword.setBounds((int) (((1.5 * w) - 210) / 2), ((h - 200) / 2), 250, 40);
         tfpassword.setFont(f1);
         tfpassword.setEchoChar('$');
-        tfpassword.setForeground(Color.BLACK);        
+        tfpassword.setForeground(Color.BLACK);      
+        tfpassword.addKeyListener(signupKey);      
         add(tfpassword);
         
         roleComboBox = new JComboBox<>(roles);
@@ -105,7 +116,7 @@ public class Signup extends JFrame implements ActionListener {
         signup.setBounds((int) (((1.5 * w) - 193) / 2), 420, 193, 50);
         signup.setFont(f1);
         signup.setCursor(crsr);        
-        signup.setBackground(DARK_GREEN);
+        signup.setBackground(DARK_BLUE);
         signup.setForeground(Color.WHITE);
         signup.addActionListener(this);
         add(signup);
@@ -114,7 +125,7 @@ public class Signup extends JFrame implements ActionListener {
         back.setBounds((int) (((1.5 * w) - 193) / 2), 490, 193, 50);
         back.setFont(f1);
         back.setCursor(crsr);        
-        back.setBackground(DARK_GREEN);
+        back.setBackground(DARK_BLUE);
         back.setForeground(Color.WHITE);
         back.addActionListener(this);
         add(back);
@@ -167,6 +178,31 @@ public class Signup extends JFrame implements ActionListener {
             cb1.setVisible(true);        
         }
     }
+	KeyListener passwordKey = new KeyAdapter() {
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				tfpassword.requestFocus(); 
+			}
+		}
+	};
+    KeyListener emailKey = new KeyAdapter() {
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				tfemail.requestFocus(); 
+			}
+		}
+	};
+    
+	KeyListener signupKey = new KeyAdapter() {
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				signup.doClick(); 
+			}
+		}
+	};
     
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {

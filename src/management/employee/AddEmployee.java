@@ -109,7 +109,7 @@ public class AddEmployee extends JFrame implements ActionListener {
         jcb.setBounds(200, 350, 150, 30);
         add(jcb);
 
-        JLabel labelaadhar = new JLabel("Aadhar Number");
+        JLabel labelaadhar = new JLabel("Another Number");
         labelaadhar.setBounds(400, 350, 150, 30);
         labelaadhar.setFont(new Font("serif", Font.PLAIN, 20));
         add(labelaadhar);

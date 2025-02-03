@@ -1,4 +1,3 @@
-
 package frame;
 
 import java.awt.*;
@@ -7,7 +6,7 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
-import management.validation.DBManager;
+import management.validation.*;
 import management.shop.*;
 
 public class CustomerView extends JFrame {
@@ -18,6 +17,8 @@ public class CustomerView extends JFrame {
     private ArrayList<Shop> shops;
     private DBManager DBManager;
     private JButton billing, back;
+	private String path = System.getProperty("user.dir");  
+	private String background = (path.substring(0, path.length() - 3) + "pic\\Billing System.jpg");
     
     public CustomerView(DBManager DBManager) {
         this.DBManager = DBManager;
@@ -35,6 +36,8 @@ public class CustomerView extends JFrame {
         // Colors
         Color LIGHT_GREEN = new Color(102, 255, 102);
         Color DARK_GREEN = new Color(0, 153, 0);
+		Color DARK_BLUE = new Color(0, 0, 204);
+
         
         // Cursor and Border
         Cursor crsr = new Cursor(Cursor.HAND_CURSOR);
@@ -45,8 +48,11 @@ public class CustomerView extends JFrame {
         setVisible(true);
         setBounds(200, 15, 800, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(Color.WHITE);
+        //getContentPane().setBackground(Color.WHITE);
         setLayout(null);
+		
+		JLabel l = new JLabel(new ImageIcon(background));
+		setContentPane(l);
         
         double w = getWidth();
         int h = (int) getHeight();
@@ -55,14 +61,14 @@ public class CustomerView extends JFrame {
         JLabel titleLabel = new JLabel("Customer View");
         titleLabel.setBounds((int) (((1.5 * w) - 200) / 2), (h - 650), 200, 100);
         titleLabel.setFont(f2);
-        titleLabel.setForeground(DARK_GREEN);
+        titleLabel.setForeground( DARK_BLUE);
         add(titleLabel);
 
         // Shop List Panel
         JLabel shopLabel = new JLabel("Select Shop");
         shopLabel.setBounds(50, 120, 200, 30);
         shopLabel.setFont(f1);
-        shopLabel.setForeground(Color.GRAY);
+        shopLabel.setForeground(Color.WHITE);
         add(shopLabel);
 
         shopListModel = new DefaultListModel<>();
@@ -82,11 +88,11 @@ public class CustomerView extends JFrame {
         JLabel productLabel = new JLabel("Products");
         productLabel.setBounds(50, 380, 200, 30);
         productLabel.setFont(f1);
-        productLabel.setForeground(Color.GRAY);
+        productLabel.setForeground(Color.WHITE);
         add(productLabel);
 
         String[] columnNames = {"ProductID", "ProductName", "Type", "Quantity", "Price", "CompanyName"};
-        productTableModel = new DefaultTableModel(columnNames, 0);
+        productTableModel = new NonEditableTableModel(new Object[][]{}, columnNames); // Use NonEditableTableModel
         productTable = new JTable(productTableModel);
         productTable.setFont(f3);
         productTable.getTableHeader().setFont(f3);
@@ -107,11 +113,11 @@ public class CustomerView extends JFrame {
         });
 
         // Buttons
-        billing = new JButton("Billing");
+        billing = new JButton("Buy Product");
         billing.setBounds((int) (((1.5 * w) - 193) / 2), 590, 193, 50);
         billing.setFont(f1);
         billing.setCursor(crsr);
-        billing.setBackground(DARK_GREEN);
+        billing.setBackground( DARK_BLUE);
         billing.setForeground(Color.WHITE);
         billing.addActionListener(e -> onBilling());
         add(billing);
@@ -120,7 +126,7 @@ public class CustomerView extends JFrame {
         back.setBounds((int) (((0.5 * w) - 193) / 2), 590, 193, 50);
         back.setFont(f1);
         back.setCursor(crsr);
-        back.setBackground(DARK_GREEN);
+        back.setBackground( DARK_BLUE);
         back.setForeground(Color.WHITE);
         back.addActionListener(e -> onBack());
         add(back);
@@ -139,7 +145,9 @@ public class CustomerView extends JFrame {
         String[][] data = productData.stream()
                 .map(product -> product.split(","))
                 .toArray(String[][]::new);
-        productTableModel = new DefaultTableModel(data, columnNames);
+        
+        // Use the custom NonEditableTableModel
+        productTableModel = new NonEditableTableModel(data, columnNames);
         productTable.setModel(productTableModel);
     }
 
@@ -160,26 +168,8 @@ public class CustomerView extends JFrame {
     }
 
     private void onBilling() {
-		/*
-        int selectedShopIndex = shopList.getSelectedIndex();
-        int selectedProductRow = productTable.getSelectedRow();
-        
-        if (selectedShopIndex == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a shop first");
-            return;
-        }
-        
-        if (selectedProductRow == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a product first");
-            return;
-        }
-        
-        Shop selectedShop = shops.get(selectedShopIndex);
-        String[] productData = selectedShop.products.get(selectedProductRow).split(",");
-        */
         this.setVisible(false);
-        //new Billing(DBManager, selectedShop, productData);
-		new Billing(DBManager);
+        new Buying(DBManager);
     }
 
     private void onBack() {
@@ -191,5 +181,17 @@ public class CustomerView extends JFrame {
         SwingUtilities.invokeLater(() -> {
             new CustomerView(new DBManager()).setVisible(true);
         });
+    }
+}
+
+class NonEditableTableModel extends DefaultTableModel {
+    public NonEditableTableModel(Object[][] data, Object[] columnNames) {
+        super(data, columnNames);
+    }
+
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        // Make all cells uneditable
+        return false;
     }
 }

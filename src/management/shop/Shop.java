@@ -3,11 +3,13 @@ package management.shop;
 import management.validation.DBManager;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.*;
 
 public class Shop {
     public String id;
     public String name;
     public ArrayList<String> products;
+	private DBManager DBManager = new DBManager();
 
     public Shop(String id, String name) {
         this.id = id;
@@ -47,4 +49,12 @@ public class Shop {
     public String getId() {
         return id;
     }
+	
+	
+	
+	private boolean isValidProductInfo(String productInfo) {
+        // Add validation logic here
+        return productInfo != null && !productInfo.trim().isEmpty();
+    }
+
 }

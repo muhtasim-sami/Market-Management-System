@@ -81,10 +81,10 @@ public class Security {
                 
                 if (storedUsername.equals(username) && storedPassword.equals(password)) {
                     switch (role) {
-                        case "Shop Manager":
+                        case "Employee Manager":
                             new EmployeeManagement();
                             break;
-                        case "Cashier":
+                        case "Shop Manager":
                             new ProductManagement();
                             break;
                         case "Vendor":

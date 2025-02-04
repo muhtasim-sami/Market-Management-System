@@ -12,11 +12,14 @@ public class RemoveEmployee extends JFrame implements ActionListener {
     Choice cEmpId;
     JButton delete, back;
     DBManager DBManager;
+	
+	private String path = System.getProperty("user.dir");  
+	private String background = (path.substring(0, path.length() - 3) + "pic\\Background.jpg");
 
     public RemoveEmployee() {
         DBManager = new DBManager();
         setVisible(true);
-        getContentPane().setBackground(Color.WHITE);
+        //getContentPane().setBackground(Color.WHITE);
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 400);
@@ -34,6 +37,9 @@ public class RemoveEmployee extends JFrame implements ActionListener {
         Cursor crsr = new Cursor(Cursor.HAND_CURSOR);
 
         LineBorder lineBorder = new LineBorder(Color.black, 1, true);
+		
+		JLabel l = new JLabel(new ImageIcon(background));
+		setContentPane(l);
 
         JLabel labelempId = new JLabel("Employee Id");
         labelempId.setBounds(50, 50, 100, 30);

@@ -12,6 +12,8 @@ public class RemoveProduct extends JFrame implements ActionListener {
     private JButton delete, back;
     private DBManager DBManager;
     private List<String> productData;
+	private String path = System.getProperty("user.dir");  
+	private String background = (path.substring(0, path.length() - 3) + "pic\\Background.jpg");
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new RemoveProduct());
@@ -22,8 +24,11 @@ public class RemoveProduct extends JFrame implements ActionListener {
         setBounds(200, 15, 800, 700);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(Color.WHITE);
+        //getContentPane().setBackground(Color.WHITE);
         setLayout(null);
+
+		JLabel l = new JLabel(new ImageIcon(background));
+		setContentPane(l);
 
         JLabel labelproId = new JLabel("Product Id");
         labelproId.setBounds(50, 50, 100, 30);

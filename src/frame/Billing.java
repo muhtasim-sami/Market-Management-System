@@ -22,7 +22,7 @@ public class Billing extends JFrame {
     private String customerName = null;
     private String customerNum = null;
 	private String path = System.getProperty("user.dir");  
-	private String background = (path.substring(0, path.length() - 3) + "pic\\Billing System.jpg");
+	private String background = (path.substring(0, path.length() - 3) + "pic\\Background.jpg");
 	private ArrayList<Object[]> selectedProductsList = new ArrayList<>();
 
 	

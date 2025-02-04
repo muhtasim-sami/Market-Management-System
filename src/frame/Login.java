@@ -18,8 +18,8 @@ public class Login extends JFrame implements ActionListener {
     JCheckBox cb2 = new JCheckBox("hide Password");
 	
 	private String path = System.getProperty("user.dir");  
-    private String loginIcon = (path.substring(0, path.length() - 3) + "pic\\login2.jpg");
-    private String background = (path.substring(0, path.length() - 3) + "pic\\Billing System.jpg");
+    private String loginIcon = (path.substring(0, path.length() - 3) + "pic\\login1.jpg");
+    private String background = (path.substring(0, path.length() - 3) + "pic\\Background.jpg");
 
     public Login() {
         String[] s = {"Market Owner", "Shop owner", "Customer", "Vendor"}; 
@@ -32,7 +32,7 @@ public class Login extends JFrame implements ActionListener {
         Color LIGHT_GREEN = new Color(102, 255, 102);
         Color DARK_BLUE = new Color(0, 0, 204);
         Color DARK_GREEN = new Color(0, 153, 0);
-		Color ORANGE_BACKGROUND = new Color(224, 117, 30); // Approximate orange color
+		Color ORANGE_BACKGROUND = new Color(224, 117, 30); 
 
         
         Cursor crsr = new Cursor(Cursor.HAND_CURSOR);
@@ -52,16 +52,8 @@ public class Login extends JFrame implements ActionListener {
         setLayout(null);
 		
 		JLabel l = new JLabel(new ImageIcon(background));
-		//l.setBounds(0,0,800,700);
-		//l.setLocation(0,0);
 		setContentPane(l);
-		//add(l);
 		
-		//try {
-            //setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File(loginIcon)))));
-        /*} catch (IOException e) {
-            e.printStackTrace();
-        }*/
 		
 		System.out.println(loginIcon);
 		
@@ -82,7 +74,11 @@ public class Login extends JFrame implements ActionListener {
         l3.setFont(f3);
         l3.setForeground(Color.WHITE);
         add(l3);
-        
+		
+		JLabel l4 = new JLabel(new ImageIcon(loginIcon));
+		l4.setBounds(0,30,500,600);
+		add(l4);
+		
         tfusername = new JTextField();
         tfusername.setBorder(lineBorder);
         tfusername.setBounds((int) (((1.5 * w) - 210) / 2), ((h - 350) / 2), 250, 40);

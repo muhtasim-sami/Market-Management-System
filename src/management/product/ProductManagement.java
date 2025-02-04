@@ -21,6 +21,10 @@ public class ProductManagement extends JFrame implements ActionListener {
     private ArrayList<Shop> shops;
     private DBManager DBManager;
     private Choice cproductId;
+	private String path = System.getProperty("user.dir");  
+	private String background = (path.substring(0, path.length() - 3) + "pic\\Background.jpg");
+	private String prod = (path.substring(0, path.length() - 3) + "pic\\Product Management.jpg");
+	private ArrayList<Object[]> selectedProductsList = new ArrayList<>();
 
     public ProductManagement() {
         DBManager = new DBManager();
@@ -35,6 +39,8 @@ public class ProductManagement extends JFrame implements ActionListener {
         Font f3 = new Font("Arial", Font.BOLD, 13);
 
         Color DARK_GREEN = new Color(0, 153, 0);
+		Color DARK_BLUE = new Color(0, 0, 204);
+
 
         Cursor crsr = new Cursor(Cursor.HAND_CURSOR);
         LineBorder lineBorder = new LineBorder(Color.black, 1, true);
@@ -44,18 +50,25 @@ public class ProductManagement extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
+		
+		JLabel l = new JLabel(new ImageIcon(background));
+		setContentPane(l);
 
-        JLabel heading = new JLabel("Product Management");
+		JLabel l1 = new JLabel(new ImageIcon(prod));
+		l1.setBounds(0,30,500,600);
+		//add(l1);
+
+        JLabel heading = new JLabel("Shop Management");
         heading.setBounds((int) (((1.5 * getWidth()) - 300) / 2), 20, 300, 40);
         heading.setFont(f2);
-        heading.setForeground(DARK_GREEN);
+        heading.setForeground(DARK_BLUE);
         add(heading);
 
         // Shop List Panel
         JLabel shopLabel = new JLabel("Select Shop");
         shopLabel.setBounds(400, 100, 200, 30);
         shopLabel.setFont(f3);
-        shopLabel.setForeground(DARK_GREEN);
+        shopLabel.setForeground(DARK_BLUE);
         add(shopLabel);
 
         shopListModel = new DefaultListModel<>();
@@ -75,7 +88,7 @@ public class ProductManagement extends JFrame implements ActionListener {
         JLabel productLabel = new JLabel("Products");
         productLabel.setBounds(50, 360, 200, 30);
         productLabel.setFont(f3);
-        productLabel.setForeground(DARK_GREEN);
+        productLabel.setForeground(DARK_BLUE);
         add(productLabel);
 
         String[] columnNames = {"ProductID", "ProductName", "Type", "Quantity", "Price", "CompanyName"};
@@ -104,27 +117,16 @@ public class ProductManagement extends JFrame implements ActionListener {
         add.setBounds(50, 100, 150, 40);
         add.setFont(f3);
         add.setCursor(crsr);
-        add.setBackground(DARK_GREEN);
+        add.setBackground(DARK_BLUE);
         add.setForeground(Color.WHITE);
         add.addActionListener(this);
         add(add);
-
-        /*
-		view = new JButton("View Products");
-        view.setBounds(50, 150, 150, 40);
-        view.setFont(f3);
-        view.setCursor(crsr);
-        view.setBackground(DARK_GREEN);
-        view.setForeground(Color.WHITE);
-        view.addActionListener(this);
-        add(view);
-		*/
 
         update = new JButton("Update Products");
         update.setBounds(50, 150, 150, 40);
         update.setFont(f3);
         update.setCursor(crsr);
-        update.setBackground(DARK_GREEN);
+        update.setBackground(DARK_BLUE);
         update.setForeground(Color.WHITE);
         update.addActionListener(this);
         add(update);
@@ -133,7 +135,7 @@ public class ProductManagement extends JFrame implements ActionListener {
         remove.setBounds(50, 200, 150, 40);
         remove.setFont(f3);
         remove.setCursor(crsr);
-        remove.setBackground(DARK_GREEN);
+        remove.setBackground(DARK_BLUE);
         remove.setForeground(Color.WHITE);
         remove.addActionListener(this);
         add(remove);
@@ -142,7 +144,7 @@ public class ProductManagement extends JFrame implements ActionListener {
         logout.setBounds(50, 250, 150, 40);
         logout.setFont(f3);
         logout.setCursor(crsr);
-        logout.setBackground(DARK_GREEN);
+        logout.setBackground(DARK_BLUE);
         logout.setForeground(Color.WHITE);
         logout.addActionListener(this);
         add(logout);
@@ -151,7 +153,7 @@ public class ProductManagement extends JFrame implements ActionListener {
         JLabel searchLabel = new JLabel("Search by Product Id");
         searchLabel.setBounds(50, 580, 200, 20);
         searchLabel.setFont(f3);
-        searchLabel.setForeground(DARK_GREEN);
+        searchLabel.setForeground(DARK_BLUE);
         add(searchLabel);
 
         cproductId = new Choice();
@@ -169,7 +171,7 @@ public class ProductManagement extends JFrame implements ActionListener {
         search.setBounds(420, 580, 120, 20);
         search.setFont(f3);
         search.setCursor(crsr);
-        search.setBackground(DARK_GREEN);
+        search.setBackground(DARK_BLUE);
         search.setForeground(Color.WHITE);
         search.addActionListener(this);
         add(search);
@@ -178,7 +180,7 @@ public class ProductManagement extends JFrame implements ActionListener {
         print.setBounds(550, 580, 120, 20);
         print.setFont(f3);
         print.setCursor(crsr);
-        print.setBackground(DARK_GREEN);
+        print.setBackground(DARK_BLUE);
         print.setForeground(Color.WHITE);
         print.addActionListener(this);
         add(print);
@@ -187,7 +189,7 @@ public class ProductManagement extends JFrame implements ActionListener {
         updateProduct.setBounds(680, 580, 120, 20);
         updateProduct.setFont(f3);
         updateProduct.setCursor(crsr);
-        updateProduct.setBackground(DARK_GREEN);
+        updateProduct.setBackground(DARK_BLUE);
         updateProduct.setForeground(Color.WHITE);
         updateProduct.addActionListener(this);
         add(updateProduct);
@@ -232,10 +234,7 @@ public class ProductManagement extends JFrame implements ActionListener {
         if (ae.getSource() == add) {
             setVisible(false);
             new AddProduct("");
-        }/* else if (ae.getSource() == view) {
-            setVisible(false);
-            new ViewProduct();
-        }*/ else if (ae.getSource() == update) {
+        } else if (ae.getSource() == update) {
             setVisible(false);
             new ViewProduct();
         } else if (ae.getSource() == remove) {

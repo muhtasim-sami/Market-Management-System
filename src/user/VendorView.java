@@ -19,6 +19,9 @@ public class VendorView extends JFrame {
     private ArrayList<Shop> shops;
     private DBManager DBManager;
     private JButton billing, back;
+	private String path = System.getProperty("user.dir");  
+	private String background = (path.substring(0, path.length() - 3) + "pic\\Background.jpg");
+	private ArrayList<Object[]> selectedProductsList = new ArrayList<>();
     
     public VendorView(DBManager DBManager) {
         this.DBManager = DBManager;
@@ -34,6 +37,8 @@ public class VendorView extends JFrame {
         
         Color LIGHT_GREEN = new Color(102, 255, 102);
         Color DARK_GREEN = new Color(0, 153, 0);
+		Color DARK_BLUE = new Color(0, 0, 204);
+
         
         Cursor crsr = new Cursor(Cursor.HAND_CURSOR);
         LineBorder lineBorder = new LineBorder(Color.black, 1, true);
@@ -42,8 +47,11 @@ public class VendorView extends JFrame {
         setVisible(true);
         setBounds(200, 15, 800, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(Color.WHITE);
+        //getContentPane().setBackground(Color.WHITE);
         setLayout(null);
+		
+		JLabel l = new JLabel(new ImageIcon(background));
+		setContentPane(l);
         
         double w = getWidth();
         int h = (int) getHeight();
@@ -51,7 +59,7 @@ public class VendorView extends JFrame {
         JLabel titleLabel = new JLabel("Vendor View");
         titleLabel.setBounds((int) (((1.5 * w) - 200) / 2), (h - 650), 200, 100);
         titleLabel.setFont(f2);
-        titleLabel.setForeground(DARK_GREEN);
+        titleLabel.setForeground(DARK_BLUE);
         add(titleLabel);
 
         JLabel shopLabel = new JLabel("Select Shop");
@@ -105,7 +113,7 @@ public class VendorView extends JFrame {
         billing.setBounds((int) (((1.5 * w) - 193) / 2), 590, 193, 50);
         billing.setFont(f1);
         billing.setCursor(crsr);
-        billing.setBackground(DARK_GREEN);
+        billing.setBackground(DARK_BLUE);
         billing.setForeground(Color.WHITE);
         billing.addActionListener(e -> onBilling());
         add(billing);
@@ -114,7 +122,7 @@ public class VendorView extends JFrame {
         back.setBounds((int) (((0.5 * w) - 193) / 2), 590, 193, 50);
         back.setFont(f1);
         back.setCursor(crsr);
-        back.setBackground(DARK_GREEN);
+        back.setBackground(DARK_BLUE);
         back.setForeground(Color.WHITE);
         back.addActionListener(e -> onBack());
         add(back);

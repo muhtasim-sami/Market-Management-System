@@ -17,6 +17,8 @@ public class AddProduct extends JFrame implements ActionListener {
     JButton add1, back;
     DBManager DBManager;
 	String user;
+	private String path = System.getProperty("user.dir");  
+	private String background = (path.substring(0, path.length() - 3) + "pic\\Background.jpg");
 
     public AddProduct(String user) {
 		this.user = user;
@@ -24,8 +26,10 @@ public class AddProduct extends JFrame implements ActionListener {
         setBounds(200, 15, 800, 700);
         setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.getContentPane().setBackground(Color.WHITE);
+        //getContentPane().setBackground(Color.WHITE);
         setLayout(null);
+		JLabel l = new JLabel(new ImageIcon(background));
+		setContentPane(l);
 
         JLabel heading = new JLabel("Add Product Detail");
         heading.setBounds(320, 30, 500, 50);

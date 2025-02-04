@@ -14,11 +14,16 @@ public class AddEmployee extends JFrame implements ActionListener {
     JComboBox cbeducation, jcb;
     JButton add, back;
     DBManager DBManager;
+	private String path = System.getProperty("user.dir");  
+	private String background = (path.substring(0, path.length() - 3) + "pic\\Background.jpg");
 
     public AddEmployee() {
         DBManager = new DBManager();
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
+		
+		JLabel l = new JLabel(new ImageIcon(background));
+		setContentPane(l);
 
         JLabel heading = new JLabel("Add Employee Detail");
         heading.setBounds(320, 30, 500, 50);
@@ -104,7 +109,7 @@ public class AddEmployee extends JFrame implements ActionListener {
         labeldesignation.setFont(new Font("serif", Font.PLAIN, 20));
         add(labeldesignation);
 
-        String array[] = {"Manager", "Cashier"};
+        String array[] = {"Sells Man", "Cashier", "Market Officer"};
         jcb = new JComboBox(array);
         jcb.setBounds(200, 350, 150, 30);
         add(jcb);

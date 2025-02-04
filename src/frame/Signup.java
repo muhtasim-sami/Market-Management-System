@@ -15,7 +15,9 @@ import java.util.regex.Pattern;
 public class Signup extends JFrame implements ActionListener {
     
 	private String path = System.getProperty("user.dir");  
-	private String background = (path.substring(0, path.length() - 3) + "pic\\Billing System.jpg");
+	private String background = (path.substring(0, path.length() - 3) + "pic\\Background.jpg");
+	private String loginIcon = (path.substring(0, path.length() - 3) + "pic\\login1.jpg");
+
     JTextField tfusername, tfemail;
     JPasswordField tfpassword;
     JComboBox<String> roleComboBox;
@@ -81,6 +83,10 @@ public class Signup extends JFrame implements ActionListener {
         l4.setFont(f3);
         l4.setForeground(Color.WHITE);
         add(l4);
+		
+		JLabel l5 = new JLabel(new ImageIcon(loginIcon));
+		l5.setBounds(0,30,500,600);
+		add(l5);
         
         tfusername = new JTextField();
         tfusername.setBorder(lineBorder);

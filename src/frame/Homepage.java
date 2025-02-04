@@ -11,7 +11,8 @@ import management.validation.*;
 public class Homepage extends JFrame implements ActionListener {
     
 	private String path = System.getProperty("user.dir");  
-	private String background = (path.substring(0, path.length() - 3) + "pic\\Billing System.jpg");
+	private String background = (path.substring(0, path.length() - 3) + "pic\\Background.jpg");
+	private String homepage = (path.substring(0, path.length() - 3) + "pic\\Home Page.jpg");
     JButton login, signup, viewProducts;
 
     public Homepage() {
@@ -45,6 +46,10 @@ public class Homepage extends JFrame implements ActionListener {
         l1.setFont(f2);
         l1.setForeground( DARK_BLUE);
         add(l1);
+		
+		JLabel l2 = new JLabel(new ImageIcon(homepage));
+		l2.setBounds(0,50,500,400);
+		add(l2);
         
         login = new JButton("Login");
         login.setBounds((int) (((1.5 * w) - 193) / 2), 340, 193, 50);

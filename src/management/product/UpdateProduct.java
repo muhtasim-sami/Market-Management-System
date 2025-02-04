@@ -14,7 +14,9 @@ public class UpdateProduct extends JFrame implements ActionListener {
     JComboBox<String> type;
     JButton add, back;
     DBManager DBManager;
-
+	private String path = System.getProperty("user.dir");  
+	private String background = (path.substring(0, path.length() - 3) + "pic\\Background.jpg");
+	
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -29,8 +31,11 @@ public class UpdateProduct extends JFrame implements ActionListener {
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.productId = productId;
-        getContentPane().setBackground(Color.WHITE);
+        //getContentPane().setBackground(Color.WHITE);
         setLayout(null);
+
+		JLabel l = new JLabel(new ImageIcon(background));
+		setContentPane(l);
 
         JLabel heading = new JLabel("Update Product Detail");
         heading.setBounds(320, 30, 500, 50);

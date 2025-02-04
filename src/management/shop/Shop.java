@@ -8,6 +8,9 @@ import javax.swing.*;
 public class Shop {
     public String id;
     public String name;
+    public String location;
+    public String owner;
+    public String phone;
     public ArrayList<String> products;
 	private DBManager DBManager = new DBManager();
 

@@ -18,7 +18,9 @@ public class CustomerView extends JFrame {
     private DBManager DBManager;
     private JButton billing, back;
 	private String path = System.getProperty("user.dir");  
-	private String background = (path.substring(0, path.length() - 3) + "pic\\Billing System.jpg");
+	private String background = (path.substring(0, path.length() - 3) + "pic\\Background.jpg");
+	private String homepage = (path.substring(0, path.length() - 3) + "pic\\Home Page.jpg");
+
     
     public CustomerView(DBManager DBManager) {
         this.DBManager = DBManager;
@@ -53,6 +55,10 @@ public class CustomerView extends JFrame {
 		
 		JLabel l = new JLabel(new ImageIcon(background));
 		setContentPane(l);
+		
+		JLabel l1 = new JLabel(new ImageIcon(homepage));
+		l1.setBounds(300,0,500,600);
+		add(l1);
         
         double w = getWidth();
         int h = (int) getHeight();

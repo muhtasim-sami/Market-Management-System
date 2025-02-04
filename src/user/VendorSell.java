@@ -26,6 +26,9 @@ public class VendorSell extends JFrame {
     private JTextArea billArea;
     private JButton newProduct, addToCart, generateBill, saveButton, backButton;
     private double totalAmount = 0;
+	private String path = System.getProperty("user.dir");  
+	private String background = (path.substring(0, path.length() - 3) + "pic\\Background.jpg");
+	private ArrayList<Object[]> selectedProductsList = new ArrayList<>();
 
     public VendorSell(DBManager DBManager) {
         this.DBManager = DBManager;
@@ -43,6 +46,8 @@ public class VendorSell extends JFrame {
         // Colors
         Color LIGHT_GREEN = new Color(102, 255, 102);
         Color DARK_GREEN = new Color(0, 153, 0);
+		Color DARK_BLUE = new Color(0, 0, 204);
+
         
         // Cursor and Border
         Cursor crsr = new Cursor(Cursor.HAND_CURSOR);
@@ -52,39 +57,42 @@ public class VendorSell extends JFrame {
         setTitle("VendorSell System");
         setBounds(200, 15, 1100, 900);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(Color.WHITE);
+        //getContentPane().setBackground(Color.ORANGE);
         setLayout(null);
 		setVisible(true);
+		
+		JLabel l = new JLabel(new ImageIcon(background));
+		setContentPane(l);
 
         // Title
         JLabel titleLabel = new JLabel("Vendor Sell System");
         titleLabel.setBounds(450, 20, 300, 50);
         titleLabel.setFont(f2);
-        titleLabel.setForeground(DARK_GREEN);
+        titleLabel.setForeground(DARK_BLUE);
         add(titleLabel);
 
         // Customer Information Panel
-        setupCustomerPanel(f1, f3, DARK_GREEN);
+        setupCustomerPanel(f1, f3, DARK_BLUE);
         
         // Shop and Product Selection Panel
-        setupShopAndProductPanel(f1, f3, DARK_GREEN, lineBorder);
+        setupShopAndProductPanel(f1, f3, DARK_BLUE, lineBorder);
         
         // Selected Products Panel
-        setupSelectedProductsPanel(f1, f3, DARK_GREEN, lineBorder);
+        setupSelectedProductsPanel(f1, f3, DARK_BLUE, lineBorder);
         
         // Bill Panel
-        setupBillPanel(f1, f3, DARK_GREEN, lineBorder, crsr);
+        setupBillPanel(f1, f3, DARK_BLUE, lineBorder, crsr);
     }
 
-    private void setupCustomerPanel(Font f1, Font f3, Color DARK_GREEN) {
+    private void setupCustomerPanel(Font f1, Font f3, Color DARK_BLUE) {
         JPanel customerPanel = new JPanel(null);
         customerPanel.setBounds(20, 80, 1040, 60);
-        customerPanel.setBackground(Color.WHITE);
+        customerPanel.setBackground(Color.ORANGE);
         
         JLabel customerName = new JLabel("Vendor's Name:");
         customerName.setBounds(10, 20, 150, 20);
         customerName.setFont(f3);
-        customerName.setForeground(DARK_GREEN);
+        customerName.setForeground(DARK_BLUE);
         //customerPanel.add(customerName);
 
         jtcustomerName = new JTextField();
@@ -95,7 +103,7 @@ public class VendorSell extends JFrame {
         JLabel customerNum = new JLabel("Contact Number:");
         customerNum.setBounds(330, 20, 150, 20);
         customerNum.setFont(f3);
-        customerNum.setForeground(DARK_GREEN);
+        customerNum.setForeground(DARK_BLUE);
         //customerPanel.add(customerNum);
 
         jtcustomerNum = new JTextField();
@@ -104,22 +112,22 @@ public class VendorSell extends JFrame {
         //customerPanel.add(jtcustomerNum);
 		
 		newProduct = new JButton("Add New Product");
-        newProduct.setBounds(10, 20, 150, 30);
+        newProduct.setBounds(30, 100, 150, 30);
         newProduct.setFont(f3);
-        newProduct.setBackground(DARK_GREEN);
-        newProduct.setForeground(Color.WHITE);
+        newProduct.setBackground(DARK_BLUE);
+        newProduct.setForeground(Color.ORANGE);
         newProduct.addActionListener(e -> addNewProducts());
-        customerPanel.add(newProduct);
+        add(newProduct);
 
-        add(customerPanel);
+        //add(customerPanel);
     }
 
-    private void setupShopAndProductPanel(Font f1, Font f3, Color DARK_GREEN, LineBorder lineBorder) {
+    private void setupShopAndProductPanel(Font f1, Font f3, Color DARK_BLUE, LineBorder lineBorder) {
         // Shop List
         JLabel shopLabel = new JLabel("Select Shop");
         shopLabel.setBounds(20, 150, 200, 30);
         shopLabel.setFont(f1);
-        shopLabel.setForeground(DARK_GREEN);
+        shopLabel.setForeground(DARK_BLUE);
         add(shopLabel);
 
         shopListModel = new DefaultListModel<>();
@@ -139,7 +147,7 @@ public class VendorSell extends JFrame {
         JLabel productLabel = new JLabel("Available Products");
         productLabel.setBounds(290, 150, 200, 30);
         productLabel.setFont(f1);
-        productLabel.setForeground(DARK_GREEN);
+        productLabel.setForeground(DARK_BLUE);
         add(productLabel);
 
         String[] columnNames = {"ProductID", "ProductName", "Type", "Available", "Price", "CompanyName"};
@@ -155,28 +163,28 @@ public class VendorSell extends JFrame {
         // Quantity Panel
         JPanel quantityPanel = new JPanel(null);
         quantityPanel.setBounds(20, 350, 450, 50);
-        quantityPanel.setBackground(Color.WHITE);
+        quantityPanel.setBackground(Color.ORANGE);
 
         JLabel quantityLabel = new JLabel("Quantity:");
-        quantityLabel.setBounds(10, 10, 80, 30);
+        quantityLabel.setBounds(30, 360, 80, 30);
         quantityLabel.setFont(f3);
-        quantityLabel.setForeground(DARK_GREEN);
-        quantityPanel.add(quantityLabel);
+        quantityLabel.setForeground(DARK_BLUE);
+        add(quantityLabel);
 
         quantityField = new JTextField();
-        quantityField.setBounds(90, 10, 80, 30);
+        quantityField.setBounds(110, 360, 80, 30);
         quantityField.setFont(f3);
-        quantityPanel.add(quantityField);
+        add(quantityField);
 
         addToCart = new JButton("Sell");
-        addToCart.setBounds(180, 10, 120, 30);
+        addToCart.setBounds(200, 360, 120, 30);
         addToCart.setFont(f3);
-        addToCart.setBackground(DARK_GREEN);
-        addToCart.setForeground(Color.WHITE);
+        addToCart.setBackground(DARK_BLUE);
+        addToCart.setForeground(Color.ORANGE);
         addToCart.addActionListener(e -> addToSelectedProducts());
-        quantityPanel.add(addToCart);
+        add(addToCart);
 
-        add(quantityPanel);
+        //add(quantityPanel);
 
         // Add selection listener
         shopList.addListSelectionListener(e -> {
@@ -190,11 +198,11 @@ public class VendorSell extends JFrame {
         });
     }
 
-    private void setupSelectedProductsPanel(Font f1, Font f3, Color DARK_GREEN, LineBorder lineBorder) {
+    private void setupSelectedProductsPanel(Font f1, Font f3, Color DARK_BLUE, LineBorder lineBorder) {
         JLabel selectedLabel = new JLabel("Selected Products");
         selectedLabel.setBounds(20, 410, 200, 30);
         selectedLabel.setFont(f1);
-        selectedLabel.setForeground(DARK_GREEN);
+        selectedLabel.setForeground(DARK_BLUE);
         add(selectedLabel);
 
         String[] columnNames = {"ProductID", "ProductName", "Quantity", "Price", "Total"};
@@ -208,7 +216,7 @@ public class VendorSell extends JFrame {
         add(selectedScrollPane);
     }
 
-    private void setupBillPanel(Font f1, Font f3, Color DARK_GREEN, LineBorder lineBorder, Cursor crsr) {
+    private void setupBillPanel(Font f1, Font f3, Color DARK_BLUE, LineBorder lineBorder, Cursor crsr) {
         // Bill Area
         billArea = new JTextArea();
         billArea.setFont(f3);
@@ -220,36 +228,36 @@ public class VendorSell extends JFrame {
         // Buttons
         JPanel buttonPanel = new JPanel(null);
         buttonPanel.setBounds(500, 350, 720, 50);
-        buttonPanel.setBackground(Color.WHITE);
+        buttonPanel.setBackground(Color.ORANGE);
 
         generateBill = new JButton("Generate Bill");
-        generateBill.setBounds(10, 10, 150, 30);
+        generateBill.setBounds(510, 360, 150, 30);
         generateBill.setFont(f3);
         generateBill.setCursor(crsr);
-        generateBill.setBackground(DARK_GREEN);
-        generateBill.setForeground(Color.WHITE);
+        generateBill.setBackground(DARK_BLUE);
+        generateBill.setForeground(Color.ORANGE);
         generateBill.addActionListener(e -> generateBill());
-        buttonPanel.add(generateBill);
+        add(generateBill);
 
         saveButton = new JButton("Save Bill");
-        saveButton.setBounds(180, 10, 150, 30);
+        saveButton.setBounds(680, 360, 150, 30);
         saveButton.setFont(f3);
         saveButton.setCursor(crsr);
-        saveButton.setBackground(DARK_GREEN);
-        saveButton.setForeground(Color.WHITE);
+        saveButton.setBackground(DARK_BLUE);
+        saveButton.setForeground(Color.ORANGE);
         saveButton.addActionListener(e -> saveBill());
-        buttonPanel.add(saveButton);
+        add(saveButton);
 
         backButton = new JButton("Back");
-        backButton.setBounds(350, 10, 150, 30);
+        backButton.setBounds(850, 360, 150, 30);
         backButton.setFont(f3);
         backButton.setCursor(crsr);
-        backButton.setBackground(DARK_GREEN);
-        backButton.setForeground(Color.WHITE);
+        backButton.setBackground(DARK_BLUE);
+        backButton.setForeground(Color.ORANGE);
         backButton.addActionListener(e -> goBack());
-        buttonPanel.add(backButton);
+        add(backButton);
 
-        add(buttonPanel);
+        //add(buttonPanel);
     }
 	private void addNewProducts (){
 		this.setVisible(false);
@@ -273,17 +281,6 @@ public class VendorSell extends JFrame {
             int quantity = Integer.parseInt(quantityStr);
             int availableQuantity = Integer.parseInt(productTable.getValueAt(selectedRow, 3).toString());
             
-			/*
-            if (quantity <= 0) {
-                JOptionPane.showMessageDialog(this, "Please enter a valid quantity");
-                return;
-            }
-            
-            if (quantity > availableQuantity) {
-                JOptionPane.showMessageDialog(this, "Not enough quantity available");
-                return;
-            }
-			*/
             String productId = productTable.getValueAt(selectedRow, 0).toString();
             String productName = productTable.getValueAt(selectedRow, 1).toString();
             double price = Double.parseDouble(productTable.getValueAt(selectedRow, 4).toString());

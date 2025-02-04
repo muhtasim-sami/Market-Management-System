@@ -35,7 +35,7 @@ public class Buying extends JFrame {
 	private Font f2 = new Font("Times New Roman", Font.BOLD, 25);
 	private Font f3 = new Font("Arial", Font.BOLD, 13);
 	private String path = System.getProperty("user.dir");  
-	private String background = (path.substring(0, path.length() - 3) + "pic\\Billing System.jpg");
+	private String background = (path.substring(0, path.length() - 3) + "pic\\Background.jpg");
 	private ArrayList<Object[]> selectedProductsList = new ArrayList<>();
 
 	
@@ -102,7 +102,7 @@ public class Buying extends JFrame {
         
         // Frame setup
         setTitle("Buying System");
-        setBounds(200, 15, 1100, 900);
+        setBounds(200, 15, 1100, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
 		setVisible(true);
@@ -359,11 +359,6 @@ public class Buying extends JFrame {
         }
     }
 
-    private void goBack() {
-        this.setVisible(false);
-        new CustomerView(DBManager);
-    }
-
     private void loadShopData() {
         List<String> lines = DBManager.readShopAndProductData();
         
@@ -384,7 +379,7 @@ public class Buying extends JFrame {
                     }
                 } else if (line.startsWith("Product: ") && currentShop != null) {
                     String productInfo = line.substring(9).trim();
-                    // Validate product info before adding
+
                     if (isValidProductInfo(productInfo)) {
                         currentShop.products.add(productInfo);
                     }
@@ -397,7 +392,6 @@ public class Buying extends JFrame {
                 JOptionPane.ERROR_MESSAGE);
         }
 
-        // If no shops were loaded, show error message
         if (shops.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                 "No shop data was loaded. Please check the data source.",
@@ -451,7 +445,6 @@ public class Buying extends JFrame {
                 .map(product -> product.split(","))
                 .toArray(String[][]::new);
         
-        // Use the custom NonEditableTableModel
         productTableModel = new NonEditableTableModel(data, columnNames);
 		editableProductTableModel = new DefaultTableModel(data, columnNames);
         productTable.setModel(productTableModel);
@@ -459,6 +452,11 @@ public class Buying extends JFrame {
 	
 	public void quantityFocus(){
 		quantityField.requestFocus();
+	}
+	
+	public void goBack(){
+		this.setVisible(false);
+		new CustomerView(DBManager);
 	}
 	
 	
@@ -489,8 +487,6 @@ public class Buying extends JFrame {
 		selectedProductsTable.setModel(selectedProductsModel);
 		
 	}
-
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

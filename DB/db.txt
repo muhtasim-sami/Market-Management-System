@@ -36,7 +36,7 @@ Product: S002P007, Tart, Bakery, 128, 3.0, Jane's Bakery,
 
 Shop: S003, Mark's Electronics, 789 Tech Park, Mark Johnson
 Product: S003P001, Laptop, Electronics, 100, 1000, Mark's Electronics, 
-Product: S003P002, Headphones, Electronics, 021, 150, Mark's Electronics, 
+Product: S003P002, Headphones, Electronics, 221, 150, Mark's Electronics, 
 Product: S003P003, Smartphone, Electronics, 027, 800, Mark's Electronics, 
 Product: S003P004, Tablet, Electronics, 074, 600, Mark's Electronics, 
 Product: S003P005, Smartwatch, Electronics, 037, 200, Mark's Electronics, 

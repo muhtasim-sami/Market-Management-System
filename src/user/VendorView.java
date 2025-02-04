@@ -21,6 +21,7 @@ public class VendorView extends JFrame {
     private JButton billing, back;
 	private String path = System.getProperty("user.dir");  
 	private String background = (path.substring(0, path.length() - 3) + "pic\\Background.jpg");
+	private String vend = (path.substring(0, path.length() - 3) + "pic\\Vendor View.jpg");
 	private ArrayList<Object[]> selectedProductsList = new ArrayList<>();
     
     public VendorView(DBManager DBManager) {
@@ -52,6 +53,10 @@ public class VendorView extends JFrame {
 		
 		JLabel l = new JLabel(new ImageIcon(background));
 		setContentPane(l);
+		
+		JLabel l1 = new JLabel(new ImageIcon(vend));
+		l1.setBounds(300,0,500,600);
+		add(l1);
         
         double w = getWidth();
         int h = (int) getHeight();

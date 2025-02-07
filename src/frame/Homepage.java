@@ -48,7 +48,7 @@ public class Homepage extends JFrame implements ActionListener {
         add(l1);
 		
 		JLabel l2 = new JLabel(new ImageIcon(homepage));
-		l2.setBounds(0,50,500,400);
+		l2.setBounds(0,150,500,400);
 		add(l2);
         
         login = new JButton("Login");

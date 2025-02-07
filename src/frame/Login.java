@@ -18,7 +18,7 @@ public class Login extends JFrame implements ActionListener {
     JCheckBox cb2 = new JCheckBox("hide Password");
 	
 	private String path = System.getProperty("user.dir");  
-    private String loginIcon = (path.substring(0, path.length() - 3) + "pic\\login1.jpg");
+    private String loginIcon = (path.substring(0, path.length() - 3) + "pic\\login.jpg");
     private String background = (path.substring(0, path.length() - 3) + "pic\\Background.jpg");
 
     public Login() {
@@ -76,7 +76,7 @@ public class Login extends JFrame implements ActionListener {
         add(l3);
 		
 		JLabel l4 = new JLabel(new ImageIcon(loginIcon));
-		l4.setBounds(0,30,500,600);
+		l4.setBounds(0,30,370,600);
 		add(l4);
 		
         tfusername = new JTextField();

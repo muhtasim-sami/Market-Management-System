@@ -21,14 +21,14 @@ Product: S001P001,  milk, Dairy,  100,  2, gg milk farm
 Product: S001P002, Bananas, Fruit, 173, 1.2, John's Grocery, 
 Product: S001P003, Oranges, Fruit, 294, 3.0, John's Grocery, 
 Product: S001P004, Grapes, Fruit, 035, 4.0, John's Grocery, 
-Product: S001P005, Strawberries, Fruit, 298, 5.0, John's Grocery, 
+Product: S001P005,  Strawberries, Personal Care,  298,  5.0,  John's Grocery
 Product: S001P006, Mangoes, Fruit, 191, 2.8, John's Grocery, 
 Product: S001P007, Pineapples, Fruit, 022, 3.5, John's Grocery
 
 Shop: S002, Jane's Bakery, 456 Bakery Lane, Jane Smith
 Product: S002P001, Bread, Bakery, 037, 1.5, Jane's Bakery, 
 Product: S002P002, Croissant, Bakery, 030, 2.0, Jane's Bakery, 
-Product: S002P003, Muffin, Bakery, 040, 2.5, Jane's Bakery, 
+Product: S002P003, Muffin, Bakery, 043, 2.5, Jane's Bakery, 
 Product: S002P004, Bagel, Bakery, 066, 1.8, Jane's Bakery, 
 Product: S002P005, Donut, Bakery, 025, 1.5, Jane's Bakery, 
 Product: S002P006, Scone, Bakery, 20, 2.2, Jane's Bakery
@@ -36,7 +36,7 @@ Product: S002P007, Tart, Bakery, 128, 3.0, Jane's Bakery,
 
 Shop: S003, Mark's Electronics, 789 Tech Park, Mark Johnson
 Product: S003P001, Laptop, Electronics, 100, 1000, Mark's Electronics, 
-Product: S003P002, Headphones, Electronics, 221, 150, Mark's Electronics, 
+Product: S003P002, Headphones, Electronics, 218, 150, Mark's Electronics, 
 Product: S003P003, Smartphone, Electronics, 027, 800, Mark's Electronics, 
 Product: S003P004, Tablet, Electronics, 074, 600, Mark's Electronics, 
 Product: S003P005, Smartwatch, Electronics, 037, 200, Mark's Electronics, 
@@ -54,7 +54,7 @@ Product: S004P007, Gloves, Clothing, 18, 30, Emily's Boutique
 
 Shop: S005, Robert's Bookstore, 987 Book St, Robert King
 Product: S005P001, Fiction Book, Book, 100, 15.0, Robert's Bookstore
-Product: S005P002, Non-fiction Book, Book, 076, 20.0, Robert's Bookstore, 
+Product: S005P002, Non-fiction Book, Book, 073, 20.0, Robert's Bookstore, 
 Product: S005P003, Children's Book, Book, 045, 10.0, Robert's Bookstore, 
 Product: S005P004, Mystery Book, Book, 60, 18.0, Robert's Bookstore
 Product: S005P005, Science Book, Book, 40, 25.0, Robert's Bookstore
@@ -67,7 +67,7 @@ Product: S006P002, Doll, Toy, 40, 30.0, Lucy's Toy Store
 Product: S006P003, Puzzle, Toy, 60, 15.0, Lucy's Toy Store
 Product: S006P004, Action Figure, Toy, 70, 20.0, Lucy's Toy Store
 Product: S006P005, Board Game, Toy, 040, 35.0, Lucy's Toy Store, 
-Product: S006P006, Toy Car, Toy, 074, 15.0, Lucy's Toy Store, 
+Product: S006P006, Toy Car, Toy, 071, 15.0, Lucy's Toy Store, 
 Product: S006P007, Lego Set, Toy, 098, 50.0, Lucy's Toy Store, 
 
 Shop: S007, Emily's Jewelry Store, 789 Gem St, Emily Harris

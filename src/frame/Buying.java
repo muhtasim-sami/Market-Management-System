@@ -170,6 +170,7 @@ public class Buying extends JFrame {
         quantityField = new JTextField();
         quantityField.setBounds(100, 360, 80, 30);
         quantityField.setFont(f3);
+		quantityField.addKeyListener(loginKey); 
         add(quantityField);
 
         addToCart = new JButton("Add to Cart");
@@ -487,6 +488,15 @@ public class Buying extends JFrame {
 		selectedProductsTable.setModel(selectedProductsModel);
 		
 	}
+	
+	KeyListener loginKey = new KeyAdapter() {
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				addToCart.doClick(); 
+			}
+		}
+	};
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

@@ -99,7 +99,7 @@ public class Billing extends JFrame {
         add(selectedScrollPane);
 
 		billArea = new JTextArea();
-        billArea.setFont(f3);
+        billArea.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
         billArea.setEditable(false);
 
         // Bill Area
@@ -281,18 +281,40 @@ public class Billing extends JFrame {
 			bill.append(" Date: ").append(java.time.LocalDate.now()).append("\n\n");
 			bill.append(" Products:\n");
 			bill.append("---------------------------------------------------------------\n");
-			bill.append(String.format(" %-10s %-20s %-10s %-10s %-10s\n", 
+			bill.append(String.format(" %-20s %-15s %-10s %-10s %-10s\n", 
 				"ID", "Name", "Quantity", "Price", "Total"));
 			bill.append("---------------------------------------------------------------\n");
+			
+			String[] productName = new String[selectedProductsModel.getRowCount()];
+			String maxName = selectedProductsModel.getValueAt(0, 1).toString();
+
+			for (int i = 0; i < selectedProductsModel.getRowCount(); i++) {
+				productName[i] = selectedProductsModel.getValueAt(i, 1).toString();
+				if (maxName.length() < productName[i].length()) {
+					maxName = productName[i];
+				}
+			}
+			
+			for (int i = 0; i < selectedProductsModel.getRowCount(); i++) {
+				for (int j = maxName.length(); j < productName[i].length(); j++){
+					productName[i] += " ";
+				}
+				productName[i] += "\t";
+			}
+			
+			
 
 			for (int i = 0; i < selectedProductsModel.getRowCount(); i++) {
 				bill.append(String.format(" %-10s %-20s %-10s %-10.2f %-10.2f\n",
 					selectedProductsModel.getValueAt(i, 0),
-					selectedProductsModel.getValueAt(i, 1),
+					//selectedProductsModel.getValueAt(i, 1),
+					productName[i],
 					selectedProductsModel.getValueAt(i, 2),
 					selectedProductsModel.getValueAt(i, 3),
-					selectedProductsModel.getValueAt(i, 4)));
+					selectedProductsModel.getValueAt(i, 4))
+				);
 			}
+
 
 			bill.append("---------------------------------------------------------------\n");
 			bill.append(String.format(" Total Amount: %.2f\n", totalAmount));

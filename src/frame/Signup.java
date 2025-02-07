@@ -16,7 +16,7 @@ public class Signup extends JFrame implements ActionListener {
     
 	private String path = System.getProperty("user.dir");  
 	private String background = (path.substring(0, path.length() - 3) + "pic\\Background.jpg");
-	private String loginIcon = (path.substring(0, path.length() - 3) + "pic\\login1.jpg");
+	private String loginIcon = (path.substring(0, path.length() - 3) + "pic\\login.jpg");
 
     JTextField tfusername, tfemail;
     JPasswordField tfpassword;
@@ -85,7 +85,7 @@ public class Signup extends JFrame implements ActionListener {
         add(l4);
 		
 		JLabel l5 = new JLabel(new ImageIcon(loginIcon));
-		l5.setBounds(0,30,500,600);
+		l5.setBounds(0,30,370,600);
 		add(l5);
         
         tfusername = new JTextField();

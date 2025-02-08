@@ -1,5 +1,5 @@
-# Market-Management-System
-## Marker Owner
-## Shop Owner
+# Market Management System
+## Shop Manager
+## Employee Manager
 ## Customer
 ## Vendor

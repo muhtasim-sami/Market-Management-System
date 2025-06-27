@@ -1,0 +1,172 @@
+CREATE TABLE Employee (
+    EmployeeID VARCHAR(10) PRIMARY KEY,
+    FullName VARCHAR(100),
+    FatherName VARCHAR(100),
+    DateOfBirth DATE,
+    Salary DECIMAL(10, 2),
+    Address VARCHAR(255),
+    ContactNumber VARCHAR(20),
+    Email VARCHAR(100),
+    Qualification VARCHAR(50),
+    Designation VARCHAR(50),
+    NID VARCHAR(20)
+);
+
+
+INSERT INTO Employee VALUES (
+  'E001', 'John Employee', 'John Doe',
+  TO_DATE('1985-04-12', 'YYYY-MM-DD'),
+  50000, '789 Market St', '1234567890',
+  'johne@market.com', 'BSc', 'Manager', '1234-5678-9012'
+);
+
+INSERT INTO Employee VALUES (
+  'E002', 'Jane Employee', 'Richard Smith',
+  TO_DATE('1990-09-25', 'YYYY-MM-DD'),
+  45000, '456 Bakery Lane', '0987654321',
+  'janee@market.com', 'BA', 'Sales Associate', '2345-6789-0123'
+);
+
+INSERT INTO Employee VALUES (
+  'E003', 'Mark Taylor', 'Michael Taylor',
+  TO_DATE('1982-08-14', 'YYYY-MM-DD'),
+  55000, '1010 Market St', '2345678901',
+  'markt@market.com', 'MSc', 'Senior Manager', '3456-7890-1234'
+);
+
+INSERT INTO Employee VALUES (
+  'E004', 'Lucy White', 'Richard White',
+  TO_DATE('1993-01-30', 'YYYY-MM-DD'),
+  48000, '678 Bakery Lane', '3456789012',
+  'lucyw@market.com', 'MBA', 'HR Manager', '4567-8901-2345'
+);
+
+INSERT INTO Employee VALUES (
+  'E005', 'Robert Brown', 'Stephen Brown',
+  TO_DATE('1988-11-20', 'YYYY-MM-DD'),
+  52000, '345 Market St', '4567890123',
+  'robertb@market.com', 'PhD', 'Director', '5678-9012-3456'
+);
+
+INSERT INTO Employee VALUES (
+  'E006', 'Emily Green', 'Charles Green',
+  TO_DATE('1995-02-18', 'YYYY-MM-DD'),
+  60000, '234 Bakery Lane', '5678901234',
+  'emilyg@market.com', 'BBA', 'Accountant', '6789-0123-4567'
+);
+
+SELECT * FROM EMPLOYEE;
+
+CREATE TABLE Users (
+    UserID VARCHAR(10) PRIMARY KEY,
+    UserName VARCHAR(100),
+    Password VARCHAR(100),
+    Role VARCHAR(50),
+    Email VARCHAR(100)
+);
+
+INSERT INTO Users VALUES ('U001', 'ahnaf', '1@Mn', 'Shop Manager', 'sami@example.com');
+INSERT INTO Users VALUES ('U002', 'Rabby', '1@Ab', 'Employee Manager', 'rabby@example.com');
+INSERT INTO Users VALUES ('U003', 'Mark Johnson', 'markPass789', 'Shop Manager', 'mark@example.com');
+INSERT INTO Users VALUES ('U004', 'Lucy Brown', 'lucyPass101', 'Employee Manager', 'lucy@example.com');
+INSERT INTO Users VALUES ('U005', 'Robert King', 'robertPass202', 'Shop Manager', 'robert@example.com');
+INSERT INTO Users VALUES ('U006', 'Emily Harris', 'emilyPass303', 'Shop Manager', 'emily@example.com');
+INSERT INTO Users VALUES ('U007', 'sami', '1@Cd', 'Vendor', 'ahnaf@demo.com');
+INSERT INTO Users VALUES ('U008', 'Niasor', '1@Niasor', 'Vendor', 'niasor@gmail.com');
+INSERT INTO Users VALUES ('U009', 'arponil', '1@Gh', 'Employee Manager', 'arponil@demo.com');
+INSERT INTO Users VALUES ('U010', 'fahim', '1@Ef', 'Employee Manager', 'fahim@gmail.com');
+
+SELECT * FROM USERS;
+
+
+CREATE TABLE Shop (
+    ShopID VARCHAR(10) PRIMARY KEY,
+    ShopName VARCHAR(100),
+    Address VARCHAR(255),
+    OwnerName VARCHAR(100)
+);
+
+INSERT INTO Shop VALUES ('S001', 'John''s Grocery', '123 Market Street', 'John Doe');
+INSERT INTO Shop VALUES ('S002', 'Jane''s Bakery', '456 Bakery Lane', 'Jane Smith');
+INSERT INTO Shop VALUES ('S003', 'Mark''s Electronics', '789 Tech Park', 'Mark Johnson');
+INSERT INTO Shop VALUES ('S004', 'Emily''s Boutique', '321 Fashion Ave', 'Emily Harris');
+INSERT INTO Shop VALUES ('S005', 'Robert''s Bookstore', '987 Book St', 'Robert King');
+INSERT INTO Shop VALUES ('S006', 'Lucy''s Toy Store', '654 Toy Ave', 'Lucy Brown');
+INSERT INTO Shop VALUES ('S007', 'Emily''s Jewelry Store', '789 Gem St', 'Emily Harris');
+
+SELECT * FROM SHOP;
+
+CREATE TABLE Product (
+    ProductID VARCHAR(15) PRIMARY KEY,
+    ProductName VARCHAR(100),
+    Category VARCHAR(50),
+    Quantity INT,
+    Price DECIMAL(10, 2),
+    ShopID VARCHAR(10),
+    FOREIGN KEY (ShopID) REFERENCES Shop(ShopID)
+);
+
+-- John's Grocery (S001)
+INSERT INTO Product VALUES ('S001P001', 'milk', 'Dairy', 100, 2.0, 'S001');
+INSERT INTO Product VALUES ('S001P002', 'Bananas', 'Fruit', 173, 1.2, 'S001');
+INSERT INTO Product VALUES ('S001P003', 'Oranges', 'Fruit', 294, 3.0, 'S001');
+INSERT INTO Product VALUES ('S001P004', 'Grapes', 'Fruit', 35, 4.0, 'S001');
+INSERT INTO Product VALUES ('S001P005', 'Strawberries', 'Personal Care', 298, 5.0, 'S001');
+INSERT INTO Product VALUES ('S001P006', 'Mangoes', 'Fruit', 191, 2.8, 'S001');
+INSERT INTO Product VALUES ('S001P007', 'Pineapples', 'Fruit', 22, 3.5, 'S001');
+
+-- Jane's Bakery (S002)
+INSERT INTO Product VALUES ('S002P001', 'Bread', 'Bakery', 37, 1.5, 'S002');
+INSERT INTO Product VALUES ('S002P002', 'Croissant', 'Bakery', 30, 2.0, 'S002');
+INSERT INTO Product VALUES ('S002P003', 'Muffin', 'Bakery', 43, 2.5, 'S002');
+INSERT INTO Product VALUES ('S002P004', 'Bagel', 'Bakery', 66, 1.8, 'S002');
+INSERT INTO Product VALUES ('S002P005', 'Donut', 'Bakery', 25, 1.5, 'S002');
+INSERT INTO Product VALUES ('S002P006', 'Scone', 'Bakery', 20, 2.2, 'S002');
+INSERT INTO Product VALUES ('S002P007', 'Tart', 'Bakery', 128, 3.0, 'S002');
+
+-- Mark's Electronics (S003)
+INSERT INTO Product VALUES ('S003P001', 'Laptop', 'Electronics', 100, 1000.0, 'S003');
+INSERT INTO Product VALUES ('S003P002', 'Headphones', 'Electronics', 218, 150.0, 'S003');
+INSERT INTO Product VALUES ('S003P003', 'Smartphone', 'Electronics', 27, 800.0, 'S003');
+INSERT INTO Product VALUES ('S003P004', 'Tablet', 'Electronics', 74, 600.0, 'S003');
+INSERT INTO Product VALUES ('S003P005', 'Smartwatch', 'Electronics', 37, 200.0, 'S003');
+INSERT INTO Product VALUES ('S003P006', 'Camera', 'Electronics', 12, 1200.0, 'S003');
+INSERT INTO Product VALUES ('S003P007', 'Speaker', 'Electronics', 49, 300.0, 'S003');
+
+-- Emily's Boutique (S004)
+INSERT INTO Product VALUES ('S004P001', 'Dress', 'Clothing', 70, 50.0, 'S004');
+INSERT INTO Product VALUES ('S004P002', 'Jacket', 'Clothing', 10, 80.0, 'S004');
+INSERT INTO Product VALUES ('S004P003', 'Shoes', 'Clothing', 19, 60.0, 'S004');
+INSERT INTO Product VALUES ('S004P004', 'Handbag', 'Clothing', 86, 100.0, 'S004');
+INSERT INTO Product VALUES ('S004P005', 'Scarf', 'Clothing', 24, 20.0, 'S004');
+INSERT INTO Product VALUES ('S004P006', 'Hat', 'Clothing', 66, 25.0, 'S004');
+INSERT INTO Product VALUES ('S004P007', 'Gloves', 'Clothing', 18, 30.0, 'S004');
+
+-- Robert's Bookstore (S005)
+INSERT INTO Product VALUES ('S005P001', 'Fiction Book', 'Book', 100, 15.0, 'S005');
+INSERT INTO Product VALUES ('S005P002', 'Non-fiction Book', 'Book', 73, 20.0, 'S005');
+INSERT INTO Product VALUES ('S005P003', 'Children''s Book', 'Book', 45, 10.0, 'S005');
+INSERT INTO Product VALUES ('S005P004', 'Mystery Book', 'Book', 60, 18.0, 'S005');
+INSERT INTO Product VALUES ('S005P005', 'Science Book', 'Book', 40, 25.0, 'S005');
+INSERT INTO Product VALUES ('S005P006', 'History Book', 'Book', 30, 22.0, 'S005');
+INSERT INTO Product VALUES ('S005P007', 'Art Book', 'Book', 126, 30.0, 'S005');
+
+-- Lucy's Toy Store (S006)
+INSERT INTO Product VALUES ('S006P001', 'Teddy Bear', 'Toy', 45, 25.0, 'S006');
+INSERT INTO Product VALUES ('S006P002', 'Doll', 'Toy', 40, 30.0, 'S006');
+INSERT INTO Product VALUES ('S006P003', 'Puzzle', 'Toy', 60, 15.0, 'S006');
+INSERT INTO Product VALUES ('S006P004', 'Action Figure', 'Toy', 70, 20.0, 'S006');
+INSERT INTO Product VALUES ('S006P005', 'Board Game', 'Toy', 40, 35.0, 'S006');
+INSERT INTO Product VALUES ('S006P006', 'Toy Car', 'Toy', 71, 15.0, 'S006');
+INSERT INTO Product VALUES ('S006P007', 'Lego Set', 'Toy', 98, 50.0, 'S006');
+
+-- Emily's Jewelry Store (S007)
+INSERT INTO Product VALUES ('S007P001', 'Necklace', 'Personal Care', 69, 250.0, 'S007');
+INSERT INTO Product VALUES ('S007P002', 'Ring', 'Jewelry', 218, 200.0, 'S007');
+INSERT INTO Product VALUES ('S007P003', 'Bracelet', 'Jewelry', 30, 100.0, 'S007');
+INSERT INTO Product VALUES ('S007P004', 'Earrings', 'Jewelry', 36, 75.0, 'S007');
+INSERT INTO Product VALUES ('S007P005', 'Watch', 'Jewelry', 542, 250.0, 'S007');
+INSERT INTO Product VALUES ('S007P006', 'Anklet', 'Jewelry', 31, 90.0, 'S007');
+INSERT INTO Product VALUES ('S007P007', 'Brooch', 'Jewelry', 195, 60.0, 'S007');
+
+SELECT * FROM PRODUCT;

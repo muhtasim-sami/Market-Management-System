@@ -1,5 +1,6 @@
 package management.shop;
 
+import management.validation.DBConnection;
 import management.validation.DBManager;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ public class Shop {
     public String phone;
     public ArrayList<String> products;
 	private DBManager DBManager = new DBManager();
-
+    private DBConnection DBConnection = new DBConnection();
     public Shop(String id, String name) {
         this.id = id;
         this.name = name;
@@ -38,7 +39,7 @@ public class Shop {
         return shops;
     }
 
-    public static void saveShops(DBManager DBManager, List<Shop> shops) {
+    public static void saveShops(DBManager DBManager,DBConnection DBConnection, List<Shop> shops) {
         List<String> content = new ArrayList<>();
         for (Shop shop : shops) {
             content.add("Shop: " + shop.id + ", " + shop.name);
@@ -46,7 +47,7 @@ public class Shop {
                 content.add("Product: " + product);
             }
         }
-        DBManager.writeFile(content);
+        DBConnection.writeFile(content);
     }
 
     public String getId() {

@@ -144,7 +144,7 @@ public class Login extends JFrame implements ActionListener {
         if (ae.getSource() == login) {
             String username = tfusername.getText();
             String password = new String(tfpassword.getPassword());
-            Security sc = new Security(new DBManager());
+            Security sc = new Security(new DBConnection());
             if (sc.checkCredentials(username, password)) {
                 sc.afterLogin(username, password);
                 setVisible(false);

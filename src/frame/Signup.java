@@ -159,7 +159,7 @@ public class Signup extends JFrame implements ActionListener {
             String email = tfemail.getText();
             String password = new String(tfpassword.getPassword());
             String role = (String) roleComboBox.getSelectedItem();
-            Security sc = new Security(new DBManager());
+            Security sc = new Security(new DBConnection());
             if (sc.isValid(username,email,password)) {
 				
 				List<String> userData = Arrays.asList(username, password, role, email);

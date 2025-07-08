@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.List;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Arrays;
 import management.validation.DBManager;
 

@@ -1,85 +1,20 @@
 package management.validation;
 
-import java.sql.*;
-import java.io.*;
+//import java.sql.*;
+//import java.io.*;
 //import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DBManager {
-    
-	private static final String DB_URL = "jdbc:oracle:thin:@CreedFanatic:1521:XE"; // Update as needed
-    private static final String DB_USER = "system";
-    private static final String DB_PASS = "admin";
 
-    private String path = System.getProperty("user.dir");  
-    private String db = (path.substring(0, path.length() - 3) + "DB\\db.txt");
+    //private String path = System.getProperty("user.dir");  
+    //private String db = (path.substring(0, path.length() - 3) + "DB\\db.txt");
 
-    public String getDB() { return db; }
-
-public Connection getOracleConnection() throws SQLException, ClassNotFoundException {
-        Class.forName("oracle.jdbc.driver.OracleDriver");
-        return DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-    }
-
-    // New: Example method to read from Oracle DB
-    public List<String> readFromOracle(String query) {
-        List<String> results = new ArrayList<>();
-        try (Connection conn = getOracleConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-            ResultSetMetaData meta = rs.getMetaData();
-            int columnCount = meta.getColumnCount();
-            while (rs.next()) {
-                StringBuilder row = new StringBuilder();
-                for (int i = 1; i <= columnCount; i++) {
-                    row.append(rs.getString(i));
-                    if (i < columnCount) row.append(", ");
-                }
-                results.add(row.toString());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return results;
-    }
-
-    // New: Example method to write to Oracle DB
-    public void writeToOracle(String insertSql) {
-        try (Connection conn = getOracleConnection();
-             Statement stmt = conn.createStatement()) {
-            stmt.executeUpdate(insertSql);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public List<String> readFile() {
-        List<String> data = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(getDB()))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                data.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return data;
-    }
-
-    public void writeFile(List<String> content) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(getDB()))) {
-            for (String line : content) {
-                bw.write(line);
-                bw.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    //public String getDB() { return db; }
 
     private String generateNextId(String prefix, String entityType) {
-        List<String> data = readFile();
+        List<String> data = new DBConnection().readFile();
         int maxId = 0;
 
         for (String line : data) {
@@ -102,7 +37,7 @@ public Connection getOracleConnection() throws SQLException, ClassNotFoundExcept
     }
 
     private String generateNextProductId(String shopId) {
-        List<String> data = readFile();
+        List<String> data = new DBConnection().readFile();
         int maxProductNumber = 0;
         String productPrefix = shopId + "P"; 
 
@@ -124,7 +59,7 @@ public Connection getOracleConnection() throws SQLException, ClassNotFoundExcept
 
 
     private String getShopIdByName(String shopName) {
-        List<String> data = readFile();
+        List<String> data = new DBConnection().readFile();
         for (String line : data) {
             if (line.startsWith("Shop:")) {
                 String[] parts = line.substring(6).split(", ");
@@ -137,7 +72,7 @@ public Connection getOracleConnection() throws SQLException, ClassNotFoundExcept
     }
 
 	private void addDataInOrder(String prefix, String newEntry) {
-		List<String> dbData = readFile();
+		List<String> dbData = new DBConnection().readFile();
 		List<String> newData = new ArrayList<>();
 		boolean added = false;
 		
@@ -148,13 +83,13 @@ public Connection getOracleConnection() throws SQLException, ClassNotFoundExcept
 				newData.add("");
 			}			
 			newData.add(prefix + newEntry);
-			writeFile(newData);
+			new DBConnection().writeFile(newData);
 			return;
 		}
 		
 		if (dbData.isEmpty()) {
 			newData.add(prefix + newEntry);
-			writeFile(newData);
+			new DBConnection().writeFile(newData);
 			return;
 		}
 
@@ -178,7 +113,7 @@ public Connection getOracleConnection() throws SQLException, ClassNotFoundExcept
 			newData.add(prefix + newEntry);
 		}
 
-		writeFile(newData);
+		new DBConnection().writeFile(newData);
 	}
     public void addUserData(List<String> userData) {
         String id = generateNextId("U", "User:");
@@ -211,7 +146,7 @@ public Connection getOracleConnection() throws SQLException, ClassNotFoundExcept
         newData.addAll(productData);
         String newProduct = String.join(", ", newData);
         
-        List<String> dbData = readFile();
+        List<String> dbData = new DBConnection().readFile();
         List<String> newDbData = new ArrayList<>();
         boolean added = false;
         String currentShopName = "";
@@ -260,7 +195,7 @@ public Connection getOracleConnection() throws SQLException, ClassNotFoundExcept
             newDbData.add("Product: " + newProduct);
         }
 
-        writeFile(newDbData);
+        new DBConnection().writeFile(newDbData);
     }
 
     public void addEmployeeData(List<String> employeeData) {
@@ -271,10 +206,12 @@ public Connection getOracleConnection() throws SQLException, ClassNotFoundExcept
         String newEmployee = String.join(", ", newData);
         addDataInOrder("Employee: ", newEmployee);
     }
+
+	
 	
 	public List<String> readProductData() {
 		List<String> products = new ArrayList<>();
-		List<String> data = readFile();
+		List<String> data = new DBConnection().readFile();
 		for (String line : data) {
 			if (line.startsWith("Product:")) {
 				String productParts = line.substring(9);
@@ -286,7 +223,7 @@ public Connection getOracleConnection() throws SQLException, ClassNotFoundExcept
 
 	public List<String> readEmployeeData() {
 		List<String> employees = new ArrayList<>();
-		List<String> data = readFile();
+		List<String> data = new DBConnection().readFile();
 		for (String line : data) {
 			if (line.startsWith("Employee:")) {
 				String employeeParts = line.substring(10);
@@ -298,7 +235,7 @@ public Connection getOracleConnection() throws SQLException, ClassNotFoundExcept
 	
 	public List<String> readShopAndProductData() {
 		List<String> shopAndProducts = new ArrayList<>();
-		List<String> data = readFile();
+		List<String> data = new DBConnection().readFile();
 		
 		for (String line : data) {
 			if (line.startsWith("Shop:") || line.startsWith("Product:")) {
@@ -310,7 +247,7 @@ public Connection getOracleConnection() throws SQLException, ClassNotFoundExcept
 	}
 	
 	public void updateProductData(String productId, String newData) {
-		List<String> allData = readFile();
+		List<String> allData = new DBConnection().readFile();
 		List<String> updatedData = new ArrayList<>();
 		
 		for (String line : allData) {
@@ -327,11 +264,11 @@ public Connection getOracleConnection() throws SQLException, ClassNotFoundExcept
 		}
 		
 		// Write back to file
-		writeFile(updatedData);
+		new DBConnection().writeFile(updatedData);
 	}
 
 	public void updateEmployeeData(String employeeId, String newData) {
-		List<String> allData = readFile();
+		List<String> allData = new DBConnection().readFile();
 		List<String> updatedData = new ArrayList<>();
 		
 		for (String line : allData) {
@@ -348,11 +285,11 @@ public Connection getOracleConnection() throws SQLException, ClassNotFoundExcept
 		}
 		
 		// Write back to file
-		writeFile(updatedData);
+		new DBConnection().writeFile(updatedData);
 	}
 	
 	public void decreasedProductQuantity(String productId, int quantity ){
-		List<String> allData = readFile();
+		List<String> allData = new DBConnection().readFile();
 		List<String> updatedData = new ArrayList<>();
 		
 		for (String line : allData) {
@@ -376,11 +313,11 @@ public Connection getOracleConnection() throws SQLException, ClassNotFoundExcept
 		}
 		
 		// Write back to file
-		writeFile(updatedData);
+		new DBConnection().writeFile(updatedData);
 	}
 	
 	public void increasedProductQuantity(String productId, int quantity ){
-		List<String> allData = readFile();
+		List<String> allData = new DBConnection().readFile();
 		List<String> updatedData = new ArrayList<>();
 		
 		for (String line : allData) {
@@ -404,11 +341,11 @@ public Connection getOracleConnection() throws SQLException, ClassNotFoundExcept
 		}
 		
 		// Write back to file
-		writeFile(updatedData);
+		new DBConnection().writeFile(updatedData);
 	}
 	
 	public void removeProductData(String productId) {
-		List<String> allData = readFile();
+		List<String> allData = new DBConnection().readFile();
 		List<String> updatedData = new ArrayList<>();
 		
 		for (String line : allData) {
@@ -423,11 +360,11 @@ public Connection getOracleConnection() throws SQLException, ClassNotFoundExcept
 		}
 		
 		// Write back to file
-		writeFile(updatedData);
+		new DBConnection().writeFile(updatedData);
 	}
 
 	public void removeEmployeeData(String employeeId) {
-		List<String> allData = readFile();
+		List<String> allData = new DBConnection().readFile();
 		List<String> updatedData = new ArrayList<>();
 		
 		for (String line : allData) {
@@ -442,11 +379,11 @@ public Connection getOracleConnection() throws SQLException, ClassNotFoundExcept
 		}
 		
 		// Write back to file
-		writeFile(updatedData);
+		new DBConnection().writeFile(updatedData);
 	}
 
 	public void removeShopData(String shopId) {
-		List<String> allData = readFile();
+		List<String> allData = new DBConnection().readFile();
 		List<String> updatedData = new ArrayList<>();
 		List<String> productsToRemove = new ArrayList<>();
 		
@@ -478,7 +415,7 @@ public Connection getOracleConnection() throws SQLException, ClassNotFoundExcept
 		}
 		
 		// Write back to file
-		writeFile(updatedData);
+		new DBConnection().writeFile(updatedData);
 	}
 
     public static void main(String[] args) {

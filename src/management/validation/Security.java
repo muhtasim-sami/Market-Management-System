@@ -6,14 +6,14 @@ import management.product.ProductManagement;
 import user.*;
 
 public class Security {
-    private DBManager DBManager;
-    
-    public Security(DBManager DBManager) {
-        this.DBManager = DBManager;
+    private DBConnection DBConnection;
+
+    public Security(DBConnection DBConnection) {
+        this.DBConnection = DBConnection;
     }
     
     public boolean checkUsername(String username) {
-        List<String> data = DBManager.readFile();
+        List<String> data = DBConnection.readFile();
         for (String line : data) {
             if (line.startsWith("User:")) {
                 String[] parts = line.substring(6).split(", ");
@@ -30,7 +30,7 @@ public class Security {
     }
 
     public boolean checkPassword(String password) {
-        List<String> data = DBManager.readFile();
+        List<String> data = DBConnection.readFile();
         for (String line : data) {
             if (line.startsWith("User:")) {
                 String[] parts = line.substring(6).split(", ");
@@ -47,7 +47,7 @@ public class Security {
     }
 
     public boolean checkCredentials(String username, String password) {
-        List<String> data = DBManager.readFile();
+        List<String> data = DBConnection.readFile();
         for (String line : data) {
             if (line.startsWith("User: ")) {
                 String[] parts = line.substring(6).split(", ");
@@ -65,11 +65,11 @@ public class Security {
     
     public void writeUser(String[] userData) {
         List<String> userDataList = new ArrayList<>(Arrays.asList(userData));
-        DBManager.writeFile(userDataList);
+        DBConnection.writeFile(userDataList);
     }
 
     public void afterLogin(String username, String password) {
-        List<String> data = DBManager.readFile();
+        List<String> data = DBConnection.readFile();
         for (String line : data) {
             if (line.startsWith("User: ")) {
                 String[] parts = line.substring(6).split(", ");

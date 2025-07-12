@@ -1,16 +1,70 @@
-<!DOCTYPE html>
-<html lang="en"></html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
-</head>
-<body>
-    <center><h1>Market-Management-System</h1></center>
-    <h2>Marker Owner</h2>
-    <h2>Shop Owner</h2>
-    <h2>Customer</h2>
-    <h2>Vendor</h2>
-</body>
-</html>
-<!-- This file is auto-generated. Do not edit manually. -->
+# Market Management System
+
+A Java-based desktop application for managing products, employees, shops, and billing in a market environment. The system uses file storage and Oracle Database for persistent data management.
+
+## Features
+
+- **Product Management:** Add, update, delete, and manage product inventory.
+- **Employee Management:** Add, update, and manage employee records.
+- **Shop Management:** Manage shop details and assignments.
+- **Billing System:** Generate bills, update product quantities, and handle payments.
+- **Oracle Database Integration:** Synchronize data with an Oracle database.
+- **User Authentication:** Manage users and roles.
+
+## Technologies Used
+
+- Java (Swing for GUI)
+- Oracle Database (JDBC)
+- File-based data storage
+- MVC design pattern
+
+## Setup
+
+1. **Clone the repository:**
+    ```sh
+    git clone <your-repo-url>
+    cd MarketManagementSystem
+    ```
+
+2. **Configure Oracle Database:**
+    - Update the Oracle connection settings in `src/management/validation/OracleDB.java`:
+      ```java
+      private static final String DB_URL = "jdbc:oracle:thin:@localhost:1521:XE";
+      private static final String DB_USER = "system";
+      private static final String DB_PASS = "admin";
+      ```
+    - Make sure your Oracle DB is running and accessible.
+
+3. **Compile the project:**
+    - **Windows users:**  
+    Go to the `.gitignore` directory and double-click `run.bat` to compile and run the project.
+
+    - **Linux users:**  
+    Go to the `.gitignore` directory and run `run.bash` in your terminal:
+    ```sh
+    ./run.bash
+    ```
+
+4. **Run the application:**
+    ```sh
+    java -cp ".;lib/ojdbc11.jar;bin" frame.Homepage
+    ```
+
+## Usage
+
+- Launch the application and log in.
+- Use the menu to manage products, employees, shops, and billing.
+- All changes are saved to both files and the Oracle database.
+
+## Notes
+
+- Ensure Oracle JDBC driver (`ojdbc11.jar`) is in the `lib` directory.
+- Update database credentials as needed.
+- Data files are stored in the project directory.
+
+## License
+
+This project is for educational purposes.
+
+---
+

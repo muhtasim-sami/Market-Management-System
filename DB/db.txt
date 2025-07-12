@@ -1,5 +1,5 @@
-Employee: E001, John Employee, John Doe, 1985-04-12, 50000, 789 Market St, 1234567890, johne@market.com, BSc, Manager, 1234-5678-9012
-Employee: E002, Jane Employee, Richard Smith, 1990-09-25, 45000, 456 Bakery Lane, 0987654321, janee@market.com, BA, Sales Associate, 2345-6789-0123
+Employee: E001,       John Green, John Doe, 1985-04-12, 50000, 789 Market St, 1234567890, johne@market.com,BBA, Manager, 1234-5678-9012
+Employee: E002,  Jane Brown, Richard Smith, 1990-09-25, 45000, 456 Bakery Lane, 0987654321, janee@market.com,BBA, Sales Associate, 2345-6789-0123
 Employee: E003, Mark Taylor, Michael Taylor, 1982-08-14, 55000, 1010 Market St, 2345678901, markt@market.com, MSc, Senior Manager, 3456-7890-1234
 Employee: E004, Lucy White, Richard White, 1993-01-30, 48000, 678 Bakery Lane, 3456789012, lucyw@market.com, MBA, HR Manager, 4567-8901-2345
 Employee: E005, Robert Brown, Stephen Brown, 1988-11-20, 52000, 345 Market St, 4567890123, robertb@market.com, PhD, Director, 5678-9012-3456
@@ -17,10 +17,10 @@ User: U009, arponil, 1@Gh, Employee Manager, arponil@demo.com
 User: U010, fahim, 1@Ef, Employee Manager, fahim@gmail.com
 
 Shop: S001, John's Grocery, 123 Market Street, John Doe
-Product: S001P001,  milk, Dairy,  100,  2, gg milk farm
-Product: S001P002, Bananas, Fruit, 173, 1.2, John's Grocery, 
-Product: S001P003, Oranges, Fruit, 294, 3.0, John's Grocery, 
-Product: S001P004, Grapes, Fruit, 035, 4.0, John's Grocery, 
+Product: S001P001, milk, Personal Care, 192, 3, gg milk farm, , 
+Product: S001P002, Bananas, Fruit, 165, 1.2, John's Grocery, , 
+Product: S001P003, Oranges, Fruit, 286, 3.0, John's Grocery, 
+Product: S001P004,   Grapes, Personal Care,   50,   4.0,   John's Grocery
 Product: S001P005,  Strawberries, Personal Care,  298,  5.0,  John's Grocery
 Product: S001P006, Mangoes, Fruit, 191, 2.8, John's Grocery, 
 Product: S001P007, Pineapples, Fruit, 022, 3.5, John's Grocery

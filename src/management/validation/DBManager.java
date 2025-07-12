@@ -122,6 +122,8 @@ public class DBManager {
         newData.addAll(userData);
         String newUser = String.join(", ", newData);
         addDataInOrder("User: ", newUser);
+
+		new OracleDB().addUserToOracle(newData);
     }
 
     public void addShopData(List<String> shopData) {
@@ -131,6 +133,8 @@ public class DBManager {
         newData.addAll(shopData);
         String newShop = String.join(", ", newData);
         addDataInOrder("Shop: ", newShop);
+
+		new OracleDB().addShopToOracle(newData);
     }
 
     public void addProductData(List<String> productData, String shopName) {
@@ -196,6 +200,8 @@ public class DBManager {
         }
 
         new DBConnection().writeFile(newDbData);
+
+		new OracleDB().addProductToOracle(newData);
     }
 
     public void addEmployeeData(List<String> employeeData) {
@@ -203,8 +209,10 @@ public class DBManager {
         List<String> newData = new ArrayList<>();
         newData.add(id);
         newData.addAll(employeeData);
-        String newEmployee = String.join(", ", newData);
+        String newEmployee = String.join(",", newData);
         addDataInOrder("Employee: ", newEmployee);
+
+		new OracleDB().addEmployeeToOracle(newData);
     }
 
 	
@@ -265,6 +273,15 @@ public class DBManager {
 		
 		// Write back to file
 		new DBConnection().writeFile(updatedData);
+
+		List<String> newDataList = new ArrayList<>();
+		newDataList.add(productId);
+		String[] newDataParts = newData.split(",");
+		for (String part : newDataParts) {
+			newDataList.add(part.trim());
+		}
+
+		new OracleDB().updateProductInOracle(productId, newDataList);
 	}
 
 	public void updateEmployeeData(String employeeId, String newData) {
@@ -273,7 +290,7 @@ public class DBManager {
 		
 		for (String line : allData) {
 			if (line.startsWith("Employee:")) {
-				String[] parts = line.substring(10).split(", ");
+				String[] parts = line.substring(10).split(",");
 				if (parts[0].equals(employeeId)) {
 					updatedData.add("Employee: " + employeeId + ", " + newData);
 				} else {
@@ -286,6 +303,16 @@ public class DBManager {
 		
 		// Write back to file
 		new DBConnection().writeFile(updatedData);
+
+		List<String> newDataList = new ArrayList<>();
+		newDataList.add(employeeId);
+		String[] newDataParts = newData.split(",");
+		for (String part : newDataParts) {
+			newDataList.add(part.trim());
+		}
+		System.out.println("New data list goes to oracle : " + newDataList);
+
+		new OracleDB().updateEmployeeInOracle(employeeId, newDataList);
 	}
 	
 	public void decreasedProductQuantity(String productId, int quantity ){
@@ -294,9 +321,13 @@ public class DBManager {
 		
 		for (String line : allData) {
 			if (line.startsWith("Product:")) {
-				String[] parts = line.substring(9).split(", ");
+				String[] parts = line.substring(9).split(",");
+				for (int i = 0; i < parts.length; i++) {
+					parts[i] = parts[i].trim();
+				}
 				if (parts[0].equals(productId)) {
-					int available = Integer.parseInt(parts[3]);
+					System.out.println("Decreasing quantity for product: " + productId);
+					int available = Integer.parseInt(parts[3].trim());
 					int update = available - quantity;
 					parts[3] = String.format("%03d",update);
 					String newData = "";
@@ -314,6 +345,8 @@ public class DBManager {
 		
 		// Write back to file
 		new DBConnection().writeFile(updatedData);
+
+		new OracleDB().decreaseProductQuantityInOracle(productId, quantity);
 	}
 	
 	public void increasedProductQuantity(String productId, int quantity ){
@@ -323,6 +356,9 @@ public class DBManager {
 		for (String line : allData) {
 			if (line.startsWith("Product:")) {
 				String[] parts = line.substring(9).split(", ");
+				for (int i = 0; i < parts.length; i++) {
+					parts[i] = parts[i].trim();
+				}
 				if (parts[0].equals(productId)) {
 					int available = Integer.parseInt(parts[3]);
 					int update = available + quantity;
@@ -342,6 +378,8 @@ public class DBManager {
 		
 		// Write back to file
 		new DBConnection().writeFile(updatedData);
+
+		new OracleDB().increaseProductQuantityInOracle(productId, quantity);
 	}
 	
 	public void removeProductData(String productId) {
@@ -361,6 +399,8 @@ public class DBManager {
 		
 		// Write back to file
 		new DBConnection().writeFile(updatedData);
+
+		new OracleDB().deleteProductFromOracle(productId);
 	}
 
 	public void removeEmployeeData(String employeeId) {
@@ -380,6 +420,8 @@ public class DBManager {
 		
 		// Write back to file
 		new DBConnection().writeFile(updatedData);
+
+		new OracleDB().deleteEmployeeFromOracle(employeeId);
 	}
 
 	public void removeShopData(String shopId) {
@@ -416,6 +458,8 @@ public class DBManager {
 		
 		// Write back to file
 		new DBConnection().writeFile(updatedData);
+
+		new OracleDB().deleteShopFromOracle(shopId);
 	}
 
     public static void main(String[] args) {

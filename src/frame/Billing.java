@@ -2,11 +2,9 @@ package frame;
 
 import java.awt.*;
 import java.io.*;
-import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import management.validation.*;
@@ -210,12 +208,12 @@ public class Billing extends JFrame {
 				possibleValues, possibleValues[0]
 			);
 			if (selectedValue == "Pay Directly"){
-				bill();
-				confermBill();
+			    confermBill();
+		        bill();
 			}
 			else if (selectedValue == "Cash On Delivery"){
+				confermBill();
 				bill();
-				//confermBill();
 			}
 		}
 
@@ -250,15 +248,53 @@ public class Billing extends JFrame {
         add(jtcustomerNum);
 
     }
-	public void confermBill(){
-		for (int i = 0; i < selectedProductsModel.getRowCount(); i++) {
-			String productId = selectedProductsModel.getValueAt(i, 0).toString();
-			int quantity = Integer.parseInt(selectedProductsModel.getValueAt(i, 2).toString());
-			
-			// Update the quantity in database
-			DBManager.decreasedProductQuantity(productId, quantity);
-		}
-	}
+	public void confermBill() {
+    for (int i = 0; i < selectedProductsModel.getRowCount(); i++) {
+        try {
+            Object idObj = selectedProductsModel.getValueAt(i, 0);
+            Object qtyObj = selectedProductsModel.getValueAt(i, 2);
+            System.out.println("By selectedProductsModel Row " + (i + 1) + ": ID = " + selectedProductsModel.getValueAt(i, 0) + ", Quantity = " + selectedProductsModel.getValueAt(i, 2));
+
+            if (idObj == null || qtyObj == null) {
+                System.out.println("Invalid data in row " + (i + 1) + ": ID or Quantity is null");
+                continue; // Skip invalid row
+            }
+
+            String productId = idObj.toString().trim();
+            String qtyStr = qtyObj.toString().trim();
+
+
+            System.out.println("Processing row " + (i + 1) + ": ID = " + productId + ", Quantity = '" + qtyStr + "'");
+            
+            // Check if productId or qtyStr is null
+            // Check if productId or qtyStr is empty
+            if (productId.isEmpty() || qtyStr.isEmpty()) {
+                System.out.println("Invalid data in row " + (i + 1) + ": ID or Quantity is empty");
+                continue; // Skip invalid row
+            }
+            
+            if (!qtyStr.matches("\\d+")) {
+                JOptionPane.showMessageDialog(this, "\\d+ Invalid quantity in row " + (i + 1) + ": '" + qtyStr + "'");
+                continue;
+            }
+
+            int quantity = Integer.parseInt(qtyStr);
+            System.out.println("Row " + (i + 1) + " quantity value: " + quantity + " which is a : " + ((Object)quantity).getClass().getName());
+            System.out.println(" quantity value + 2 : " + (quantity + 2));
+
+            // Update the quantity in database
+            DBManager.decreasedProductQuantity(productId, quantity);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid quantity in row " + (i + 1));
+            System.out.println("Invalid quantity in row " + (i + 1) + ": " + ex.getMessage());
+            continue; // Skip this row if quantity is invalid
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error updating product in row " + (i + 1) + ": " + ex.getMessage());
+            System.out.println("Error updating product in row " + (i + 1) + ": " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+}
 	public void paymentOption(){
 		
 	}

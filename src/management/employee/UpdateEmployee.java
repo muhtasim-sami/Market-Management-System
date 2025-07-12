@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.List;
 import management.validation.DBManager;
+import management.validation.OracleDB;
+
 
 public class UpdateEmployee extends JFrame implements ActionListener {
 
@@ -151,16 +153,23 @@ public class UpdateEmployee extends JFrame implements ActionListener {
         for (String data : employeeData) {
             String[] details = data.split(",");
             if (details[0].equals(empId)) {
-                lblname.setText(details[1]);
-                tffname.setText(details[2]);
-                lbldob.setText(details[3]);
-                tfsalary.setText(details[4]);
-                tfaddress.setText(details[5]);
-                tfphone.setText(details[6]);
-                tfemail.setText(details[7]);
-                tfeducation.setSelectedItem(details[8]);
-                tfdesignation.setText(details[9]);
-                lblaadhar.setText(details[10]);
+                for (int i = 0; i < details.length; i++) {
+                    System.out.println("Detail " + i + ": " + details[i]);
+                }
+                if (details.length >= 11) {
+                    lblname.setText(details[1]);
+                    tffname.setText(details[2]);
+                    lbldob.setText(details[3]);
+                    tfsalary.setText(details[4]);
+                    tfaddress.setText(details[5]);
+                    tfphone.setText(details[6]);
+                    tfemail.setText(details[7]);
+                    tfeducation.setSelectedItem(details[8]);
+                    tfdesignation.setText(details[9]);
+                    lblaadhar.setText(details[10]);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Employee data is incomplete for ID: " + empId + "\nData: " + data);
+                }
                 break;
             }
         }
@@ -185,8 +194,17 @@ public class UpdateEmployee extends JFrame implements ActionListener {
             String aadhar = lblaadhar.getText();
 
             String updatedDetails = name + "," + fname + "," + dob + "," + salary + "," + address + "," + phone + "," + email + "," + education + "," + designation + "," + aadhar;
+
+            System.out.println("Employee ID: " + empId);
+            System.out.println("Updated Employee Data: " + updatedDetails);
             
-            DBManager.updateEmployeeData(empId,updatedDetails);
+            try {
+                DBManager.updateEmployeeData(empId,updatedDetails);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error updating employee details: " + e.getMessage());
+                e.printStackTrace();
+                return;
+            }
 
             JOptionPane.showMessageDialog(null, "Employee Updated Successfully");
             setVisible(false);

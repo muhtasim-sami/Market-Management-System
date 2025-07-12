@@ -22,7 +22,7 @@ A Java-based desktop application for managing products, employees, shops, and bi
 
 1. **Clone the repository:**
     ```sh
-    git clone <your-repo-url>
+    git clone https://github.com/muhtasim-sami/Market-Management-System
     cd MarketManagementSystem
     ```
 
@@ -36,19 +36,20 @@ A Java-based desktop application for managing products, employees, shops, and bi
     - Make sure your Oracle DB is running and accessible.
 
 3. **Compile the project:**
-    - **Windows users:**  
-    Go to the `.gitignore` directory and double-click `run.bat` to compile and run the project.
 
-    - **Linux users:**  
-    Go to the `.gitignore` directory and run `run.bash` in your terminal:
-    ```sh
-    ./run.bash
-    ```
+- **Windows users:**  
+  Go to the `run` directory and double-click `run.bat` to compile and run the project.
 
-4. **Run the application:**
-    ```sh
-    java -cp ".;lib/ojdbc11.jar;bin" frame.Homepage
-    ```
+- **Linux/macOS users:**  
+  Go to the `run` directory, make the script executable, and run `run.sh` in your terminal:
+  ```sh
+  chmod +x run.sh
+  ./run.sh
+  ```
+
+  > **Note:**  
+  > The provided `run.sh` script uses Unix line endings and the correct classpath separator (`:`), so it works on both Linux and macOS.
+
 
 ## Usage
 

@@ -253,7 +253,6 @@ public class Billing extends JFrame {
         try {
             Object idObj = selectedProductsModel.getValueAt(i, 0);
             Object qtyObj = selectedProductsModel.getValueAt(i, 2);
-            System.out.println("By selectedProductsModel Row " + (i + 1) + ": ID = " + selectedProductsModel.getValueAt(i, 0) + ", Quantity = " + selectedProductsModel.getValueAt(i, 2));
 
             if (idObj == null || qtyObj == null) {
                 System.out.println("Invalid data in row " + (i + 1) + ": ID or Quantity is null");
@@ -262,12 +261,7 @@ public class Billing extends JFrame {
 
             String productId = idObj.toString().trim();
             String qtyStr = qtyObj.toString().trim();
-
-
-            System.out.println("Processing row " + (i + 1) + ": ID = " + productId + ", Quantity = '" + qtyStr + "'");
             
-            // Check if productId or qtyStr is null
-            // Check if productId or qtyStr is empty
             if (productId.isEmpty() || qtyStr.isEmpty()) {
                 System.out.println("Invalid data in row " + (i + 1) + ": ID or Quantity is empty");
                 continue; // Skip invalid row
@@ -279,8 +273,6 @@ public class Billing extends JFrame {
             }
 
             int quantity = Integer.parseInt(qtyStr);
-            System.out.println("Row " + (i + 1) + " quantity value: " + quantity + " which is a : " + ((Object)quantity).getClass().getName());
-            System.out.println(" quantity value + 2 : " + (quantity + 2));
 
             // Update the quantity in database
             DBManager.decreasedProductQuantity(productId, quantity);

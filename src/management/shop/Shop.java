@@ -27,7 +27,7 @@ public class Shop {
         Shop currentShop = null;
         for (String line : lines) {
             if (line.startsWith("Shop: ")) {
-                String[] shopInfo = line.substring(6).split(", ", 4);
+                String[] shopInfo = line.substring(6).split(",", 4);
                 String shopId = shopInfo[0].trim();
                 String shopName = shopInfo[1].trim();
                 currentShop = new Shop(shopId, shopName);

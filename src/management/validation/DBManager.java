@@ -1,17 +1,9 @@
 package management.validation;
 
-//import java.sql.*;
-//import java.io.*;
-//import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DBManager {
-
-    //private String path = System.getProperty("user.dir");  
-    //private String db = (path.substring(0, path.length() - 3) + "DB\\db.txt");
-
-    //public String getDB() { return db; }
 
     private String generateNextId(String prefix, String entityType) {
         List<String> data = new DBConnection().readFile();
@@ -330,9 +322,9 @@ public class DBManager {
 					int available = Integer.parseInt(parts[3].trim());
 					int update = available - quantity;
 					parts[3] = String.format("%03d",update);
-					String newData = "";
-					for (int i = 0; i < parts.length; i++){
-						newData += (parts[i] + ", ");
+					String newData = parts[0];
+					for (int i = 1; i < parts.length; i++){
+						newData += (", " + parts[i]);
 					}
 					updatedData.add("Product: " + newData);
 				} else {
